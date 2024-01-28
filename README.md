@@ -75,7 +75,8 @@ __Project bucket list__
 	-F <options>, --flash <options>		Run image flashing
 	-G [options], --gdb <options>		Launch GDB server
 	
-	Multiple --script, --path, --execute and --define are allowed and --interf is mandatory if EB_DEFAULT_PROBE is not set
+	Multiple --script, --path, --execute and --define are allowed
+    and --interf is mandatory if EB_DEFAULT_PROBE is not set.
 
        e.g.
         EBlink -I stlink -S auto -G
