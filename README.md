@@ -71,18 +71,19 @@ __Project bucket list__
 	-S <file>,    --script <file>		Add a device script file
 	-P <path>,    --path <path>		Add a search path for scripts
 	-D <def>,     --define <def>		Add a script global define "name=value"
-	-E <func>,    --execute <func>		Execute script function(s) from cli e.g. "setopt(WRREG, 5);lcdwr(\"foo\")"    
+	-E <func>,    --execute <func>		Execute script function(s) from cli   
 	-F <options>, --flash <options>		Run image flashing
 	-G [options], --gdb <options>		Launch GDB server
 	
-	Multiple --script, --path, --execute and --define are allowed
-    and --interf is mandatory if EB_DEFAULT_PROBE is not set.
+	Multiple --script, --path, --execute and --define are allowed and 
+             --interf is mandatory if EB_DEFAULT_PROBE is not set.
 
        e.g.
         EBlink -I stlink -S auto -G
         EBlink -I stlink -S stm32 -G -D FLASH_SIZE=1024 -D RAM_SIZE=16
         EBlink -I stlink,dr,speed=3000 -S silabs -F erase,verify,run,file=mytarget.elf
         EBlink -I cmsis-dap -T cortex-m,fu=0 -S renesas -G port=4242,nc,s -S myReset.scr
+        EBlink -I stlink -S auto -E "setopt(WRREG, 5);dataflash_erase(0x08000500)" 
 
 
 ==== **Interfaces**
