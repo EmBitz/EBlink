@@ -4,8 +4,9 @@
 
 EBlink ARM Cortex-M debug tool with squirrel scripting device support
 
-[ Windows installer ](https://embitz.org/forum/thread-141.html) available with windows shell context menu.  
-The installer set environment variable EB_DEFAULT_SCRIPT to "auto"(.script) so that all supported vendors are automaticlly detected (currently Silabs, STmicro, Atmel, NXP and Renesas).
+<u>Windows installer</u> available with windows shell context menu.  
+The installer will set the environment variable EB_DEFAULT_SCRIPT to "auto"(.script) so that all supported vendors are automaticlly detected (currently Silabs, STmicro, Atmel, NXP and Renesas)
+and the variable EB_DEFAULT_PROBE is set to "stlink".
 
 ![alt text](https://www.embitz.org/context3.png)  
 
@@ -74,13 +75,13 @@ __Project bucket list__
 	-F <options>, --flash <options>		Run image flashing
 	-G [options], --gdb <options>		Launch GDB server
 	
-	Multiple --script, --path, --execute and --define are allowed and --interf is mandatory
+	Multiple --script, --path, --execute and --define are allowed and --interf is mandatory if EB_DEFAULT_PROBE is not set
 
        e.g.
-        EBlink -I stlink -S stm32-auto -G
-        EBlink -I stlink -S stm32-auto -G -D FLASH_SIZE=1024 -D RAM_SIZE=16
-        EBlink -I stlink,dr,speed=3000 -S silabs-auto -F erase,verify,run,file=mytarget.elf
-        EBlink -I cmsis-dap -T cortex-m,fu=0 -S stm32-auto -G port=4242,nc,s -S myReset.scr
+        EBlink -I stlink -S auto -G
+        EBlink -I stlink -S stm32 -G -D FLASH_SIZE=1024 -D RAM_SIZE=16
+        EBlink -I stlink,dr,speed=3000 -S silabs -F erase,verify,run,file=mytarget.elf
+        EBlink -I cmsis-dap -T cortex-m,fu=0 -S renesas -G port=4242,nc,s -S myReset.scr
 
 
 ==== **Interfaces**
