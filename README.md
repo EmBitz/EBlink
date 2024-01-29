@@ -160,7 +160,7 @@ name: ***GDB-server***
      Usage -G [options]
 
         address=<x.x.x.x> : Select different listen address, default 0.0.0.0
-        port=<tcp port>   : Select different TCP port, default (2331 + DAP_AP)
+        port=<tcp port>   : Select different TCP port, default 2331
         ap=<port>         : Select the DAP_AP port, default 0
         s                 : Shutdown after disconnect
         nc                : Don't use EBlink flash cache
@@ -201,5 +201,5 @@ The following environment variables are active <u>after linux reboot</u>:
 
 You can launch EBlink from every terminal, e.g. to launch GDB server **_./eblink -G_**  
 
-IF you need a particular script file you can just overrule the environment by **_./eblink -S silabs-auto -G_**  
+IF you need a particular script file you can just overrule the environment by **_./eblink -S silabs -G_**  
 or if other interface options are needed **_./eblink -I stlink,speed=1000 -G_** etc.
