@@ -14,11 +14,6 @@ and the variable EB_DEFAULT_PROBE is set to "stlink".
 
 ![alt text](https://www.embitz.org/context3.png)  
 
-__Project bucket list__
-- _Flash-breakpoints_ to increase the number of allowable breakpoints. Now we don't use external loaders anymore this is in reach as soon as we have ARMulator incoperated. Together with the speed of e.g. STlinkV3 and small page-size devices, this will be very convenient.
-- Complete _CMIS-DAP(v2)_, this is for 40% ready
-- Implement _SWO_ and _ITM_
-- EBlink CLI wrappers 'ST-LINK_gdbserver.exe' and 'JLinkGDBServerCL.exe' so that EBlink can replace those GDB servers and act as if they are there.
    
  ##### When to consider EBlink instead of OpenOCD:
 - if you need live variables for e.g. Embitz (OpenOCD doesn't support live variables)
@@ -58,7 +53,6 @@ __Project bucket list__
 3) From EBlink version 4.4 and above, this GDB server can be used for CubeMX IDE in either STlink GDB-server mode or OpenOCD. Be sure that Live variables are unchecked. Just launch EBlink from the context menu and keep it running to have full benefit of flash caching and exception unwind inside CubeMX IDE.
 
 #### ISSUES
-- If flash is empty but was started by e.g. powerup, a target exception is detected and an UNWIND is happening after first GDB launch because the exception flags of the MCU are set. This is not a bug but by design. Just ignore!
 - Non STmicro devices (e.g. Silabs, NXP) are only working with STlink-V2.
 
 ## EBlink - usage:
@@ -114,8 +108,9 @@ name: ***cortex-m***
      
      Usage -T cortex-m[,options]
 
-        fu=[0..2]    : Fault unwind level; 0=off, 1=forced only, 2= active break(default)
-        reset[=0..2] : Reset the target, 0(default)=system,1=core,2=jtag
+        fu=<0..2>    : Fault unwind level; 0=off, 1=passive, 2=active(default)
+        fc=<rmncsbih>: Fault catch active; rESET,mEM,nCOP,cHK,sTAT,bUS,iNT,hARD (default all)
+        reset[=0..2] : Reset the target; 0=system(default),1=core,2=jtag
         halt         : Halt target
         resume       : Resume target
 	
