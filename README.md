@@ -16,7 +16,7 @@ and the variable EB_DEFAULT_PROBE is set to "stlink".
 
    
  ##### When to consider EBlink instead of OpenOCD:
-- if you need live variables for e.g. Embitz (OpenOCD doesn't support live variables)
+- if you need live variables for Embitz (OpenOCD doesn't support native live variables only with Tandem-GDB)
 - as a non-intrusive memory inspector (eblink supports hot-plugging and non-stop mode )
 - if you need a CLI memory reader to read particular memory locations (also on running targets) and print them at stdout
 - if you need a CLI programmer to modify particular in-place flash locations (checksum, serials etc)
@@ -50,7 +50,7 @@ and the variable EB_DEFAULT_PROBE is set to "stlink".
 
 2) By default, the "Connection under reset" for the stlink interface is enabled. For hotplugging use the CLI option --hotplug (-H) or the stlink interface swith "dr" (Disable Reset) e.g. -I stlink,dr  Both options are the same but set at different levels.
 
-3) From EBlink version 4.4 and above, this GDB server can be used for CubeMX IDE in either STlink GDB-server mode or OpenOCD. Be sure that Live variables are unchecked. Just launch EBlink from the context menu and keep it running to have full benefit of flash caching and exception unwind inside CubeMX IDE.
+3) From EBlink version 5.30 and above, this GDB server can be used for **CubeMX IDE** in either **STlink GDB-server, Jlink or OpenOCD mode**. All probes can be **used with Live variables**. Just launch EBlink from the context menu and keep it running to have full benefit of flash caching and exception unwind inside CubeMX IDE.
 
 #### ISSUES
 - Non STmicro devices (e.g. Silabs, NXP) are only working with STlink-V2.
