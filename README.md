@@ -8,7 +8,7 @@ EBlink ARM Cortex-M debug tool with squirrel scripting device support
 
 [ Link to EmBitz EBlink forum ](https://embitz.org/forum/forum-3.html)
 
-Windows installer with shell context menu.  
+Windows installer with shell context menu and all windows files are digitally signed.
 The installer will set the environment variable EB_DEFAULT_SCRIPT to "auto"(.script) so that all supported vendors are automaticlly detected (currently Silabs, STmicro, Atmel, NXP and Renesas)
 and the variable EB_DEFAULT_PROBE is set to "stlink".
 
