@@ -173,7 +173,7 @@ Dependencies: none
 
 **AMD64**
 
-    Foe Debian
+    For Debian
     	Install: sudo apt install ./eblink-debian-amd64.deb
     	Remove:  sudo dpkg  --remove eblink-debian-amd64
 
