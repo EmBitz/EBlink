@@ -179,7 +179,7 @@ Dependencies: none
 
     For Ubuntu
     	Install: sudo dpkg -i  ./eblink-debian-amd64.deb
-    	Remove:  sudo dpjg -r  ./eblink-debian-amd64.deb
+    	Remove:  sudo dpkg -r  ./eblink-debian-amd64.deb
     
 **RaspberryPi**
 
