@@ -1,4 +1,4 @@
-_This is a pre-release of version 6. This version is heavily rewritten with features like script debugging (single step etc) and with user interactive script dialogs. If you encounter problems, please report them and the old version is still available here at Github at the Releases._
+_This is a pre-release of version 6. This version has been heavily rewritten with features like script debugging (single step etc.) and with interactive script dialogs for users. If you encounter any issues please report them and the old version is still available on Github at Releases._
 
 [![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://stand-with-ukraine.pp.ua)
 
