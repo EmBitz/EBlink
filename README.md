@@ -172,9 +172,14 @@ These packages will install everything needed to start using EBlink with STlink(
 Dependencies: none
 
 **AMD64**
-    
-    Install: sudo apt install ./eblink-debian-amd64.deb
-    Remove:  sudo dpkg  --remove eblink-debian-amd64
+
+    For Debian
+    	Install: sudo apt install ./eblink-debian-amd64.deb
+    	Remove:  sudo dpkg  --remove eblink-debian-amd64
+
+    For Ubuntu
+    	Install: sudo dpkg -i  ./eblink-debian-amd64.deb
+    	Remove:  sudo dpkg -r  ./eblink-debian-amd64.deb
     
 **RaspberryPi**
 
