@@ -142,9 +142,9 @@ name: ***cortex-m***
 
         e.g. -F file=test.elf
              -F run,file=test.hex
-             -F read=4@0x80000004,read=6@0x80000008
-             -F write=DEAD@80000004
-             -F run,file=test.hex,write=45FECA1245@0x80000004,write=DEAD@0x80000100
+             -F read=4@0x8000004,read=6@0x8000008
+             -F write=DEAD@0x8000004
+             -F run,file=test.hex,write=45FECA1245@0x8000004,write=DEAD@0x8000100
              -F erase,verify,run,file=test.s
              -F erase
              -F run
