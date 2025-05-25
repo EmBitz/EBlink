@@ -42,7 +42,7 @@ and the variable EB_DEFAULT_PROBE is set to "stlink".
 - Dump memory (also on running target) to file in Intel hex or binary format
 - Compare MCU flash against a ELF, IHEX or SREC file.
 - All device related functions by c-like squirrel scripting e.g. flash or ext. EEprom algorithms, device reset strategy etc etc
-- Squirrel scripting tracing and debugging after version 6.0, place breakpoints and watch the local variables. Step in,over,out or till exception
+- Squirrel script tracing and debugging after version 6.0, place breakpoints and watch the local variables. Step in,over,out or till exception
 - Ready for multiple interfaces
 
 #### Remarks:
