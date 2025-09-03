@@ -184,8 +184,13 @@ Dependencies: none
     
 **RaspberryPi**
 
-    Install: sudo apt install ./eblink-debian-armhf.deb
-    Remove:  sudo dpkg  --remove eblink-debian-armhf
+    For 32bits 
+		Install: sudo apt install ./eblink-debian-armhf.deb
+		Remove:  sudo dpkg  --remove eblink-debian-armhf
+
+    For 64bits 
+		Install: sudo apt install ./eblink-debian-arm64.deb
+		Remove:  sudo dpkg  --remove eblink-debian-arm64
 
 **Installed files**
 
