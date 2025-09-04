@@ -167,7 +167,7 @@ name: ***GDB-server***
         
 ====
 
-# Ready to go Debian packages AMD64 / ARMHF(RaspberryPi)
+# Ready to go Debian packages AMD64 and ARM32/64 (RaspberryPi)
 
 These packages will install everything needed to start using EBlink with STlink(c) on a fresh machine.  
 Dependencies: none
