@@ -1,7 +1,7 @@
 [![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://stand-with-ukraine.pp.ua)
 
 # Cortex-M tool e.g. STlink V2 & V3 support
-## Win32, Linux_x86_64 and Raspberry 
+## Win32, Linux_x86_64 and Raspberry(32/64)
 ### Auto detects Silabs, STmicro, Atmel, NXP and Renesas
 
 EBlink ARM Cortex-M debug tool with squirrel scripting device support
