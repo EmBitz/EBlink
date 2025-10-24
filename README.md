@@ -154,16 +154,16 @@ name: ***cortex-m***
 ==== **Services**
      
 name: ***GDB-server***
-
      Usage -G [options]
 
-        address=<x.x.x.x> : Select different listen address, default 0.0.0.0
-        port=<tcp port>   : Select different TCP port, default 2331
-        ap=<port>         : Select the DAP_AP port, default 0
-        s                 : Shutdown after disconnect
-        nc                : Don't use EBlink flash cache
+        address=<x.x.x.x>   : Select different listen address, default 0.0.0.0
+        port=<tcp port>     : Select different TCP port, default 2331
+        proxy=<host>:<port> : Also connect to an external bridge (remote over NAT)
+        ap=<port>           : Select the DAP_AP port, default 0
+        s                   : Shutdown after disconnect
+        nc                  : Don't use EBlink flash cache
 
-        e.g.  -G s,nc
+        e.g.  -G s,nc,proxy=foo.nl:2331		
         
 ====
 
