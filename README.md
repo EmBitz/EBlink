@@ -16,20 +16,22 @@ and the variable EB_DEFAULT_PROBE is set to "stlink".
 
    
  ##### When to consider EBlink instead of OpenOCD:
-- if you need live variables for Embitz (OpenOCD doesn't support native live variables only with Tandem-GDB)
-- as a non-intrusive memory inspector (eblink supports hot-plugging and non-stop mode )
-- if you need a CLI memory reader to read particular memory locations (also on running targets) and print them at stdout
-- if you need a CLI programmer to modify particular in-place flash locations (checksum, serials etc)
-- for easy complex custom board reset strategies or memory maps with special options
-- for faster debug sessions and flash operations because of the EBlink flash cache
-- for using easy auto configuration scripts e.g. custom flashing of ext. EEprom's etc
-- as a remote (wifi) GDB server e.g. Raspberry (lightweight)
-- very fast and easy to use standalone flash tool (program, verify, compare or dump)
+- If you need live variables for Embitz (OpenOCD doesn't support native live variables only with Tandem-GDB)
+- As a non-intrusive memory inspector (eblink supports hot-plugging and non-stop mode )
+- If you need a CLI memory reader to read particular memory locations (also on running targets) and print them at stdout
+- If you need a CLI programmer to modify particular in-place flash locations (checksum, serials etc)
+- For easy complex custom board reset strategies or memory maps with special options
+- For faster debug sessions and flash operations because of the EBlink flash cache
+- For using easy auto configuration scripts e.g. custom flashing of ext. EEprom's etc
+- As a remote (wifi) GDB server e.g. Raspberry (lightweight)
+- Very fast and easy to use standalone flash tool (program, verify, compare or dump)
+- If you need to establish a remote debug connection behind a NAT network
   
 ### EBlink features:
 - **_MultiCore support_**  _Currently STM32H7x5 - dual core auto detected, no additional configuration needed_.
 - Integrated target stack frame UNWIND in case of exception with message box popup in windows.
 - GDB (**MultiCore**) server with flash caching, with EmBitz live variables/expression support!
+- Each GDB server instance supports up to four concurrent connections
 - Full Semi-hosting support
 - Target voltage CLI override (e.g. 3 wire debugging or clone probes)
 - Execute (user) script functions from CLI e.g. option bytes reading/writing etc.
@@ -43,6 +45,7 @@ and the variable EB_DEFAULT_PROBE is set to "stlink".
 - Compare MCU flash against a ELF, IHEX or SREC file.
 - All device related functions by c-like squirrel scripting e.g. flash or ext. EEprom algorithms, device reset strategy etc etc
 - Squirrel script tracing and debugging after version 6.0, place breakpoints and watch the local variables. Step in,over,out or till exception [ Link to EBlink forum ](https://embitz.org/forum/thread-227.html)
+- Use a GDB proxy connection to perform remote debugging behind a NAT network via an external TCP bridge. The bridge source code is available upon request.
 - Ready for multiple interfaces
 
 #### Remarks:
