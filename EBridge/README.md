@@ -57,7 +57,7 @@ GDB client [10.2.1.10]
                                                                ▲
                                                                │ (private network)
                                                                │
-                                                        Remote PC runs: eblink -Gproxy=myserver
+                                                        Remote PC runs: eblink -Gproxy=myserver.net
 ```                                                                   
 
 If you stop the debugging session, EBridge automatically resets the bridge so EBlink can
