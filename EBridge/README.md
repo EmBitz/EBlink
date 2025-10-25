@@ -1,4 +1,4 @@
-# EBridge – One-to-One TCP Debug Bridge
+# EBridge : One-to-One TCP Debug Bridge
 
 EBridge is a lightweight utility that creates a **one-to-one TCP bridge** between two endpoints.  
 It was designed to make **remote debugging with EBlink and GDB** possible even when the target
