@@ -48,6 +48,18 @@ EBlink will then automatically re-connect, creating a **fresh GDB context**, jus
 4. In your IDE (e.g. **EmBitz**, **VS Code**, or **GDB client**), connect to EBridge’s **client port**.  
 5. You’re now debugging remotely — as if the EBlink were on your own machine.
 
+```text
+GDB client [10.2.1.10]
+     │
+     │  (private network)
+     ▼
+[10.2.0.1:2331]  EBridge [myserver.net:3333] ◀──(public) ── NAT/firewall 
+                                                               ▲
+                                                               │ (private network)
+                                                               │
+                                                        Remote PC runs: eblink -Gproxy=myserver
+```                                                                   
+
 If you stop the debugging session, EBridge automatically resets the bridge so EBlink can
 re-establish a new connection.
 
