@@ -45,7 +45,7 @@ EBlink will then automatically re-connect, creating a **fresh GDB context**, jus
 
 1. Install and run **EBridge** on your **local** server or PC.  
 2. Open the **main port** on your firewall to make it publicly reachable.  
-3. Ask your colleague to configure EBlink with the **GDB proxy** option and connect it to your server’s main port.  
+3. Ask your colleague to configure EBlink with the **GDB proxy** option and connect it to your server’s EBridge main port.  
 4. In your IDE (e.g. **EmBitz**, **VS Code**, or **GDB client**), connect to EBridge’s **client port**.  
 5. You’re now debugging remotely — as if the EBlink were on your own machine.
 
