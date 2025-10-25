@@ -68,7 +68,7 @@ re-establish a new connection.
 
 ## Build Instructions
 ```bash
-g++ -std=c++17 -O2 -o ebridge tcp_bridge.cpp
+g++ -std=c++17 -O2  -Wall -pthread ebridge.cpp -o ebridge
 ```
 
 ## Command Line
