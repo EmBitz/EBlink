@@ -16,11 +16,10 @@ is behind **NAT networks** or **restricted firewalls** where port forwarding is 
 
 ## Overview
 
-In many development setups, your colleague’s EBlink debugger runs behind one or multiple
-NAT layers — for example, within a company network or a basement lab.  
-Normally, you could only reach that EBlink if explicit **port forwarding** is configured,
-which is often **not allowed** (company IT policies) or **not possible** (e.g. ISP or router
-restrictions).
+Sometimes you need to debug a device remotely because the DUT (Device Under Test) is located elsewhere.
+In such cases, your colleague’s EBlink debugger often runs behind one or more NAT layers — for example, inside a company network or a lab environment.
+Normally, you can only access that EBlink instance if port forwarding has been configured.
+However, this is often not permitted due to company IT security policies, or simply not feasible because of ISP or router limitations.
 
 EBridge solves this by reversing the connection strategy.
 
