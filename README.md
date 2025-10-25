@@ -1,65 +1,75 @@
 [![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://stand-with-ukraine.pp.ua)
 
-# Cortex-M tool e.g. STlink V2 & V3 support
-## Win32, Linux_x86_64 and Raspberry(32/64)
-### Auto detects Silabs, STmicro, Atmel, NXP and Renesas
+# Cortex-M Tool Support (e.g., STlink V2 & V3)
+## Win32, Linux x86_64, and Raspberry Pi (32/64-bit)
+### Auto-detects Silabs, STMicro, Atmel, NXP, and Renesas
 
-EBlink ARM Cortex-M debug tool with squirrel scripting device support
+EBlink is an ARM Cortex-M debug tool with Squirrel scripting support for various devices.
 
-[ Link to EmBitz EBlink forum ](https://embitz.org/forum/forum-3.html)
+[Link to EmBitz EBlink forum](https://embitz.org/forum/forum-3.html)
 
-Windows installer with shell context menu and **all windows files are digitally signed**.
-The installer will set the environment variable EB_DEFAULT_SCRIPT to "auto"(.script) so that all supported vendors are automaticlly detected (currently Silabs, STmicro, Atmel, NXP and Renesas)
-and the variable EB_DEFAULT_PROBE is set to "stlink".
+Windows installer includes a shell context menu, and **all files are digitally signed**.  
+The installer sets the environment variable `EB_DEFAULT_SCRIPT` to `"auto"` (`.script`), so that all supported vendors are automatically detected (currently Silabs, STMicro, Atmel, NXP, and Renesas).  
+The variable `EB_DEFAULT_PROBE` is set to `"stlink"`.
 
 ![alt text](https://www.embitz.org/context3.png)  
 
-   
- ##### When to consider EBlink instead of OpenOCD:
-- If you need live variables for Embitz (OpenOCD doesn't support native live variables only with Tandem-GDB)
-- As a non-intrusive memory inspector (eblink supports hot-plugging and non-stop mode )
-- If you need a CLI memory reader to read particular memory locations (also on running targets) and print them at stdout
-- If you need a CLI programmer to modify particular in-place flash locations (checksum, serials etc)
-- For easy complex custom board reset strategies or memory maps with special options
-- For faster debug sessions and flash operations because of the EBlink flash cache
-- For using easy auto configuration scripts e.g. custom flashing of ext. EEprom's etc
-- As a remote (wifi) GDB server e.g. Raspberry (lightweight)
-- Very fast and easy to use standalone flash tool (program, verify, compare or dump)
-- If you need to establish a remote debug connection behind a NAT network
-  
-### EBlink features:
-- **_MultiCore support_**  _Currently STM32H7x5 - dual core auto detected, no additional configuration needed_.
-- Integrated target stack frame UNWIND in case of exception with message box popup in windows.
-- GDB (**MultiCore**) server with flash caching, with EmBitz live variables/expression support!
-- Each GDB server instance supports up to four concurrent connections
-- Full Semi-hosting support
-- Target voltage CLI override (e.g. 3 wire debugging or clone probes)
-- Execute (user) script functions from CLI e.g. option bytes reading/writing etc.
-- Execute (user) script functions from GDB terminal with the "monitor exec_script" command e.g. Special setups on GDB connect or on user request during runtime.
-- Supports Hotplug current Embitz 2.x (monitor command "IsRunning" for target state query)
-- Inplace memory (flash or ram) modifications of any length byte array from the command line (e.g. serials or checksum programming)
-- Any length byte array memory reading also on running target from the command line (automated testing)
-- **MultiCore** Core control (halt, reset and resume) from the command line (automated testing) 
-- Stand alone command line flashing tool (auto detect ELF, IHEX and SREC) for production
-- Dump memory (also on running target) to file in Intel hex or binary format
-- Compare MCU flash against a ELF, IHEX or SREC file.
-- All device related functions by c-like squirrel scripting e.g. flash or ext. EEprom algorithms, device reset strategy etc etc
-- Squirrel script tracing and debugging after version 6.0, place breakpoints and watch the local variables. Step in,over,out or till exception [ Link to EBlink forum ](https://embitz.org/forum/thread-227.html)
-- Use a GDB proxy connection to perform remote debugging behind a NAT network via an external TCP bridge. The bridge source code is available upon request.
-- Ready for multiple interfaces
+---
 
-#### Remarks:
+## When to Consider EBlink Instead of OpenOCD
 
-1) EBlink uses ROM caching for speed performance. It is parsing the same XML memory map, which is provided by scripting, which is offered to GDB to get the memory information. If GDB reads memory from the ROM (flash) region then EBlink will not query the target but will instead return from cache. Sometimes, like debugging flash writing applications (e.g. bootloader), this behavior is not preferred and doesn't show the real flash modifications in GDB. If flash modifying code is debugged, turn off the caching with the "nc" GDB server option.
+- If you need live variables for EmBitz (OpenOCD only supports them via Tandem-GDB).  
+- As a non-intrusive memory inspector (supports hot-plugging and non-stop mode).  
+- If you need a CLI memory reader to read specific memory locations (even on running targets) and print them to stdout.  
+- If you need a CLI programmer to modify in-place flash locations (e.g., checksums, serials).  
+- For complex board reset strategies or special memory maps.  
+- For faster debug sessions and flash operations due to EBlink’s flash cache.  
+- To use auto-configuration scripts (e.g., custom flashing of external EEPROMs).  
+- As a remote (Wi-Fi) GDB server (lightweight, e.g., Raspberry Pi).  
+- As a fast, standalone flash tool (program, verify, compare, or dump).  
+- If you need to establish a remote debug connection behind a NAT network.
 
-2) By default, the "Connection under reset" for the stlink interface is enabled. For hotplugging use the CLI option --hotplug (-H) or the stlink interface swith "dr" (Disable Reset) e.g. -I stlink,dr  Both options are the same but set at different levels.
+---
 
-3) From EBlink version 5.30 and above, this GDB server can be used for **CubeIDE** in either **STlink GDB-server, Jlink or OpenOCD mode**. All probes can be **used with Live variables**. Just launch EBlink from the context menu and keep it running to have full benefit of flash caching and exception unwind inside CubeIDE.
+## EBlink Features
 
-#### ISSUES
-- Non STmicro devices (e.g. Silabs, NXP) are only working with STlink-V2.
+- **MultiCore support** – currently STM32H7x5 dual-core auto-detected, no additional configuration required.  
+- Integrated target stack frame unwind in case of exceptions, with message box popup on Windows.  
+- GDB (**MultiCore**) server with flash caching and EmBitz live variable/expression support.  
+- Each GDB server instance supports up to four concurrent connections.  
+- Full semi-hosting support.  
+- Target voltage CLI override (e.g., 3-wire debugging or clone probes).  
+- Execute user script functions from CLI or from GDB terminal using `monitor exec_script`.  
+- Hotplug support in EmBitz 2.x (`monitor IsRunning` command for target state query).  
+- In-place memory (flash or RAM) modifications of any byte array from the command line.  
+- Read memory from running targets via CLI (automated testing).  
+- MultiCore control (halt, reset, resume) from the command line.  
+- Standalone command-line flashing tool (auto-detect ELF, IHEX, SREC).  
+- Dump memory (even on running targets) to Intel HEX or binary formats.  
+- Compare MCU flash against ELF, IHEX, or SREC files.  
+- Device-related functions using C-like Squirrel scripting (flash, EEPROM algorithms, reset strategies, etc.).  
+- Squirrel script tracing and debugging (version 6.0+), including breakpoints and local variable watch.  
+- Use a GDB proxy connection for remote debugging behind NAT networks via EBridge.  
+- Ready for multiple interfaces.
 
-## EBlink - usage:
+---
+
+## Remarks
+
+1. EBlink uses ROM caching for performance. It parses the XML memory map (provided by scripting) to supply memory information to GDB. If GDB reads memory from the ROM (flash) region, EBlink returns cached data instead of querying the target. For debugging flash-writing applications (e.g., bootloader), disable caching with the `nc` GDB server option.  
+2. By default, "Connection under reset" is enabled for the STlink interface. For hotplugging, use CLI `--hotplug` (`-H`) or the STlink option `dr` (Disable Reset). Both achieve the same result but at different levels.  
+3. From EBlink version 5.30+, this GDB server can be used with **CubeIDE** in **STlink GDB-server, JLink, or OpenOCD mode**. Live variables work on all supported probes. Launch EBlink from the context menu and keep it running to benefit from flash caching and exception unwind inside CubeIDE.
+
+---
+
+## Issues
+
+- Non-STMicro devices (e.g., Silabs, NXP) currently work only with STlink V2.
+
+---
+
+## EBlink Usage
+
 
 	EBlink <options>
 
@@ -77,123 +87,135 @@ and the variable EB_DEFAULT_PROBE is set to "stlink".
 	-F <options>, --flash <options> Run image flashing
 	-G [options], --gdb <options>   Launch GDB server
 	
-	Multiple --script, --path, --execute and --define are allowed and 
-             --interf is mandatory if EB_DEFAULT_PROBE is not set.
+- Multiple `--script`, `--path`, `--execute`, and `--define` are allowed.  
+- `--interf` is mandatory if `EB_DEFAULT_PROBE` is not set.
 
-       e.g.
+**Examples:**
+
         EBlink -I stlink -S auto -G
         EBlink -I stlink -S stm32 -G -D FLASH_SIZE=1024 -D RAM_SIZE=16
         EBlink -I stlink,dr,speed=3000 -S silabs -F erase,verify,run,file=mytarget.elf
         EBlink -I cmsis-dap -T cortex-m,fu=0 -S renesas -G port=4242,nc,s -S myReset.scr
         EBlink -I stlink -S auto -E "setopt(WRREG, 5);dataflash_erase(0x08000500)" 
 
+---
 
-==== **Interfaces**
+## Interfaces
+
+### STlink – STMicro V2/3 interface driver  
+
+**Usage:** `-I stlink[,options]`
+
+Options:
+
+- `dr` – Disable reset at connection (same as `--hotplug`)  
+- `speed=<speed>` – Interface speed (default: max possible)  
+- `swd` – Use SWD (default)  
+- `jtag` – Use JTAG  
+- `vcc=<voltage>` – Set explicit target voltage (e.g., 3.3V)  
+- `ap=<port>` – Select target DAP_AP port (default 0)  
+- `serial=<serial>` – Select specific probe by serial number  
+- `device=<usb_bus>:<usb_addr>` – Select specific probe on USB bus  
+
+Example: `-I stlink,dr,speed=3000`
+
+---
+
+## Targets
+
+### cortex-m  
+
+**Usage:** `-T cortex-m[,options]`
+
+Options:
+
+- `fu=<0..2>` – Fault unwind level (0=off, 1=passive, 2=active [default])  
+- `fc=<rmncsbih>` – Fault catch active flags (`rESET, mEM, nCOP, cHK, sTAT, bUS, iNT, hARD`)  
+- `reset[=0..2]` – Reset type (0=system [default], 1=core, 2=JTAG)  
+- `halt` – Halt target  
+- `resume` – Resume target  
+
+Examples:
+        -T cortex-m,fu=1
+        -T cortex-m,reset,resume
 
 
-name: ***STlink*** - STmicro V2/3 interface driver 
-	
-     Usage -I stlink[,options]
+---
 
-        dr              : Disable reset at connection (same as cli --hotplug)
-        speed=<speed>   : Interface speed (default max possible)
-        swd             : use SWD (default)
-        jtag            : use Jtag
-        vcc=<voltage>   : Set explicit target voltage (like 3.3)
-        ap=<port>       : Select target DAP_AP port (default 0)        
-        serial=<serial> : Select probe explicit with serial#
-        device=<usb_bus>:<usb_addr> : Select probe explicit on bus
+## Flash Loader
 
-        e.g.  -I stlink,dr,speed=3000
+**Usage:** `-F [options]`
 
-==== **Targets**
+Options:
 
-name: ***cortex-m***
-     
-     Usage -T cortex-m[,options]
+- `erase` – Chip erase flash  
+- `verify` – Verify flash after upload  
+- `run` – Start target  
+- `write=<hex bytes>@<address>` – Modify flash at specific address  
+- `read=<length>@<address>` – Read memory at specific address  
+- `file=<file>` – Load file (ELF, IHEX, SREC auto-detect)  
+- `cmp=<file>` – Compare memory against file  
+- `dump=<length>@<address>:<file>` – Dump memory to file (Intel HEX or binary)  
 
-        fu=<0..2>    : Fault unwind level; 0=off, 1=passive, 2=active(default)
-        fc=<rmncsbih>: Fault catch active; rESET,mEM,nCOP,cHK,sTAT,bUS,iNT,hARD (default all)
-        reset[=0..2] : Reset the target; 0=system(default),1=core,2=jtag
-        halt         : Halt target
-        resume       : Resume target
-	
-        e.g.  -T cortex-m,fu=1
-              -T cortex-m,reset,resume
+Examples:
 
-==== **Flash loader**
-	
-	Usage -F [options]
+        -F file=test.elf
+        -F run,file=test.hex
+        -F read=4@0x8000004,read=6@0x8000008
+        -F write=DEAD@0x8000004
+        -F run,file=test.hex,write=45FECA1245@0x8000004,write=DEAD@0x8000100
+        -F erase,verify,run,file=test.s
+        -F erase
+        -F run
 
-        erase        : Chip erase the flash
-        verify       : Verify flash after upload
-        run          : Start target
+Default (without `erase`): only modified sectors are reflashed. Multiple reads/writes are allowed and executed after file upload.
 
-        write=<hex byte(s)>@<address>
-                     : Modify flash location at address with a given hex byte array
+---
 
-        read=<length>@<address>
-                     : returns hex byte array of memory location at address with a given length
-                       use verbose level 0 to filter all unnecessary info.
+## Services
 
-        file=<file>  : Load the file,  <file>. Valid formats: ELF, IHEX or SREC (auto detect)
-        cmp=<file>   : Memory compare, <file>. Valid formats: ELF, IHEX or SREC (auto detect)
-        dump=<length>@<address>:<file>
-                     : Dump memory to file, <file>.hex  = Intel HEX format
-                                            Default     = Binary format
+### GDB Server  
 
-        e.g. -F file=test.elf
-             -F run,file=test.hex
-             -F read=4@0x8000004,read=6@0x8000008
-             -F write=DEAD@0x8000004
-             -F run,file=test.hex,write=45FECA1245@0x8000004,write=DEAD@0x8000100
-             -F erase,verify,run,file=test.s
-             -F erase
-             -F run
+**Usage:** `-G [options]`
 
-        Default (without erase) only modified sectors are (re)flashed.
-        Multiple reads and writes are allowed and is done after any file upload
+Options:
 
-==== **Services**
-     
-name: ***GDB-server***
-     Usage -G [options]
+- `address=<x.x.x.x>` – Listen address (default 0.0.0.0)  
+- `port=<tcp port>` – TCP port (default 2331)  
+- `proxy=<host>[:<port>]` – Connect to external EBridge (default port 3333)  
+- `ap=<port>` – DAP_AP port (default 0)  
+- `s` – Shutdown after disconnect  
+- `nc` – Disable EBlink flash cache  
 
-        address=<x.x.x.x>   : Select different listen address, default 0.0.0.0
-        port=<tcp port>     : Select different TCP port, default 2331
-        proxy=<host>:<port> : Also connect to an external bridge (remote over NAT)
-        ap=<port>           : Select the DAP_AP port, default 0
-        s                   : Shutdown after disconnect
-        nc                  : Don't use EBlink flash cache
+Example: `-G nc,proxy=foo.nl`
 
-        e.g.  -G s,nc,proxy=foo.nl:2331		
-        
-====
+---
 
-# Ready to go Debian packages AMD64 and ARM32/64 (RaspberryPi)
+## Debian Packages (AMD64 / ARM32 / ARM64)
 
-These packages will install everything needed to start using EBlink with STlink(c) on a fresh machine.  
-Dependencies: none
+Packages include all dependencies for EBlink with STlink.  
 
-**AMD64**
+**AMD64:**
+```bash
+# Debian
+sudo apt install ./eblink-debian-amd64.deb
+sudo dpkg --remove eblink-debian-amd64
 
-    For Debian
-    	Install: sudo apt install ./eblink-debian-amd64.deb
-    	Remove:  sudo dpkg  --remove eblink-debian-amd64
+# Ubuntu
+sudo dpkg -i ./eblink-debian-amd64.deb
+sudo dpkg -r ./eblink-debian-amd64
+```
 
-    For Ubuntu
-    	Install: sudo dpkg -i  ./eblink-debian-amd64.deb
-    	Remove:  sudo dpkg -r  ./eblink-debian-amd64.deb
-    
-**RaspberryPi**
+**Raspberry Pi:**
+```bash
+# 32-bit
+sudo apt install ./eblink-debian-armhf.deb
+sudo dpkg --remove eblink-debian-armhf
 
-    For 32bits 
-		Install: sudo apt install ./eblink-debian-armhf.deb
-		Remove:  sudo dpkg  --remove eblink-debian-armhf
-
-    For 64bits 
-		Install: sudo apt install ./eblink-debian-arm64.deb
-		Remove:  sudo dpkg  --remove eblink-debian-arm64
+# 64-bit
+sudo apt install ./eblink-debian-arm64.deb
+sudo dpkg --remove eblink-debian-arm64
+```
 
 **Installed files**
 
@@ -210,7 +232,10 @@ The following environment variables are active <u>after linux reboot</u>:
 
 **Usage**
 
-You can launch EBlink from every terminal, e.g. to launch GDB server **_./eblink -G_**  
+You can launch EBlink from every terminal, e.g. to launch GDB server 
+```bash
+eblink -G
+```
+IF you need a particular script file you can just overrule the environment by **_eblink -S silabs -G_**  
+or if other interface options are needed **_eblink -I stlink,speed=1000 -G_** etc.
 
-IF you need a particular script file you can just overrule the environment by **_./eblink -S silabs -G_**  
-or if other interface options are needed **_./eblink -I stlink,speed=1000 -G_** etc.

@@ -1,0 +1,19 @@
+[Unit]
+Description=EBlink TCP Bridge
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=nobody
+Group=nogroup
+ExecStart=/usr/local/bin/ebridge -l /var/log/ebridge.log -p /var/run/ebridge.pid
+PIDFile=/var/run/ebridge.pid
+Restart=on-failure
+RestartSec=5s
+SyslogIdentifier=ebridge
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
