@@ -136,6 +136,7 @@ Options:
 - `resume` – Resume target  
 
 Examples:
+
         -T cortex-m,fu=1
         -T cortex-m,reset,resume
 
