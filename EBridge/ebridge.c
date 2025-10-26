@@ -90,11 +90,11 @@ static FILE *log_file = NULL;
 static int is_daemon = 0;
 static char *pid_file_path = NULL;
 
-// Luister-sockets
+// Listen-sockets
 static int listen_main = -1;
 static int listen_client = -1;
 
-// Actieve connected sockets
+// Active connected sockets
 static int fd_main = -1;
 static int fd_client = -1;
 
@@ -293,7 +293,8 @@ void print_help() {
     printf("\nBehavior:\n");
     printf("  Waits for main connection first, then accepts client.\n");
     printf("  Client cannot connect before main is connected.\n");
-    printf("  Main is disconnected if client disconnect.\n");
+    printf("  Main is disconnected if client disconnect or if\n");
+    printf("  it receives data with unconnected client.\n");    
 }
 
 // ---------- Main ----------
@@ -374,18 +375,12 @@ int main(int argc, char *argv[]) {
             logmsg(0,"Waiting for new main connection...");
         }
 
-        // --- Discard main data if client not connected ---
+        // If main receives data and client not connected, disconnect main
         if (fd_main > 0 && fd_client < 0) {
             char buf[BUF_SIZE];
             ssize_t n = read(fd_main, buf, sizeof(buf));
-            if (n > 0) {
-               // logmsg(0, "Discarded %zd bytes while waiting for client", n);
-            } else if (n == 0) {
-               // logmsg(0, "[main] Connection closed before client connected");
-                close(fd_main);
-                fd_main = -1;
-            } else if (errno != EAGAIN && errno != EWOULDBLOCK) {
-              //  logmsg(1, "[main] Read error: %s", strerror(errno));
+            if ( (n >= 0) || (errno != EAGAIN && errno != EWOULDBLOCK ) ) {
+                logmsg(0, "[main] closed on early data or error");
                 close(fd_main);
                 fd_main = -1;
             }
