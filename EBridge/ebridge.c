@@ -135,9 +135,7 @@ void log_peer_ip(int fd, const char *name) {
         char ip[INET_ADDRSTRLEN];
         inet_ntop(AF_INET, &addr.sin_addr, ip, sizeof(ip));
         logmsg(0, "[%s] Connected from %s:%d", name, ip, ntohs(addr.sin_port));
-    } else {
-        logmsg(1, "[%s] Could not get peer address: %s", name, strerror(errno));
-    }
+    } 
 }
 
 
@@ -223,6 +221,7 @@ void daemonize(void) {
     if (fd > 2)
         close(fd);
 
+    logmsg(1, "Daemon started");
     is_daemon = 1;
 }
 
@@ -264,8 +263,8 @@ void bridge_sockets(int main_fd, int client_fd) {
         if (n1 == 0 || n2 == 0)
             running = 0;
         if ((n1 < 0 && errno != EAGAIN && errno != EWOULDBLOCK) ||
-                (n2 < 0 && errno != EAGAIN && errno != EWOULDBLOCK))
-            running = 0;
+            (n2 < 0 && errno != EAGAIN && errno != EWOULDBLOCK))
+               running = 0;        
 
         usleep(100);
     }
@@ -336,8 +335,7 @@ int main(int argc, char *argv[]) {
     // Daemonize
     if (is_daemon) {
         daemonize();
-        logmsg(1, "Daemon started (main=%d, client=%d)", port_main, port_client);
-        write_pidfile();
+        write_pidfile();     
     }
 
     logmsg(0,"Starting ebridge (main=%d, client=%d)%s",
