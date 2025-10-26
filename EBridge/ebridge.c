@@ -375,7 +375,7 @@ int main(int argc, char *argv[]) {
 
         // If main receives data and client not connected, disconnect main
         if (fd_main > 0 && fd_client < 0) {
-            char buf[BUF_SIZE];
+            char buf[2];
             ssize_t n = read(fd_main, buf, sizeof(buf));
             if ( (n >= 0) || (errno != EAGAIN && errno != EWOULDBLOCK ) ) {
                 logmsg(0, "[main] closed on early data or error");
