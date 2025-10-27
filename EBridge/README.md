@@ -9,7 +9,7 @@ is behind **NAT networks** or **restricted firewalls** where port forwarding is 
 -  **Single connection per port** – ensures clean one-to-one bridging.  
 -  **Auto-reconnect behavior** – EBlink reconnects seamlessly after client disconnects.  
 -  **Firewall/NAT-friendly** – only one public port needs to be exposed.  
--  **Lightweight & dependency-free** – minimal C++ implementation.  
+-  **Lightweight & dependency-free** – minimal C implementation.  
 -  **GDB/EBlink compatible** – works with existing remote debug setups.
 
 ---
