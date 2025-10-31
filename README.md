@@ -226,6 +226,7 @@ sudo dpkg --remove eblink-debian-arm64
 **Installed files**
 
     /usr/bin/eblink                     // Executable  
+    /usr/bin/ebmon                      // Executable  	
     /usr/share/eblink                   // Scripts folder  
     /etc/profile.d/eblink.sh            // EBlink Environment variables export at linux startup  
     /etc/udev/rules.d/80-eblink.rules   // The STlink device registrations  
