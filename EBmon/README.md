@@ -126,7 +126,7 @@ EBmonitor can operate in blocking or non-blocking mode depending on `EBMON_WRITE
 
 - Buffers are aligned to 4 bytes for performance on most MCUs.  
 - `_eb_monitor_stdout` and `_eb_monitor_stdin` are circular buffers, so always respect the head and tail indices if you directly access them.  
-- To clear the host terminal screen, send a formfeed character `` via `_write()`.
+- To clear the host terminal screen, send a formfeed character `\f` via `_write()`.
 
 ---
 
