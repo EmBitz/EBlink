@@ -60,8 +60,7 @@ GDB client [10.2.1.10]
                                                         Remote PC runs: eblink -Gproxy=myserver.net
 ```                                                                   
 
-If you stop the debugging session, EBridge automatically resets the bridge so EBlink can
-re-establish a new connection.
+If you stop the debugging session, EBridge automatically resets the bridge, allowing EBlink to re-establish a new connection automatically with a fresh GDB context — just as it would in local listen mode.
 
 
 ---
