@@ -18,7 +18,7 @@ Several macros control buffer sizes, initialization, and behavior:
 
 | Define              | Purpose                       | Default        |
 |--------------------|-------------------------------|----------------|
-| `STDOUT_BUFFERSIZE` | Size of stdout buffer          | 512           |
+| `STDOUT_BUFFERSIZE` | Size of stdout buffer          | 256           |
 | `STDIN_BUFFERSIZE`  | Size of stdin buffer           | 16            |
 | `NO_EBMON_INIT`     | Disable automatic initialization | Not defined   |
 | `EBMON_WRITE_WAIT`  | Enable blocking writes if buffer is full | Not defined |
