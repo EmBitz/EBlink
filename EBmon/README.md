@@ -7,15 +7,8 @@ This document explains how to use `ebmon.c` in your embedded target, configure i
 ## 1. Adding EBmonitor to Your Target
 
 1. Copy `ebmon.c` and `ebmon.h` into your target project.  
-2. Include the header in your source files:
-
-```c
-#include "ebmon.h"
-```
-
----
-
-## 3. Link `ebmon.c` in your build system so it compiles with your firmware.
+2. Include the header in your source files: `#include "ebmon.h"`
+3. Link `ebmon.c` in your build system so it compiles with your firmware.
 
 ---
 
