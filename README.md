@@ -14,8 +14,13 @@ The variable `EB_DEFAULT_PROBE` is set to `"stlink"`.
 
 ![alt text](https://www.embitz.org/context3.png)  
 
-Starting from version 6.21, **EBmon** is included in the packages. EBmon is the host-side component of the real-time monitor that has been available for years as a plugin in EmBitz. The **EBmon CLI** is very fast because it does not require a GDB client. With the CLI, you can also control your target by running, halting, or restarting it. Importantly, the EBmon CLI is **not strictly tied to EBlink**.
+### What's New in Version 6.21
 
+Starting with version 6.21, **EBmon** is now included in the packages. EBmon is the host-side component of the real-time monitor, which has been available for years as a plugin in EmBitz.  
+
+The **EBmon CLI** is blazing fast since it doesn't require a GDB client. It lets you easily control your target—run it, halt it, or restart it—with simple commands. Using the `--log` option, you can capture all target data in the background for later analysis.  
+
+Best of all, the EBmon CLI is **not strictly tied to EBlink**, giving you more flexibility in how you use it.
 
 ![alt text](https://www.embitz.org/EBmon.png)  
 
