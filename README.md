@@ -58,7 +58,7 @@ Best of all, the EBmon CLI is **not strictly tied to EBlink**, giving you more f
 - Dump memory (even on running targets) to Intel HEX or binary formats.  
 - Compare MCU flash against ELF, IHEX, or SREC files.  
 - Device-related functions using C-like Squirrel scripting (flash, EEPROM algorithms, reset strategies, etc.).  
-- Squirrel script tracing and debugging (version 6.0+), including breakpoints and local variable watch.  
+- Squirrel script tracing and debugging (version 6.0+), including breakpoints and local variable watch. [More info](https://embitz.org/forum/thread-227.html) 
 - Use a GDB proxy connection for remote debugging behind NAT networks via EBridge.  
 - Ready for multiple interfaces.
 
