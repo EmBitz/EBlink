@@ -390,8 +390,7 @@ Metamethods
     pair: metamethods; Class
     single: Class metamethods
 
-Class instances allow the customization of certain aspects of the
-their semantics through metamethods(see see :ref:`Metamethods <metamethods>`).
+Class instances allow the customization of certain aspects of their semantics through metamethods.
 For C++ programmers: "metamethods behave roughly like overloaded operators".
 The metamethods supported by classes are ``_add, _sub, _mul, _div, _unm, _modulo,
 _set, _get, _typeof, _nexti, _cmp, _call, _delslot, _tostring``

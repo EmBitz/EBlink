@@ -248,22 +248,7 @@ return
 
 The return statement terminates the execution of the current function/generator and
 optionally returns the result of an expression. If the expression is omitted the function
-will return null. If the return statement is used inside a generator, the generator will not
-be resumable anymore.
-
----------
-yield
----------
-
-.. index::
-    pair: yield; statement
-
-::
-
-    stat := yield [exp]
-
-(see :ref:`Generators <generators>`).
-
+will return null.
 
 ---------------------------
 Local variables declaration

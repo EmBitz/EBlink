@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3.5. Expressions &mdash; EBlink documentation 6.2 stable documentation</title>
+  <title>3.5. Expressions &mdash; EBlink documentation 6.2 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -15,7 +15,7 @@
   
         <script src="../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=7218f4fa"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2847d854"></script>
         <script src="../../_static/doctools.js?v=888ff710"></script>
         <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -84,13 +84,8 @@
 <li class="toctree-l2"><a class="reference internal" href="arrays.html">3.7. Arrays</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functions.html">3.8. Functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="classes.html">3.9. Classes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generators.html">3.10. Generators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="constants_and_enumerations.html">3.11. Constants &amp; Enumerations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="threads.html">3.12. Threads</a></li>
-<li class="toctree-l2"><a class="reference internal" href="weak_references.html">3.13. Weak References</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delegation.html">3.14. Delegation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metamethods.html">3.15. Metamethods</a></li>
-<li class="toctree-l2"><a class="reference internal" href="builtin_functions.html">3.16. Built-in Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants_and_enumerations.html">3.10. Constants &amp; Enumerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="builtin_functions.html">3.11. Built-in Functions</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../eblink/index.html">4. EBlink Scripting</a></li>
@@ -381,9 +376,8 @@ cause an exception.</p>
 </pre></div>
 </div>
 <p>Clone performs shallow copy of a table, array or class instance (copies all slots in the new object without
-recursion). If the source table has a delegate, the same delegate will be assigned as
-delegate (not copied) to the new table (see <a class="reference internal" href="delegation.html#delegation"><span class="std std-ref">Delegation</span></a>).</p>
-<p>After the new object is ready the “_cloned” meta method is called (see <a class="reference internal" href="metamethods.html#metamethods"><span class="std std-ref">Metamethods</span></a>).</p>
+recursion).</p>
+<p>After the new object is ready the <code class="docutils literal notranslate"><span class="pre">_cloned</span></code> metamethod is called.</p>
 <p>When a class instance is cloned the constructor is not invoked(initializations must rely on <code class="docutils literal notranslate"><span class="pre">`_cloned`</span></code> instead</p>
 </section>
 <section id="array-contructor">

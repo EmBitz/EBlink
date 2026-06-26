@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3.4. Statements &mdash; EBlink documentation 6.2 stable documentation</title>
+  <title>3.4. Statements &mdash; EBlink documentation 6.2 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -15,7 +15,7 @@
   
         <script src="../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=7218f4fa"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2847d854"></script>
         <script src="../../_static/doctools.js?v=888ff710"></script>
         <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -73,15 +73,14 @@
 <li class="toctree-l3"><a class="reference internal" href="#break">3.4.4. break</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#continue">3.4.5. continue</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#return">3.4.6. return</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#yield">3.4.7. yield</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#local-variables-declaration">3.4.8. Local variables declaration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#function-declaration">3.4.9. Function declaration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#class-declaration">3.4.10. Class declaration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#try-catch">3.4.11. try/catch</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#throw">3.4.12. throw</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#const">3.4.13. const</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#enum">3.4.14. enum</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#expression-statement">3.4.15. Expression statement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#local-variables-declaration">3.4.7. Local variables declaration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#function-declaration">3.4.8. Function declaration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#class-declaration">3.4.9. Class declaration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#try-catch">3.4.10. try/catch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#throw">3.4.11. throw</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#const">3.4.12. const</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#enum">3.4.13. enum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#expression-statement">3.4.14. Expression statement</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="expressions.html">3.5. Expressions</a></li>
@@ -89,13 +88,8 @@
 <li class="toctree-l2"><a class="reference internal" href="arrays.html">3.7. Arrays</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functions.html">3.8. Functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="classes.html">3.9. Classes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generators.html">3.10. Generators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="constants_and_enumerations.html">3.11. Constants &amp; Enumerations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="threads.html">3.12. Threads</a></li>
-<li class="toctree-l2"><a class="reference internal" href="weak_references.html">3.13. Weak References</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delegation.html">3.14. Delegation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metamethods.html">3.15. Metamethods</a></li>
-<li class="toctree-l2"><a class="reference internal" href="builtin_functions.html">3.16. Built-in Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants_and_enumerations.html">3.10. Constants &amp; Enumerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="builtin_functions.html">3.11. Built-in Functions</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../eblink/index.html">4. EBlink Scripting</a></li>
@@ -294,19 +288,11 @@ the following statements.</p>
 </div>
 <p>The return statement terminates the execution of the current function/generator and
 optionally returns the result of an expression. If the expression is omitted the function
-will return null. If the return statement is used inside a generator, the generator will not
-be resumable anymore.</p>
-</section>
-<section id="yield">
-<h2><span class="section-number">3.4.7. </span>yield<a class="headerlink" href="#yield" title="Permalink to this heading"></a></h2>
-<div class="highlight-default notranslate" id="index-14"><div class="highlight"><pre><span></span><span class="n">stat</span> <span class="o">:=</span> <span class="k">yield</span> <span class="p">[</span><span class="n">exp</span><span class="p">]</span>
-</pre></div>
-</div>
-<p>(see <a class="reference internal" href="generators.html#generators"><span class="std std-ref">Generators</span></a>).</p>
+will return null.</p>
 </section>
 <section id="local-variables-declaration">
-<h2><span class="section-number">3.4.8. </span>Local variables declaration<a class="headerlink" href="#local-variables-declaration" title="Permalink to this heading"></a></h2>
-<div class="highlight-default notranslate" id="index-15"><div class="highlight"><pre><span></span><span class="n">initz</span> <span class="o">:=</span> <span class="nb">id</span> <span class="p">[</span><span class="o">=</span> <span class="n">exp</span><span class="p">][</span><span class="s1">&#39;,&#39;</span> <span class="n">initz</span><span class="p">]</span>
+<h2><span class="section-number">3.4.7. </span>Local variables declaration<a class="headerlink" href="#local-variables-declaration" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-14"><div class="highlight"><pre><span></span><span class="n">initz</span> <span class="o">:=</span> <span class="nb">id</span> <span class="p">[</span><span class="o">=</span> <span class="n">exp</span><span class="p">][</span><span class="s1">&#39;,&#39;</span> <span class="n">initz</span><span class="p">]</span>
 <span class="n">stat</span> <span class="o">:=</span> <span class="s1">&#39;local&#39;</span> <span class="n">initz</span>
 </pre></div>
 </div>
@@ -319,16 +305,16 @@ declaration to the end of the block where they have been declared.
 </div>
 </section>
 <section id="function-declaration">
-<h2><span class="section-number">3.4.9. </span>Function declaration<a class="headerlink" href="#function-declaration" title="Permalink to this heading"></a></h2>
-<div class="highlight-default notranslate" id="index-16"><div class="highlight"><pre><span></span><span class="n">funcname</span> <span class="o">:=</span> <span class="nb">id</span> <span class="p">[</span><span class="s1">&#39;::&#39;</span> <span class="nb">id</span><span class="p">]</span>
+<h2><span class="section-number">3.4.8. </span>Function declaration<a class="headerlink" href="#function-declaration" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-15"><div class="highlight"><pre><span></span><span class="n">funcname</span> <span class="o">:=</span> <span class="nb">id</span> <span class="p">[</span><span class="s1">&#39;::&#39;</span> <span class="nb">id</span><span class="p">]</span>
 <span class="n">stat</span><span class="o">:=</span> <span class="s1">&#39;function&#39;</span> <span class="nb">id</span> <span class="p">[</span><span class="s1">&#39;::&#39;</span> <span class="nb">id</span><span class="p">]</span><span class="o">+</span> <span class="s1">&#39;(&#39;</span> <span class="n">args</span> <span class="s1">&#39;)&#39;</span> <span class="n">stat</span>
 </pre></div>
 </div>
 <p>creates a new function.</p>
 </section>
 <section id="class-declaration">
-<h2><span class="section-number">3.4.10. </span>Class declaration<a class="headerlink" href="#class-declaration" title="Permalink to this heading"></a></h2>
-<div class="highlight-default notranslate" id="index-17"><div class="highlight"><pre><span></span><span class="n">memberdecl</span> <span class="o">:=</span> <span class="nb">id</span> <span class="s1">&#39;=&#39;</span> <span class="n">exp</span> <span class="p">[</span><span class="s1">&#39;;&#39;</span><span class="p">]</span> <span class="o">|</span>    <span class="s1">&#39;[&#39;</span> <span class="n">exp</span> <span class="s1">&#39;]&#39;</span> <span class="s1">&#39;=&#39;</span> <span class="n">exp</span> <span class="p">[</span><span class="s1">&#39;;&#39;</span><span class="p">]</span> <span class="o">|</span> <span class="n">functionstat</span> <span class="o">|</span> <span class="s1">&#39;constructor&#39;</span> <span class="n">functionexp</span>
+<h2><span class="section-number">3.4.9. </span>Class declaration<a class="headerlink" href="#class-declaration" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-16"><div class="highlight"><pre><span></span><span class="n">memberdecl</span> <span class="o">:=</span> <span class="nb">id</span> <span class="s1">&#39;=&#39;</span> <span class="n">exp</span> <span class="p">[</span><span class="s1">&#39;;&#39;</span><span class="p">]</span> <span class="o">|</span>    <span class="s1">&#39;[&#39;</span> <span class="n">exp</span> <span class="s1">&#39;]&#39;</span> <span class="s1">&#39;=&#39;</span> <span class="n">exp</span> <span class="p">[</span><span class="s1">&#39;;&#39;</span><span class="p">]</span> <span class="o">|</span> <span class="n">functionstat</span> <span class="o">|</span> <span class="s1">&#39;constructor&#39;</span> <span class="n">functionexp</span>
 <span class="n">stat</span><span class="o">:=</span> <span class="s1">&#39;class&#39;</span> <span class="n">derefexp</span> <span class="p">[</span><span class="s1">&#39;extends&#39;</span> <span class="n">derefexp</span><span class="p">]</span> <span class="s1">&#39;{&#39;</span>
         <span class="p">[</span><span class="n">memberdecl</span><span class="p">]</span>
     <span class="s1">&#39;}&#39;</span>
@@ -337,8 +323,8 @@ declaration to the end of the block where they have been declared.
 <p>creates a new class.</p>
 </section>
 <section id="try-catch">
-<h2><span class="section-number">3.4.11. </span>try/catch<a class="headerlink" href="#try-catch" title="Permalink to this heading"></a></h2>
-<div class="highlight-default notranslate" id="index-18"><div class="highlight"><pre><span></span><span class="n">stat</span><span class="o">:=</span> <span class="s1">&#39;try&#39;</span> <span class="n">stat</span> <span class="s1">&#39;catch&#39;</span> <span class="s1">&#39;(&#39;</span> <span class="nb">id</span> <span class="s1">&#39;)&#39;</span> <span class="n">stat</span>
+<h2><span class="section-number">3.4.10. </span>try/catch<a class="headerlink" href="#try-catch" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-17"><div class="highlight"><pre><span></span><span class="n">stat</span><span class="o">:=</span> <span class="s1">&#39;try&#39;</span> <span class="n">stat</span> <span class="s1">&#39;catch&#39;</span> <span class="s1">&#39;(&#39;</span> <span class="nb">id</span> <span class="s1">&#39;)&#39;</span> <span class="n">stat</span>
 </pre></div>
 </div>
 <p>The try statement encloses a block of code in which an exceptional condition can occur,
@@ -347,30 +333,30 @@ code. When a catch clause catches an exception, its id is bound to that
 exception.</p>
 </section>
 <section id="throw">
-<h2><span class="section-number">3.4.12. </span>throw<a class="headerlink" href="#throw" title="Permalink to this heading"></a></h2>
-<div class="highlight-default notranslate" id="index-19"><div class="highlight"><pre><span></span><span class="n">stat</span><span class="o">:=</span> <span class="s1">&#39;throw&#39;</span> <span class="n">exp</span>
+<h2><span class="section-number">3.4.11. </span>throw<a class="headerlink" href="#throw" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-18"><div class="highlight"><pre><span></span><span class="n">stat</span><span class="o">:=</span> <span class="s1">&#39;throw&#39;</span> <span class="n">exp</span>
 </pre></div>
 </div>
 <p>Throws an exception. Any value can be thrown.</p>
 </section>
 <section id="const">
-<h2><span class="section-number">3.4.13. </span>const<a class="headerlink" href="#const" title="Permalink to this heading"></a></h2>
-<div class="highlight-default notranslate" id="index-20"><div class="highlight"><pre><span></span><span class="n">stat</span><span class="o">:=</span> <span class="s1">&#39;const&#39;</span> <span class="nb">id</span> <span class="s1">&#39;=&#39;</span> <span class="s1">&#39;Integer | Float | StringLiteral</span>
+<h2><span class="section-number">3.4.12. </span>const<a class="headerlink" href="#const" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-19"><div class="highlight"><pre><span></span><span class="n">stat</span><span class="o">:=</span> <span class="s1">&#39;const&#39;</span> <span class="nb">id</span> <span class="s1">&#39;=&#39;</span> <span class="s1">&#39;Integer | Float | StringLiteral</span>
 </pre></div>
 </div>
 <p>Declares a constant (see <a class="reference internal" href="constants_and_enumerations.html#constants-and-enumerations"><span class="std std-ref">Constants &amp; Enumerations</span></a>).</p>
 </section>
 <section id="enum">
-<h2><span class="section-number">3.4.14. </span>enum<a class="headerlink" href="#enum" title="Permalink to this heading"></a></h2>
-<div class="highlight-default notranslate" id="index-21"><div class="highlight"><pre><span></span><span class="n">enumerations</span> <span class="o">:=</span> <span class="p">(</span> <span class="s1">&#39;id&#39;</span> <span class="s1">&#39;=&#39;</span> <span class="n">Integer</span> <span class="o">|</span> <span class="n">Float</span> <span class="o">|</span> <span class="n">StringLiteral</span> <span class="p">)</span> <span class="p">[</span><span class="s1">&#39;,&#39;</span><span class="p">]</span>
+<h2><span class="section-number">3.4.13. </span>enum<a class="headerlink" href="#enum" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-20"><div class="highlight"><pre><span></span><span class="n">enumerations</span> <span class="o">:=</span> <span class="p">(</span> <span class="s1">&#39;id&#39;</span> <span class="s1">&#39;=&#39;</span> <span class="n">Integer</span> <span class="o">|</span> <span class="n">Float</span> <span class="o">|</span> <span class="n">StringLiteral</span> <span class="p">)</span> <span class="p">[</span><span class="s1">&#39;,&#39;</span><span class="p">]</span>
 <span class="n">stat</span><span class="o">:=</span> <span class="s1">&#39;enum&#39;</span> <span class="nb">id</span> <span class="s1">&#39;{&#39;</span> <span class="n">enumerations</span> <span class="s1">&#39;}&#39;</span>
 </pre></div>
 </div>
 <p>Declares an enumeration (see <a class="reference internal" href="constants_and_enumerations.html#constants-and-enumerations"><span class="std std-ref">Constants &amp; Enumerations</span></a>).</p>
 </section>
 <section id="expression-statement">
-<h2><span class="section-number">3.4.15. </span>Expression statement<a class="headerlink" href="#expression-statement" title="Permalink to this heading"></a></h2>
-<div class="highlight-default notranslate" id="index-22"><div class="highlight"><pre><span></span><span class="n">stat</span> <span class="o">:=</span> <span class="n">exp</span>
+<h2><span class="section-number">3.4.14. </span>Expression statement<a class="headerlink" href="#expression-statement" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-21"><div class="highlight"><pre><span></span><span class="n">stat</span> <span class="o">:=</span> <span class="n">exp</span>
 </pre></div>
 </div>
 <p>In Squirrel every expression is also allowed as statement, if so, the result of the

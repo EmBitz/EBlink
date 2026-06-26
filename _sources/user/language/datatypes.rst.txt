@@ -7,8 +7,7 @@ Values and Data types
 While Squirrel is a dynamically typed language and variables do not
 have a type, different operations may interpret the variable as
 containing a type.  Squirrel's basic types are integer, float, string,
-null, table, array, function, generator, class, instance, bool, thread
-and userdata.
+null, table, array, function, class, instance, bool and userdata.
 
 .. _userdata-index:
 
@@ -133,29 +132,8 @@ cannot be dynamically added or removed; however the value of the
 members can be changed.
 
 ---------
-Generator
----------
-
-Generators are functions that can be suspended with the statement
-'yield' and resumed later (see :ref:`Generators <generators>`).
-
----------
 Userdata
 ---------
 
 Userdata objects are blobs of memory or pointers defined by the host
 application but stored within Squirrel variables.
-
----------
-Thread
----------
-
-Threads are objects representing a cooperative thread of execution,
-also known as coroutines.
-
---------------
-Weak Reference
---------------
-
-Weak References are objects that point to another (non-scalar) object but do not own a strong reference to it.
-(See :ref:`Weak References <weak_references>`).

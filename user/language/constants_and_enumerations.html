@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3.11. Constants &amp; Enumerations &mdash; EBlink documentation 6.2 stable documentation</title>
+  <title>3.10. Constants &amp; Enumerations &mdash; EBlink documentation 6.2 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -15,14 +15,14 @@
   
         <script src="../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=7218f4fa"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2847d854"></script>
         <script src="../../_static/doctools.js?v=888ff710"></script>
         <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="3.12. Threads" href="threads.html" />
-    <link rel="prev" title="3.10. Generators" href="generators.html" /> 
+    <link rel="next" title="3.11. Built-in Functions" href="builtin_functions.html" />
+    <link rel="prev" title="3.9. Classes" href="classes.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -61,18 +61,13 @@
 <li class="toctree-l2"><a class="reference internal" href="arrays.html">3.7. Arrays</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functions.html">3.8. Functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="classes.html">3.9. Classes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generators.html">3.10. Generators</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">3.11. Constants &amp; Enumerations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#constants">3.11.1. Constants</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#enumerations">3.11.2. Enumerations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#implementation-notes">3.11.3. Implementation notes</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.10. Constants &amp; Enumerations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#constants">3.10.1. Constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#enumerations">3.10.2. Enumerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#implementation-notes">3.10.3. Implementation notes</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="threads.html">3.12. Threads</a></li>
-<li class="toctree-l2"><a class="reference internal" href="weak_references.html">3.13. Weak References</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delegation.html">3.14. Delegation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metamethods.html">3.15. Metamethods</a></li>
-<li class="toctree-l2"><a class="reference internal" href="builtin_functions.html">3.16. Built-in Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="builtin_functions.html">3.11. Built-in Functions</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../eblink/index.html">4. EBlink Scripting</a></li>
@@ -94,7 +89,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../language.html"><span class="section-number">3. </span>The script language</a></li>
-      <li class="breadcrumb-item active"><span class="section-number">3.11. </span>Constants &amp; Enumerations</li>
+      <li class="breadcrumb-item active"><span class="section-number">3.10. </span>Constants &amp; Enumerations</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -104,11 +99,11 @@
            <div itemprop="articleBody">
              
   <section id="constants-enumerations">
-<span id="constants-and-enumerations"></span><h1><span class="section-number">3.11. </span>Constants &amp; Enumerations<a class="headerlink" href="#constants-enumerations" title="Permalink to this heading"></a></h1>
+<span id="constants-and-enumerations"></span><h1><span class="section-number">3.10. </span>Constants &amp; Enumerations<a class="headerlink" href="#constants-enumerations" title="Permalink to this heading"></a></h1>
 <p id="index-0">Squirrel allows to bind constant values to an identifier that will be evaluated compile-time.
 This is achieved though constants and Enumerations.</p>
 <section id="constants">
-<h2><span class="section-number">3.11.1. </span>Constants<a class="headerlink" href="#constants" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.10.1. </span>Constants<a class="headerlink" href="#constants" title="Permalink to this heading"></a></h2>
 <p id="index-1">Constants bind a specific value to an identifier. Constants are similar to
 global values, except that they are evaluated compile time and their value cannot be changed.</p>
 <p>constants values can only be integers, floats or string literals. No expression are allowed.
@@ -126,7 +121,7 @@ Constants will shadow any global slot with the same name( the global slot will r
 </div>
 </section>
 <section id="enumerations">
-<h2><span class="section-number">3.11.2. </span>Enumerations<a class="headerlink" href="#enumerations" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.10.2. </span>Enumerations<a class="headerlink" href="#enumerations" title="Permalink to this heading"></a></h2>
 <p id="index-2">As Constants, Enumerations bind a specific value to a name. Enumerations are also evaluated at compile time
 and their value cannot be changed.</p>
 <p>An enum declaration introduces a new enumeration into the program.
@@ -154,7 +149,7 @@ Enumerations will shadow any global slot with the same name( the global slot wil
 </div>
 </section>
 <section id="implementation-notes">
-<h2><span class="section-number">3.11.3. </span>Implementation notes<a class="headerlink" href="#implementation-notes" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.10.3. </span>Implementation notes<a class="headerlink" href="#implementation-notes" title="Permalink to this heading"></a></h2>
 <p>Enumerations and Constants are a compile-time feature. Only integers, string and floats can be declared as const/enum;
 No expressions are allowed(because they would have to be evaluated compile time).
 When a const or an enum is declared, it is added compile time to the <code class="docutils literal notranslate"><span class="pre">consttable</span></code>. This table is stored in the VM shared state
@@ -183,8 +178,8 @@ to a constant/enumeration(function,classes etc…). However this will make seria
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="generators.html" class="btn btn-neutral float-left" title="3.10. Generators" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="threads.html" class="btn btn-neutral float-right" title="3.12. Threads" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="classes.html" class="btn btn-neutral float-left" title="3.9. Classes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="builtin_functions.html" class="btn btn-neutral float-right" title="3.11. Built-in Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
