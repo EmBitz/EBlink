@@ -32,11 +32,7 @@ and other multi-line text directly in a script.
 
    ``@"..."`` — single-line verbatim: no escape processing, no newlines.
 
-   ``@@"..."`` — multiline verbatim: no escape processing, newlines allowed.
-
-Pseudo BNF::
-
-    MultilineVerbatimStringLiteral : '@@' '"' .* '"'
+   ``@@"..."`` — multiline verbatim: no escape processing, physical newlines in source are ignored (use ``\n`` for a newline in the value).
 
 Compile-time constant expressions
 ----------------------------------

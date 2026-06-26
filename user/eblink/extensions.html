@@ -126,11 +126,7 @@ and other multi-line text directly in a script.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><code class="docutils literal notranslate"><span class="pre">&#64;&quot;...&quot;</span></code> — single-line verbatim: no escape processing, no newlines.</p>
-<p><code class="docutils literal notranslate"><span class="pre">&#64;&#64;&quot;...&quot;</span></code> — multiline verbatim: no escape processing, newlines allowed.</p>
-</div>
-<p>Pseudo BNF:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MultilineVerbatimStringLiteral</span> <span class="p">:</span> <span class="s1">&#39;@@&#39;</span> <span class="s1">&#39;&quot;&#39;</span> <span class="o">.*</span> <span class="s1">&#39;&quot;&#39;</span>
-</pre></div>
+<p><code class="docutils literal notranslate"><span class="pre">&#64;&#64;&quot;...&quot;</span></code> — multiline verbatim: no escape processing, physical newlines in source are ignored (use <code class="docutils literal notranslate"><span class="pre">\n</span></code> for a newline in the value).</p>
 </div>
 </section>
 <section id="compile-time-constant-expressions">
