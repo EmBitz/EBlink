@@ -1,5 +1,7 @@
 [![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://stand-with-ukraine.pp.ua)
 
+[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://embitz.github.io/EBlink/)
+
 # Cortex-M Tool Support (e.g., STlink V2 & V3)
 ## Win32, Linux x86_64, and Raspberry Pi (32/64-bit)
 ### Auto-detects Silabs, STMicro, Atmel, NXP, and Renesas
