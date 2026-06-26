@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3.9. Classes &mdash; EBlink documentation 6.2 stable documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/EBlink.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=7218f4fa"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3.10. Generators" href="generators.html" />
+    <link rel="prev" title="3.8. Functions" href="functions.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            EBlink documentation
+              <img src="../../_static/EBlink.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">2. Usage</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../language.html">3. The script language</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="lexical_structure.html">3.1. Lexical Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datatypes.html">3.2. Values and Data types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="execution_context.html">3.3. Execution Context</a></li>
+<li class="toctree-l2"><a class="reference internal" href="statements.html">3.4. Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expressions.html">3.5. Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tables.html">3.6. Tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="arrays.html">3.7. Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html">3.8. Functions</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.9. Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#class-declaration">3.9.1. Class Declaration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#static-variables">3.9.1.1. Static variables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#class-attributes">3.9.1.2. Class Attributes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#class-instances">3.9.2. Class Instances</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#inheritance">3.9.3. Inheritance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#metamethods">3.9.4. Metamethods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="generators.html">3.10. Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants_and_enumerations.html">3.11. Constants &amp; Enumerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="threads.html">3.12. Threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weak_references.html">3.13. Weak References</a></li>
+<li class="toctree-l2"><a class="reference internal" href="delegation.html">3.14. Delegation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metamethods.html">3.15. Metamethods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="builtin_functions.html">3.16. Built-in Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../eblink/index.html">4. EBlink Scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bookindex.html">5. Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">EBlink documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../language.html"><span class="section-number">3. </span>The script language</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">3.9. </span>Classes</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="classes">
+<span id="id1"></span><h1><span class="section-number">3.9. </span>Classes<a class="headerlink" href="#classes" title="Permalink to this heading"></a></h1>
+<p id="index-0">Squirrel implements a class mechanism similar to languages like Java/C++/etc…
+however because of its dynamic nature it differs in several aspects.
+Classes are first class objects like integer or strings and can be stored in
+table slots local variables, arrays and passed as function parameters.</p>
+<section id="class-declaration">
+<h2><span class="section-number">3.9.1. </span>Class Declaration<a class="headerlink" href="#class-declaration" title="Permalink to this heading"></a></h2>
+<p id="index-1">A class object is created through the keyword ‘class’ . The class object follows
+the same declaration syntax of a table(see <a class="reference internal" href="tables.html#tables"><span class="std std-ref">Tables</span></a>) with the only difference
+of using ‘;’ as optional separator rather than ‘,’.</p>
+<p>For instance:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Foo</span> <span class="p">{</span>
+    <span class="o">//</span><span class="n">constructor</span>
+    <span class="n">constructor</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">testy</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;stuff&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">a</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="o">//</span><span class="n">member</span> <span class="n">function</span>
+    <span class="n">function</span> <span class="n">PrintTesty</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">foreach</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">val</span> <span class="ow">in</span> <span class="n">testy</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="p">::</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;idx = &quot;</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s2">&quot; = &quot;</span><span class="o">+</span><span class="n">val</span><span class="o">+</span><span class="s2">&quot; </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="o">//</span><span class="nb">property</span>
+    <span class="n">testy</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>the previous code example is a syntactic sugar for:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Foo &lt;- class {
+    //constructor
+    constructor(a)
+    {
+        testy = [&quot;stuff&quot;,1,2,3,a];
+    }
+    //member function
+    function PrintTesty()
+    {
+        foreach(i,val in testy)
+        {
+            ::print(&quot;idx = &quot;+i+&quot; = &quot;+val+&quot; \n&quot;);
+        }
+    }
+    //property
+    testy = null;
+
+}
+</pre></div>
+</div>
+<p>in order to emulate namespaces, it is also possible to declare something like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">just</span> <span class="mi">2</span> <span class="n">regular</span> <span class="n">nested</span> <span class="n">tables</span>
+<span class="n">FakeNamespace</span> <span class="o">&lt;-</span> <span class="p">{</span>
+    <span class="n">Utils</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="p">}</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">FakeNamespace</span><span class="o">.</span><span class="n">Utils</span><span class="o">.</span><span class="n">SuperClass</span> <span class="p">{</span>
+    <span class="n">constructor</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="p">::</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FakeNamespace.Utils.SuperClass&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="n">function</span> <span class="n">DoSomething</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="p">::</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DoSomething()&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">function</span> <span class="n">FakeNamespace</span><span class="p">::</span><span class="n">Utils</span><span class="p">::</span><span class="n">SuperClass</span><span class="p">::</span><span class="n">DoSomethingElse</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="p">::</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FakeNamespace::Utils::SuperClass::DoSomethingElse()&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="n">local</span> <span class="n">testy</span> <span class="o">=</span> <span class="n">FakeNamespace</span><span class="o">.</span><span class="n">Utils</span><span class="o">.</span><span class="n">SuperClass</span><span class="p">();</span>
+<span class="n">testy</span><span class="o">.</span><span class="n">DoSomething</span><span class="p">();</span>
+<span class="n">testy</span><span class="o">.</span><span class="n">DoSomethingElse</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>After its declaration, methods or properties can be added or modified by following
+the same rules that apply to a table(operator <code class="docutils literal notranslate"><span class="pre">&lt;-</span></code>).:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">adds</span> <span class="n">a</span> <span class="n">new</span> <span class="nb">property</span>
+<span class="n">Foo</span><span class="o">.</span><span class="n">stuff</span> <span class="o">&lt;-</span> <span class="mi">10</span><span class="p">;</span>
+
+<span class="o">//</span><span class="n">modifies</span> <span class="n">the</span> <span class="n">default</span> <span class="n">value</span> <span class="n">of</span> <span class="n">an</span> <span class="n">existing</span> <span class="nb">property</span>
+<span class="n">Foo</span><span class="o">.</span><span class="n">testy</span> <span class="o">&lt;-</span> <span class="s2">&quot;I&#39;m a string&quot;</span><span class="p">;</span>
+
+<span class="o">//</span><span class="n">adds</span> <span class="n">a</span> <span class="n">new</span> <span class="n">method</span>
+<span class="n">function</span> <span class="n">Foo</span><span class="p">::</span><span class="n">DoSomething</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>After a class is instantiated is no longer possible to add new properties however is possible to add or replace methods.</p>
+<section id="static-variables">
+<h3><span class="section-number">3.9.1.1. </span>Static variables<a class="headerlink" href="#static-variables" title="Permalink to this heading"></a></h3>
+<p id="index-2">Squirrel’s classes support static member variables. A static variable shares its value
+between all instances of the class. Statics are declared by prefixing the variable declaration
+with the keyword <code class="docutils literal notranslate"><span class="pre">static</span></code>; the declaration must be in the class body.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Statics are read-only.</p>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Foo</span> <span class="p">{</span>
+    <span class="n">constructor</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="o">//..</span><span class="n">stuff</span>
+    <span class="p">}</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;normal variable&quot;</span><span class="p">;</span>
+    <span class="o">//</span><span class="n">static</span> <span class="n">variable</span>
+    <span class="n">static</span> <span class="n">classname</span> <span class="o">=</span> <span class="s2">&quot;The class name is foo&quot;</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="class-attributes">
+<h3><span class="section-number">3.9.1.2. </span>Class Attributes<a class="headerlink" href="#class-attributes" title="Permalink to this heading"></a></h3>
+<p id="index-3">Classes allow to associate attributes to it’s members. Attributes are a form of metadata
+that can be used to store application specific informations, like documentations
+strings, properties for IDEs, code generators etc…
+Class attributes are declared in the class body by preceding the member declaration and
+are delimited by the symbol <code class="docutils literal notranslate"><span class="pre">&lt;/</span></code> and <code class="docutils literal notranslate"><span class="pre">/&gt;</span></code>.
+Here an example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Foo</span> <span class="o">&lt;/</span> <span class="n">test</span> <span class="o">=</span> <span class="s2">&quot;I&#39;m a class level attribute&quot;</span> <span class="o">/&gt;</span><span class="p">{</span>
+    <span class="o">&lt;/</span> <span class="n">test</span> <span class="o">=</span> <span class="s2">&quot;freakin attribute&quot;</span> <span class="o">/&gt;</span> <span class="o">//</span><span class="n">attributes</span> <span class="n">of</span> <span class="n">PrintTesty</span>
+    <span class="n">function</span> <span class="n">PrintTesty</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">foreach</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">val</span> <span class="ow">in</span> <span class="n">testy</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="p">::</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;idx = &quot;</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s2">&quot; = &quot;</span><span class="o">+</span><span class="n">val</span><span class="o">+</span><span class="s2">&quot; </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="o">&lt;/</span> <span class="n">flippy</span> <span class="o">=</span> <span class="mi">10</span> <span class="p">,</span> <span class="n">second</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">/&gt;</span> <span class="o">//</span><span class="n">attributes</span> <span class="n">of</span> <span class="n">testy</span>
+    <span class="n">testy</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Attributes are, matter of fact, a table. Squirrel uses <code class="docutils literal notranslate"><span class="pre">&lt;/</span> <span class="pre">/&gt;</span></code> syntax
+instead of curly brackets <code class="docutils literal notranslate"><span class="pre">{}</span></code> for the attribute declaration to increase readability.</p>
+<p>This means that all rules that apply to tables apply to attributes.</p>
+<p>Attributes can be retrieved through the built-in function <code class="docutils literal notranslate"><span class="pre">classobj.getattributes(membername)</span></code> (see &lt;link linkend=”builtin”&gt;built-in functions&lt;/link&gt;).
+and can be modified/added through the built-in function <code class="docutils literal notranslate"><span class="pre">classobj.setattributes(membername,val)</span></code>.</p>
+<p>the following code iterates through the attributes of all Foo members.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">foreach</span><span class="p">(</span><span class="n">member</span><span class="p">,</span><span class="n">val</span> <span class="ow">in</span> <span class="n">Foo</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="p">::</span><span class="nb">print</span><span class="p">(</span><span class="n">member</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+    <span class="n">local</span> <span class="n">attr</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">((</span><span class="n">attr</span> <span class="o">=</span> <span class="n">Foo</span><span class="o">.</span><span class="n">getattributes</span><span class="p">(</span><span class="n">member</span><span class="p">))</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">foreach</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">attr</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="p">::</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s2">&quot; = &quot;</span><span class="o">+</span><span class="p">(</span><span class="n">typeof</span> <span class="n">v</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="p">::</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&lt;no attributes&gt;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="class-instances">
+<h2><span class="section-number">3.9.2. </span>Class Instances<a class="headerlink" href="#class-instances" title="Permalink to this heading"></a></h2>
+<p id="index-4">The class objects inherits several of the table’s feature with the difference that multiple instances of the
+same class can be created.
+A class instance is an object that share the same structure of the table that created it but
+holds is own values.
+Class <em>instantiation</em> uses function notation.
+A class instance is created by calling a class object. Can be useful to imagine a class like a function
+that returns a class instance.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">creates</span> <span class="n">a</span> <span class="n">new</span> <span class="n">instance</span> <span class="n">of</span> <span class="n">Foo</span>
+<span class="n">local</span> <span class="n">inst</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>When a class instance is created its member are initialized <em>with the same value</em> specified in the
+class declaration. The values are copied verbatim, <em>no cloning is performed</em> even if the value is a container or a class instances.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>FOR C# and Java programmers:</p>
+<p>Squirrel doesn’t clone member’s default values nor executes the member declaration for each instance(as C# or java).</p>
+<p>So consider this example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Foo</span> <span class="p">{</span>
+  <span class="n">myarray</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+  <span class="n">mytable</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="p">}</span>
+
+<span class="n">local</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">();</span>
+<span class="n">local</span> <span class="n">b</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>In the snippet above both instances will refer to the same array and same table.To achieve what a C# or Java programmer would
+expect, the following approach should be taken.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Foo</span> <span class="p">{</span>
+  <span class="n">myarray</span> <span class="o">=</span> <span class="n">null</span>
+  <span class="n">mytable</span> <span class="o">=</span> <span class="n">null</span>
+  <span class="n">constructor</span><span class="p">()</span>
+  <span class="p">{</span>
+    <span class="n">myarray</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">mytable</span> <span class="o">=</span> <span class="p">{}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">local</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">();</span>
+<span class="n">local</span> <span class="n">b</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<p>When a class defines a method called ‘constructor’, the class instantiation operation will
+automatically invoke it for the newly created instance.
+The constructor method can have parameters, this will impact on the number of parameters
+that the <em>instantiation operation</em> will require.
+Constructors, as normal functions, can have variable number of parameters (using the parameter <code class="docutils literal notranslate"><span class="pre">...</span></code>).:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Rect</span> <span class="p">{</span>
+    <span class="n">constructor</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="n">h</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="n">w</span><span class="p">;</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="n">h</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="o">//</span><span class="n">Rect</span><span class="s1">&#39;s constructor has 2 parameters so the class has to be &#39;</span><span class="n">called</span><span class="s1">&#39;</span>
+<span class="o">//</span><span class="k">with</span> <span class="mi">2</span> <span class="n">parameters</span>
+<span class="n">local</span> <span class="n">rc</span> <span class="o">=</span> <span class="n">Rect</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>After an instance is created, its properties can be set or fetched following the
+same rules that apply to tables. Methods cannot be set.</p>
+<p>Instance members cannot be removed.</p>
+<p>The class object that created a certain instance can be retrieved through the built-in function
+<code class="docutils literal notranslate"><span class="pre">instance.getclass()</span></code> (see <a class="reference internal" href="builtin_functions.html#builtin-functions"><span class="std std-ref">built-in functions</span></a>)</p>
+<p>The operator <code class="docutils literal notranslate"><span class="pre">instanceof</span></code> tests if a class instance is an instance of a certain class.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">rc</span> <span class="o">=</span> <span class="n">Rect</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">);</span>
+<span class="k">if</span><span class="p">(</span><span class="n">rc</span> <span class="n">instanceof</span> <span class="p">::</span><span class="n">Rect</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">::</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;It&#39;s a rect&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">else</span> <span class="p">{</span>
+    <span class="p">::</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;It isn&#39;t a rect&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since Squirrel 3.x instanceof doesn’t throw an exception if the left expression is not a class, it simply fails</p>
+</div>
+</section>
+<section id="inheritance">
+<h2><span class="section-number">3.9.3. </span>Inheritance<a class="headerlink" href="#inheritance" title="Permalink to this heading"></a></h2>
+<p id="index-5">Squirrel’s classes support single inheritance by adding the keyword <code class="docutils literal notranslate"><span class="pre">extends</span></code>, followed
+by an expression, in the class declaration.
+The syntax for a derived class is the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">SuperFoo</span> <span class="n">extends</span> <span class="n">Foo</span> <span class="p">{</span>
+    <span class="n">function</span> <span class="n">DoSomething</span><span class="p">()</span> <span class="p">{</span>
+        <span class="p">::</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I&#39;m doing something&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>When a derived class is declared, Squirrel first copies all base’s members in the
+new class then proceeds with evaluating the rest of the declaration.</p>
+<p>A derived class inherit all members and properties of it’s base, if the derived class
+overrides a base function the base implementation is shadowed.
+It’s possible to access a overridden method of the base class by fetching the method from
+through the ‘base’ keyword.</p>
+<p>Here an example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Foo</span> <span class="p">{</span>
+    <span class="n">function</span> <span class="n">DoSomething</span><span class="p">()</span> <span class="p">{</span>
+        <span class="p">::</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I&#39;m the base&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">SuperFoo</span> <span class="n">extends</span> <span class="n">Foo</span> <span class="p">{</span>
+    <span class="o">//</span><span class="n">overridden</span> <span class="n">method</span>
+    <span class="n">function</span> <span class="n">DoSomething</span><span class="p">()</span> <span class="p">{</span>
+        <span class="o">//</span><span class="n">calls</span> <span class="n">the</span> <span class="n">base</span> <span class="n">method</span>
+        <span class="n">base</span><span class="o">.</span><span class="n">DoSomething</span><span class="p">();</span>
+        <span class="p">::</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I&#39;m doing something&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Same rule apply to the constructor. The constructor is a regular function (apart from being automatically invoked on construction).:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">BaseClass</span> <span class="p">{</span>
+    <span class="n">constructor</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="p">::</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Base constructor</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ChildClass</span> <span class="n">extends</span> <span class="n">BaseClass</span> <span class="p">{</span>
+    <span class="n">constructor</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">base</span><span class="o">.</span><span class="n">constructor</span><span class="p">();</span>
+        <span class="p">::</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Child constructor</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">local</span> <span class="n">test</span> <span class="o">=</span> <span class="n">ChildClass</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>The base class of a derived class can be retrieved through the built-in method <code class="docutils literal notranslate"><span class="pre">getbase()</span></code>.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">thebaseclass</span> <span class="o">=</span> <span class="n">SuperFoo</span><span class="o">.</span><span class="n">getbase</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Note that because methods do not have special protection policies when calling methods of the same
+objects, a method of a base class that calls a method of the same class can end up calling a overridden method of the derived class.</p>
+<p>A method of a base class can be explicitly invoked by a method of a derived class though the keyword <code class="docutils literal notranslate"><span class="pre">base</span></code> (as in base.MyMethod() ).:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Foo</span> <span class="p">{</span>
+    <span class="n">function</span> <span class="n">DoSomething</span><span class="p">()</span> <span class="p">{</span>
+        <span class="p">::</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I&#39;m the base&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">function</span> <span class="n">DoIt</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">DoSomething</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">SuperFoo</span> <span class="n">extends</span> <span class="n">Foo</span> <span class="p">{</span>
+    <span class="o">//</span><span class="n">overridden</span> <span class="n">method</span>
+    <span class="n">function</span> <span class="n">DoSomething</span><span class="p">()</span> <span class="p">{</span>
+        <span class="p">::</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I&#39;m the derived&quot;</span><span class="p">);</span>
+
+    <span class="p">}</span>
+    <span class="n">function</span> <span class="n">DoIt</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">base</span><span class="o">.</span><span class="n">DoIt</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="o">//</span><span class="n">creates</span> <span class="n">a</span> <span class="n">new</span> <span class="n">instance</span> <span class="n">of</span> <span class="n">SuperFoo</span>
+<span class="n">local</span> <span class="n">inst</span> <span class="o">=</span> <span class="n">SuperFoo</span><span class="p">();</span>
+
+<span class="o">//</span><span class="n">prints</span> <span class="s2">&quot;I&#39;m the derived&quot;</span>
+<span class="n">inst</span><span class="o">.</span><span class="n">DoIt</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
+<section id="metamethods">
+<h2><span class="section-number">3.9.4. </span>Metamethods<a class="headerlink" href="#metamethods" title="Permalink to this heading"></a></h2>
+<p id="index-6">Class instances allow the customization of certain aspects of the
+their semantics through metamethods(see see <a class="reference internal" href="metamethods.html#metamethods"><span class="std std-ref">Metamethods</span></a>).
+For C++ programmers: “metamethods behave roughly like overloaded operators”.
+The metamethods supported by classes are <code class="docutils literal notranslate"><span class="pre">_add,</span> <span class="pre">_sub,</span> <span class="pre">_mul,</span> <span class="pre">_div,</span> <span class="pre">_unm,</span> <span class="pre">_modulo,</span>
+<span class="pre">_set,</span> <span class="pre">_get,</span> <span class="pre">_typeof,</span> <span class="pre">_nexti,</span> <span class="pre">_cmp,</span> <span class="pre">_call,</span> <span class="pre">_delslot,</span> <span class="pre">_tostring</span></code></p>
+<p>Class objects instead support only 2 metamethods : <code class="docutils literal notranslate"><span class="pre">_newmember</span></code> and <code class="docutils literal notranslate"><span class="pre">_inherited</span></code></p>
+<p>the following example show how to create a class that implements the metamethod <code class="docutils literal notranslate"><span class="pre">_add</span></code>.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Vector3</span> <span class="p">{</span>
+    <span class="n">constructor</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">vargv</span><span class="o">.</span><span class="n">len</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">vargv</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">vargv</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+            <span class="n">z</span> <span class="o">=</span> <span class="n">vargv</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">function</span> <span class="n">_add</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="p">::</span><span class="n">Vector3</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">other</span><span class="o">.</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="o">+</span><span class="n">other</span><span class="o">.</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="o">+</span><span class="n">other</span><span class="o">.</span><span class="n">z</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">local</span> <span class="n">v0</span> <span class="o">=</span> <span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">local</span> <span class="n">v1</span> <span class="o">=</span> <span class="n">Vector3</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">)</span>
+<span class="n">local</span> <span class="n">v2</span> <span class="o">=</span> <span class="n">v0</span> <span class="o">+</span> <span class="n">v1</span><span class="p">;</span>
+<span class="p">::</span><span class="nb">print</span><span class="p">(</span><span class="n">v2</span><span class="o">.</span><span class="n">x</span><span class="o">+</span><span class="s2">&quot;,&quot;</span><span class="o">+</span><span class="n">v2</span><span class="o">.</span><span class="n">y</span><span class="o">+</span><span class="s2">&quot;,&quot;</span><span class="o">+</span><span class="n">v2</span><span class="o">.</span><span class="n">z</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Since version 2.1, classes support 2 metamethods <code class="docutils literal notranslate"><span class="pre">_inherited</span></code> and <code class="docutils literal notranslate"><span class="pre">_newmember</span></code>.
+<code class="docutils literal notranslate"><span class="pre">_inherited</span></code> is invoked when a class inherits from the one that implements <code class="docutils literal notranslate"><span class="pre">_inherited</span></code>.
+<code class="docutils literal notranslate"><span class="pre">_newmember</span></code> is invoked for each member that is added to the class(at declaration time).</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="functions.html" class="btn btn-neutral float-left" title="3.8. Functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="generators.html" class="btn btn-neutral float-right" title="3.10. Generators" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2009-2026, Gerard Zagema.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

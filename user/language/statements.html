@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3.4. Statements &mdash; EBlink documentation 6.2 stable documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/EBlink.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=7218f4fa"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3.5. Expressions" href="expressions.html" />
+    <link rel="prev" title="3.3. Execution Context" href="execution_context.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            EBlink documentation
+              <img src="../../_static/EBlink.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">2. Usage</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../language.html">3. The script language</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="lexical_structure.html">3.1. Lexical Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datatypes.html">3.2. Values and Data types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="execution_context.html">3.3. Execution Context</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.4. Statements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#block">3.4.1. Block</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#control-flow-statements">3.4.2. Control Flow Statements</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#true-and-false">3.4.2.1. true and false</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#if-else-statement">3.4.2.2. if/else statement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#while-statement">3.4.2.3. while statement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#do-while-statement">3.4.2.4. do/while statement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#switch-statement">3.4.2.5. switch statement</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#loops">3.4.3. Loops</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#for">3.4.3.1. for</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#foreach">3.4.3.2. foreach</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#break">3.4.4. break</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#continue">3.4.5. continue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#return">3.4.6. return</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#yield">3.4.7. yield</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#local-variables-declaration">3.4.8. Local variables declaration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#function-declaration">3.4.9. Function declaration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#class-declaration">3.4.10. Class declaration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#try-catch">3.4.11. try/catch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#throw">3.4.12. throw</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#const">3.4.13. const</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#enum">3.4.14. enum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#expression-statement">3.4.15. Expression statement</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="expressions.html">3.5. Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tables.html">3.6. Tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="arrays.html">3.7. Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html">3.8. Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classes.html">3.9. Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generators.html">3.10. Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants_and_enumerations.html">3.11. Constants &amp; Enumerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="threads.html">3.12. Threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weak_references.html">3.13. Weak References</a></li>
+<li class="toctree-l2"><a class="reference internal" href="delegation.html">3.14. Delegation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metamethods.html">3.15. Metamethods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="builtin_functions.html">3.16. Built-in Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../eblink/index.html">4. EBlink Scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bookindex.html">5. Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">EBlink documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../language.html"><span class="section-number">3. </span>The script language</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">3.4. </span>Statements</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="statements">
+<span id="id1"></span><h1><span class="section-number">3.4. </span>Statements<a class="headerlink" href="#statements" title="Permalink to this heading"></a></h1>
+<p id="index-0">A squirrel program is a simple sequence of statements.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span> <span class="o">:=</span> <span class="n">stat</span> <span class="p">[</span><span class="s1">&#39;;&#39;</span><span class="o">|</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">]</span> <span class="n">stats</span>
+</pre></div>
+</div>
+<p>Statements in squirrel are comparable to the C-Family languages (C/C++, Java, C#
+etc…): assignment, function calls, program flow control structures etc.. plus some
+custom statement like yield, table and array constructors (All those will be covered in detail
+later in this document).
+Statements can be separated with a new line or ‘;’ (or with the keywords case or default if
+inside a switch/case statement), both symbols are not required if the statement is
+followed by ‘}’.</p>
+<section id="block">
+<h2><span class="section-number">3.4.1. </span>Block<a class="headerlink" href="#block" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-1"><div class="highlight"><pre><span></span><span class="n">stat</span> <span class="o">:=</span> <span class="s1">&#39;{&#39;</span> <span class="n">stats</span> <span class="s1">&#39;}&#39;</span>
+</pre></div>
+</div>
+<p>A sequence of statements delimited by curly brackets ({ }) is called block;
+a block is a statement itself.</p>
+</section>
+<section id="control-flow-statements">
+<h2><span class="section-number">3.4.2. </span>Control Flow Statements<a class="headerlink" href="#control-flow-statements" title="Permalink to this heading"></a></h2>
+<p id="index-2">squirrel implements the most common control flow statements: <code class="docutils literal notranslate"><span class="pre">if,</span> <span class="pre">while,</span> <span class="pre">do-while,</span> <span class="pre">switch-case,</span> <span class="pre">for,</span> <span class="pre">foreach</span></code></p>
+<section id="true-and-false">
+<h3><span class="section-number">3.4.2.1. </span>true and false<a class="headerlink" href="#true-and-false" title="Permalink to this heading"></a></h3>
+<p id="index-3">Squirrel has a boolean type (bool) however like C++ it considers null, 0(integer) and 0.0(float)
+as <em>false</em>, any other value is considered <em>true</em>.</p>
+</section>
+<section id="if-else-statement">
+<h3><span class="section-number">3.4.2.2. </span>if/else statement<a class="headerlink" href="#if-else-statement" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate" id="index-4"><div class="highlight"><pre><span></span><span class="n">stat</span><span class="o">:=</span> <span class="s1">&#39;if&#39;</span> <span class="s1">&#39;(&#39;</span> <span class="n">exp</span> <span class="s1">&#39;)&#39;</span> <span class="n">stat</span> <span class="p">[</span><span class="s1">&#39;else&#39;</span> <span class="n">stat</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Conditionally execute a statement depending on the result of an expression.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="p">(</span><span class="n">a</span><span class="o">&gt;</span><span class="n">b</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">=</span><span class="n">b</span><span class="p">;</span>
+<span class="k">else</span>
+    <span class="n">b</span><span class="o">=</span><span class="n">a</span><span class="p">;</span>
+<span class="o">////</span>
+<span class="k">if</span><span class="p">(</span><span class="n">a</span><span class="o">==</span><span class="mi">10</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">b</span><span class="o">=</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">a</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="while-statement">
+<h3><span class="section-number">3.4.2.3. </span>while statement<a class="headerlink" href="#while-statement" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate" id="index-5"><div class="highlight"><pre><span></span><span class="n">stat</span><span class="o">:=</span> <span class="s1">&#39;while&#39;</span> <span class="s1">&#39;(&#39;</span> <span class="n">exp</span> <span class="s1">&#39;)&#39;</span> <span class="n">stat</span>
+</pre></div>
+</div>
+<p>Executes a statement while the condition is true.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">testy</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">local</span> <span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">a</span><span class="o">&lt;</span><span class="n">n</span><span class="p">)</span> <span class="n">a</span><span class="o">+=</span><span class="mi">1</span><span class="p">;</span>
+
+    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">a</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+        <span class="n">a</span><span class="o">-=</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="do-while-statement">
+<h3><span class="section-number">3.4.2.4. </span>do/while statement<a class="headerlink" href="#do-while-statement" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate" id="index-6"><div class="highlight"><pre><span></span><span class="n">stat</span><span class="o">:=</span> <span class="s1">&#39;do&#39;</span> <span class="n">stat</span> <span class="s1">&#39;while&#39;</span> <span class="s1">&#39;(&#39;</span> <span class="n">expression</span> <span class="s1">&#39;)&#39;</span>
+</pre></div>
+</div>
+<p>Executes a statement once, and then repeats execution of the statement until a condition
+expression evaluates to false.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<span class="n">do</span>
+<span class="p">{</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+    <span class="n">a</span><span class="o">+=</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">while</span><span class="p">(</span><span class="n">a</span><span class="o">&gt;</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="switch-statement">
+<h3><span class="section-number">3.4.2.5. </span>switch statement<a class="headerlink" href="#switch-statement" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate" id="index-7"><div class="highlight"><pre><span></span><span class="n">stat</span> <span class="o">:=</span> <span class="s1">&#39;switch&#39;</span> <span class="s1">&#39;&#39;</span><span class="p">(</span> <span class="n">exp</span> <span class="s1">&#39;)&#39;</span> <span class="s1">&#39;{&#39;</span>
+<span class="s1">&#39;case&#39;</span> <span class="n">case_exp</span> <span class="s1">&#39;:&#39;</span>
+    <span class="n">stats</span>
+<span class="p">[</span><span class="s1">&#39;default&#39;</span> <span class="s1">&#39;:&#39;</span>
+    <span class="n">stats</span><span class="p">]</span>
+<span class="s1">&#39;}&#39;</span>
+</pre></div>
+</div>
+<p>Switch is a control statement allows multiple selections of code by passing control to one of the
+case statements within its body.
+The control is transferred to the case label whose case_exp matches with exp if none of
+the case match will jump to the default label (if present).
+A switch statement can contain any number if case instances, if 2 case have the same
+expression result the first one will be taken in account first. The default label is only
+allowed once and must be the last one.
+A break statement will jump outside the switch block.</p>
+</section>
+</section>
+<section id="loops">
+<h2><span class="section-number">3.4.3. </span>Loops<a class="headerlink" href="#loops" title="Permalink to this heading"></a></h2>
+<section id="for">
+<span id="index-8"></span><h3><span class="section-number">3.4.3.1. </span>for<a class="headerlink" href="#for" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate" id="index-9"><div class="highlight"><pre><span></span><span class="n">stat</span><span class="o">:=</span> <span class="s1">&#39;for&#39;</span> <span class="s1">&#39;(&#39;</span> <span class="p">[</span><span class="n">initexp</span><span class="p">]</span> <span class="s1">&#39;;&#39;</span> <span class="p">[</span><span class="n">condexp</span><span class="p">]</span> <span class="s1">&#39;;&#39;</span> <span class="p">[</span><span class="n">incexp</span><span class="p">]</span> <span class="s1">&#39;)&#39;</span> <span class="n">statement</span>
+</pre></div>
+</div>
+<p>Executes a statement as long as a condition is different than false.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span><span class="n">local</span> <span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">a</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span><span class="n">a</span><span class="o">+=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+<span class="o">//</span><span class="ow">or</span>
+<span class="n">glob</span> <span class="o">&lt;-</span> <span class="n">null</span>
+<span class="k">for</span><span class="p">(</span><span class="n">glob</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">glob</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span><span class="n">glob</span><span class="o">+=</span><span class="mi">1</span><span class="p">){</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">glob</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="o">//</span><span class="ow">or</span>
+<span class="k">for</span><span class="p">(;;){</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">loops</span> <span class="n">forever</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="foreach">
+<h3><span class="section-number">3.4.3.2. </span>foreach<a class="headerlink" href="#foreach" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate" id="index-10"><div class="highlight"><pre><span></span><span class="s1">&#39;foreach&#39;</span> <span class="s1">&#39;(&#39;</span> <span class="p">[</span><span class="n">index_id</span><span class="s1">&#39;,&#39;</span><span class="p">]</span> <span class="n">value_id</span> <span class="s1">&#39;in&#39;</span> <span class="n">exp</span> <span class="s1">&#39;)&#39;</span> <span class="n">stat</span>
+</pre></div>
+</div>
+<p>Executes a statement for every element contained in an array, table, class, string or generator.
+If exp is a generator it will be resumed every iteration as long as it is alive; the value will
+be the result of ‘resume’ and the index the sequence number of the iteration starting
+from 0.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">a</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">23</span><span class="p">,</span><span class="mi">33</span><span class="p">,</span><span class="mi">41</span><span class="p">,</span><span class="mi">589</span><span class="p">,</span><span class="mi">56</span><span class="p">]</span>
+<span class="n">foreach</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span><span class="n">val</span> <span class="ow">in</span> <span class="n">a</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;index=&quot;</span><span class="o">+</span><span class="n">idx</span><span class="o">+</span><span class="s2">&quot; value=&quot;</span><span class="o">+</span><span class="n">val</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+<span class="o">//</span><span class="ow">or</span>
+<span class="n">foreach</span><span class="p">(</span><span class="n">val</span> <span class="ow">in</span> <span class="n">a</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;value=&quot;</span><span class="o">+</span><span class="n">val</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="break">
+<h2><span class="section-number">3.4.4. </span>break<a class="headerlink" href="#break" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-11"><div class="highlight"><pre><span></span><span class="n">stat</span> <span class="o">:=</span> <span class="s1">&#39;break&#39;</span>
+</pre></div>
+</div>
+<p>The break statement terminates the execution of a loop (for, foreach, while or do/while)
+or jumps out of switch statement;</p>
+</section>
+<section id="continue">
+<h2><span class="section-number">3.4.5. </span>continue<a class="headerlink" href="#continue" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-12"><div class="highlight"><pre><span></span><span class="n">stat</span> <span class="o">:=</span> <span class="s1">&#39;continue&#39;</span>
+</pre></div>
+</div>
+<p>The continue operator jumps to the next iteration of the loop skipping the execution of
+the following statements.</p>
+</section>
+<section id="return">
+<h2><span class="section-number">3.4.6. </span>return<a class="headerlink" href="#return" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-13"><div class="highlight"><pre><span></span><span class="n">stat</span><span class="o">:=</span> <span class="k">return</span> <span class="p">[</span><span class="n">exp</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The return statement terminates the execution of the current function/generator and
+optionally returns the result of an expression. If the expression is omitted the function
+will return null. If the return statement is used inside a generator, the generator will not
+be resumable anymore.</p>
+</section>
+<section id="yield">
+<h2><span class="section-number">3.4.7. </span>yield<a class="headerlink" href="#yield" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-14"><div class="highlight"><pre><span></span><span class="n">stat</span> <span class="o">:=</span> <span class="k">yield</span> <span class="p">[</span><span class="n">exp</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>(see <a class="reference internal" href="generators.html#generators"><span class="std std-ref">Generators</span></a>).</p>
+</section>
+<section id="local-variables-declaration">
+<h2><span class="section-number">3.4.8. </span>Local variables declaration<a class="headerlink" href="#local-variables-declaration" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-15"><div class="highlight"><pre><span></span><span class="n">initz</span> <span class="o">:=</span> <span class="nb">id</span> <span class="p">[</span><span class="o">=</span> <span class="n">exp</span><span class="p">][</span><span class="s1">&#39;,&#39;</span> <span class="n">initz</span><span class="p">]</span>
+<span class="n">stat</span> <span class="o">:=</span> <span class="s1">&#39;local&#39;</span> <span class="n">initz</span>
+</pre></div>
+</div>
+<p>Local variables can be declared at any point in the program; they exist between their
+declaration to the end of the block where they have been declared.
+<em>EXCEPTION:</em> a local declaration statement is allowed as first expression in a for loop.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span><span class="n">local</span> <span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">a</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span><span class="n">a</span><span class="o">+=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="function-declaration">
+<h2><span class="section-number">3.4.9. </span>Function declaration<a class="headerlink" href="#function-declaration" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-16"><div class="highlight"><pre><span></span><span class="n">funcname</span> <span class="o">:=</span> <span class="nb">id</span> <span class="p">[</span><span class="s1">&#39;::&#39;</span> <span class="nb">id</span><span class="p">]</span>
+<span class="n">stat</span><span class="o">:=</span> <span class="s1">&#39;function&#39;</span> <span class="nb">id</span> <span class="p">[</span><span class="s1">&#39;::&#39;</span> <span class="nb">id</span><span class="p">]</span><span class="o">+</span> <span class="s1">&#39;(&#39;</span> <span class="n">args</span> <span class="s1">&#39;)&#39;</span> <span class="n">stat</span>
+</pre></div>
+</div>
+<p>creates a new function.</p>
+</section>
+<section id="class-declaration">
+<h2><span class="section-number">3.4.10. </span>Class declaration<a class="headerlink" href="#class-declaration" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-17"><div class="highlight"><pre><span></span><span class="n">memberdecl</span> <span class="o">:=</span> <span class="nb">id</span> <span class="s1">&#39;=&#39;</span> <span class="n">exp</span> <span class="p">[</span><span class="s1">&#39;;&#39;</span><span class="p">]</span> <span class="o">|</span>    <span class="s1">&#39;[&#39;</span> <span class="n">exp</span> <span class="s1">&#39;]&#39;</span> <span class="s1">&#39;=&#39;</span> <span class="n">exp</span> <span class="p">[</span><span class="s1">&#39;;&#39;</span><span class="p">]</span> <span class="o">|</span> <span class="n">functionstat</span> <span class="o">|</span> <span class="s1">&#39;constructor&#39;</span> <span class="n">functionexp</span>
+<span class="n">stat</span><span class="o">:=</span> <span class="s1">&#39;class&#39;</span> <span class="n">derefexp</span> <span class="p">[</span><span class="s1">&#39;extends&#39;</span> <span class="n">derefexp</span><span class="p">]</span> <span class="s1">&#39;{&#39;</span>
+        <span class="p">[</span><span class="n">memberdecl</span><span class="p">]</span>
+    <span class="s1">&#39;}&#39;</span>
+</pre></div>
+</div>
+<p>creates a new class.</p>
+</section>
+<section id="try-catch">
+<h2><span class="section-number">3.4.11. </span>try/catch<a class="headerlink" href="#try-catch" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-18"><div class="highlight"><pre><span></span><span class="n">stat</span><span class="o">:=</span> <span class="s1">&#39;try&#39;</span> <span class="n">stat</span> <span class="s1">&#39;catch&#39;</span> <span class="s1">&#39;(&#39;</span> <span class="nb">id</span> <span class="s1">&#39;)&#39;</span> <span class="n">stat</span>
+</pre></div>
+</div>
+<p>The try statement encloses a block of code in which an exceptional condition can occur,
+such as a runtime error or a throw statement. The catch clause provides the exception-handling
+code. When a catch clause catches an exception, its id is bound to that
+exception.</p>
+</section>
+<section id="throw">
+<h2><span class="section-number">3.4.12. </span>throw<a class="headerlink" href="#throw" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-19"><div class="highlight"><pre><span></span><span class="n">stat</span><span class="o">:=</span> <span class="s1">&#39;throw&#39;</span> <span class="n">exp</span>
+</pre></div>
+</div>
+<p>Throws an exception. Any value can be thrown.</p>
+</section>
+<section id="const">
+<h2><span class="section-number">3.4.13. </span>const<a class="headerlink" href="#const" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-20"><div class="highlight"><pre><span></span><span class="n">stat</span><span class="o">:=</span> <span class="s1">&#39;const&#39;</span> <span class="nb">id</span> <span class="s1">&#39;=&#39;</span> <span class="s1">&#39;Integer | Float | StringLiteral</span>
+</pre></div>
+</div>
+<p>Declares a constant (see <a class="reference internal" href="constants_and_enumerations.html#constants-and-enumerations"><span class="std std-ref">Constants &amp; Enumerations</span></a>).</p>
+</section>
+<section id="enum">
+<h2><span class="section-number">3.4.14. </span>enum<a class="headerlink" href="#enum" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-21"><div class="highlight"><pre><span></span><span class="n">enumerations</span> <span class="o">:=</span> <span class="p">(</span> <span class="s1">&#39;id&#39;</span> <span class="s1">&#39;=&#39;</span> <span class="n">Integer</span> <span class="o">|</span> <span class="n">Float</span> <span class="o">|</span> <span class="n">StringLiteral</span> <span class="p">)</span> <span class="p">[</span><span class="s1">&#39;,&#39;</span><span class="p">]</span>
+<span class="n">stat</span><span class="o">:=</span> <span class="s1">&#39;enum&#39;</span> <span class="nb">id</span> <span class="s1">&#39;{&#39;</span> <span class="n">enumerations</span> <span class="s1">&#39;}&#39;</span>
+</pre></div>
+</div>
+<p>Declares an enumeration (see <a class="reference internal" href="constants_and_enumerations.html#constants-and-enumerations"><span class="std std-ref">Constants &amp; Enumerations</span></a>).</p>
+</section>
+<section id="expression-statement">
+<h2><span class="section-number">3.4.15. </span>Expression statement<a class="headerlink" href="#expression-statement" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-22"><div class="highlight"><pre><span></span><span class="n">stat</span> <span class="o">:=</span> <span class="n">exp</span>
+</pre></div>
+</div>
+<p>In Squirrel every expression is also allowed as statement, if so, the result of the
+expression is thrown away.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="execution_context.html" class="btn btn-neutral float-left" title="3.3. Execution Context" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="expressions.html" class="btn btn-neutral float-right" title="3.5. Expressions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2009-2026, Gerard Zagema.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

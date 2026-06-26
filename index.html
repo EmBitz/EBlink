@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EBlink User Manual &mdash; EBlink documentation 6.2 stable documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/EBlink.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=7218f4fa"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="1. Introduction" href="user/introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            EBlink documentation
+              <img src="_static/EBlink.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="user/introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user/usage.html">2. Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user/language.html">3. The script language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user/eblink/index.html">4. EBlink Scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user/bookindex.html">5. Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">EBlink documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">EBlink User Manual</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="eblink-user-manual">
+<span id="user"></span><h1>EBlink User Manual<a class="headerlink" href="#eblink-user-manual" title="Permalink to this heading"></a></h1>
+<p>Copyright (c) 2009 - 2026 Gerard Zagema</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the “Software”), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user/introduction.html">1. Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user/introduction.html#features">1.1. Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/introduction.html#supported-probes">1.2. Supported probes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/introduction.html#how-it-works">1.3. How it works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/introduction.html#this-manual">1.4. This manual</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user/usage.html">2. Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user/usage.html#before-you-start">2.1. Before you start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/usage.html#your-first-command">2.2. Your first command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/usage.html#saving-yourself-some-typing">2.3. Saving yourself some typing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/usage.html#the-command-line-structure">2.4. The command line structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/usage.html#configuring-the-probe-i">2.5. Configuring the probe: <code class="docutils literal notranslate"><span class="pre">-I</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/usage.html#loading-a-script-s">2.6. Loading a script: <code class="docutils literal notranslate"><span class="pre">-S</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/usage.html#flashing-firmware-f">2.7. Flashing firmware: <code class="docutils literal notranslate"><span class="pre">-F</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/usage.html#debugging-with-gdb-g">2.8. Debugging with GDB: <code class="docutils literal notranslate"><span class="pre">-G</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/usage.html#combining-f-and-g">2.8.1. Combining <code class="docutils literal notranslate"><span class="pre">-F</span></code> and <code class="docutils literal notranslate"><span class="pre">-G</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user/usage.html#configuring-the-cortex-m-core-t">2.9. Configuring the Cortex-M core: <code class="docutils literal notranslate"><span class="pre">-T</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/usage.html#other-options">2.10. Other options</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user/language.html">3. The script language</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user/language/lexical_structure.html">3.1. Lexical Structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/language/lexical_structure.html#index-0">3.1.1. Identifiers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/lexical_structure.html#keywords">3.1.2. Keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/lexical_structure.html#operators">3.1.3. Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/lexical_structure.html#other-tokens">3.1.4. Other tokens</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/lexical_structure.html#literals">3.1.5. Literals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/lexical_structure.html#comments">3.1.6. Comments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user/language/datatypes.html">3.2. Values and Data types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/language/datatypes.html#integer">3.2.1. Integer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/datatypes.html#float">3.2.2. Float</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/datatypes.html#string">3.2.3. String</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/datatypes.html#null">3.2.4. Null</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/datatypes.html#bool">3.2.5. Bool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/datatypes.html#table">3.2.6. Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/datatypes.html#array">3.2.7. Array</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/datatypes.html#function">3.2.8. Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/datatypes.html#class">3.2.9. Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/datatypes.html#class-instance">3.2.10. Class Instance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/datatypes.html#generator">3.2.11. Generator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/datatypes.html#userdata">3.2.12. Userdata</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/datatypes.html#thread">3.2.13. Thread</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/datatypes.html#weak-reference">3.2.14. Weak Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user/language/execution_context.html">3.3. Execution Context</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/language/execution_context.html#variables">3.3.1. Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user/language/statements.html">3.4. Statements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/language/statements.html#block">3.4.1. Block</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/statements.html#control-flow-statements">3.4.2. Control Flow Statements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/statements.html#loops">3.4.3. Loops</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/statements.html#break">3.4.4. break</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/statements.html#continue">3.4.5. continue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/statements.html#return">3.4.6. return</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/statements.html#yield">3.4.7. yield</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/statements.html#local-variables-declaration">3.4.8. Local variables declaration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/statements.html#function-declaration">3.4.9. Function declaration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/statements.html#class-declaration">3.4.10. Class declaration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/statements.html#try-catch">3.4.11. try/catch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/statements.html#throw">3.4.12. throw</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/statements.html#const">3.4.13. const</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/statements.html#enum">3.4.14. enum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/statements.html#expression-statement">3.4.15. Expression statement</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user/language/expressions.html">3.5. Expressions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/language/expressions.html#assignment">3.5.1. Assignment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/expressions.html#operators">3.5.2. Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/expressions.html#table-constructor">3.5.3. Table Constructor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/expressions.html#clone">3.5.4. clone</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/expressions.html#array-contructor">3.5.5. Array contructor</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user/language/tables.html">3.6. Tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/language/tables.html#construction">3.6.1. Construction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/tables.html#slot-creation">3.6.2. Slot creation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/tables.html#slot-deletion">3.6.3. Slot deletion</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user/language/arrays.html">3.7. Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/language/functions.html">3.8. Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/language/functions.html#function-declaration">3.8.1. Function declaration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/functions.html#function-calls">3.8.2. Function calls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/functions.html#binding-an-environment-to-a-function">3.8.3. Binding an environment to a function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/functions.html#lambda-expressions">3.8.4. Lambda Expressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/functions.html#free-variables">3.8.5. Free Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/functions.html#tail-recursion">3.8.6. Tail Recursion</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user/language/classes.html">3.9. Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/language/classes.html#class-declaration">3.9.1. Class Declaration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/classes.html#class-instances">3.9.2. Class Instances</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/classes.html#inheritance">3.9.3. Inheritance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/classes.html#metamethods">3.9.4. Metamethods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user/language/generators.html">3.10. Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/language/constants_and_enumerations.html">3.11. Constants &amp; Enumerations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/language/constants_and_enumerations.html#constants">3.11.1. Constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/constants_and_enumerations.html#enumerations">3.11.2. Enumerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/constants_and_enumerations.html#implementation-notes">3.11.3. Implementation notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user/language/threads.html">3.12. Threads</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/language/threads.html#using-threads">3.12.1. Using threads</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user/language/weak_references.html">3.13. Weak References</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/language/weak_references.html#handling-weak-references-explicitly">3.13.1. Handling weak references explicitly</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user/language/delegation.html">3.14. Delegation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/language/metamethods.html">3.15. Metamethods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/language/metamethods.html#set">3.15.1. _set</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/metamethods.html#get">3.15.2. _get</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/metamethods.html#newslot">3.15.3. _newslot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/metamethods.html#delslot">3.15.4. _delslot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/metamethods.html#add">3.15.5. _add</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/metamethods.html#sub">3.15.6. _sub</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/metamethods.html#mul">3.15.7. _mul</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/metamethods.html#div">3.15.8. _div</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/metamethods.html#modulo">3.15.9. _modulo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/metamethods.html#unm">3.15.10. _unm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/metamethods.html#typeof">3.15.11. _typeof</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/metamethods.html#cmp">3.15.12. _cmp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/metamethods.html#call">3.15.13. _call</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/metamethods.html#cloned">3.15.14. _cloned</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/metamethods.html#nexti">3.15.15. _nexti</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/metamethods.html#tostring">3.15.16. _tostring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/metamethods.html#inherited">3.15.17. _inherited</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/metamethods.html#newmember">3.15.18. _newmember</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user/language/builtin_functions.html">3.16. Built-in Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/language/builtin_functions.html#global-symbols">3.16.1. Global Symbols</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/builtin_functions.html#integer">3.16.2. Integer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/builtin_functions.html#float">3.16.3. Float</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/builtin_functions.html#bool">3.16.4. Bool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/builtin_functions.html#string">3.16.5. String</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/builtin_functions.html#table">3.16.6. Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/builtin_functions.html#id1">3.16.7. Array</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/builtin_functions.html#function">3.16.8. Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/builtin_functions.html#class">3.16.9. Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/builtin_functions.html#class-instance">3.16.10. Class Instance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/builtin_functions.html#generator">3.16.11. Generator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/builtin_functions.html#thread">3.16.12. Thread</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/language/builtin_functions.html#weak-reference">3.16.13. Weak Reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user/eblink/index.html">4. EBlink Scripting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user/eblink/introduction.html">4.1. Introduction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/introduction.html#how-scripts-are-loaded">4.1.1. How scripts are loaded</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/introduction.html#cli-defines">4.1.2. CLI defines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/introduction.html#api-objects">4.1.3. API objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/introduction.html#minimal-example">4.1.4. Minimal example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user/eblink/error_handling.html">4.2. Error Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/error_handling.html#exception-types">4.2.1. Exception types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/error_handling.html#return-values">4.2.2. Return values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/error_handling.html#propagating-errors">4.2.3. Propagating errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/error_handling.html#helper-functions">4.2.4. Helper functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/error_handling.html#user-defined-error-codes">4.2.5. User-defined error codes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user/eblink/logging.html">4.3. Logging &amp; Output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/logging.html#output-functions">4.3.1. Output functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/logging.html#verbosity-levels">4.3.2. Verbosity levels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/logging.html#format-strings">4.3.3. Format strings</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user/eblink/globals.html">4.4. Global Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/globals.html#script-loading">4.4.1. Script loading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/globals.html#type-checking">4.4.2. Type checking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/globals.html#data-conversion">4.4.3. Data conversion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/globals.html#eblink-information">4.4.4. EBlink information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/globals.html#string-utilities">4.4.5. String utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/globals.html#system-utilities">4.4.6. System utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/globals.html#math">4.4.7. Math</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user/eblink/constants.html">4.5. Constants</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/constants.html#version">4.5.1. VERSION</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/constants.html#target-state">4.5.2. Target state</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/constants.html#reset-types">4.5.3. Reset types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/constants.html#error-codes">4.5.4. Error codes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user/eblink/interaction.html">4.6. EBlink Interaction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/interaction.html#overview">4.6.1. Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/interaction.html#call-order">4.6.2. Call order</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/interaction.html#reference">4.6.3. Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user/eblink/ebbuffer.html">4.7. EBbuffer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/ebbuffer.html#construction">4.7.1. Construction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/ebbuffer.html#memory-access">4.7.2. Memory access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/ebbuffer.html#index-operator">4.7.3. Index operator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/ebbuffer.html#buffer-management">4.7.4. Buffer management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/ebbuffer.html#trimming">4.7.5. Trimming</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/ebbuffer.html#operators">4.7.6. Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/ebbuffer.html#example">4.7.7. Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user/eblink/interfapi.html">4.8. InterfAPI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/interfapi.html#probe-information">4.8.1. Probe information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/interfapi.html#dap-access">4.8.2. DAP access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/interfapi.html#memory-read">4.8.3. Memory read</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/interfapi.html#memory-write">4.8.4. Memory write</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/interfapi.html#file-loading">4.8.5. File loading</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user/eblink/deviceapi.html">4.9. DeviceAPI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/deviceapi.html#memory-map">4.9.1. Memory map</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/deviceapi.html#flash-management">4.9.2. Flash management</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user/eblink/targetapi.html">4.10. TargetAPI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/targetapi.html#target-information">4.10.1. Target information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/targetapi.html#execution-control">4.10.2. Execution control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/targetapi.html#register-access">4.10.3. Register access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/targetapi.html#example-read-and-print-all-core-registers">4.10.4. Example: read and print all core registers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user/eblink/servicesapi.html">4.11. ServicesAPI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/servicesapi.html#service-start-behaviour">4.11.1. Service start behaviour</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/servicesapi.html#example-dual-core-gdb-setup">4.11.2. Example: dual-core GDB setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/servicesapi.html#reference">4.11.3. Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user/eblink/debugger.html">4.12. Script Debugger</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/debugger.html#enabling-the-debugger">4.12.1. Enabling the debugger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/debugger.html#trace-output-format">4.12.2. Trace output format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/debugger.html#script-breakpoints">4.12.3. Script breakpoints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/debugger.html#interactive-commands">4.12.4. Interactive commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/debugger.html#call-stack-and-locals">4.12.5. Call stack and locals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/debugger.html#tips">4.12.6. Tips</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user/eblink/extensions.html">4.13. Addendum: Squirrel Extensions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/extensions.html#multiline-verbatim-strings">4.13.1. Multiline verbatim strings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/eblink/extensions.html#compile-time-constant-expressions">4.13.2. Compile-time constant expressions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user/eblink/apiindex.html">4.14. API Quick Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user/bookindex.html">5. Index</a></li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="user/introduction.html" class="btn btn-neutral float-right" title="1. Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2009-2026, Gerard Zagema.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

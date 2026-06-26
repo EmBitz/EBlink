@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3.5. Expressions &mdash; EBlink documentation 6.2 stable documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/EBlink.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=7218f4fa"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3.6. Tables" href="tables.html" />
+    <link rel="prev" title="3.4. Statements" href="statements.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            EBlink documentation
+              <img src="../../_static/EBlink.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">2. Usage</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../language.html">3. The script language</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="lexical_structure.html">3.1. Lexical Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datatypes.html">3.2. Values and Data types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="execution_context.html">3.3. Execution Context</a></li>
+<li class="toctree-l2"><a class="reference internal" href="statements.html">3.4. Statements</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.5. Expressions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#assignment">3.5.1. Assignment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#operators">3.5.2. Operators</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#operator">3.5.2.1. ?: Operator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#arithmetic">3.5.2.2. Arithmetic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#relational">3.5.2.3. Relational</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ways-compare">3.5.2.4. 3 ways compare</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logical">3.5.2.5. Logical</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#in-operator">3.5.2.6. in operator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#instanceof-operator">3.5.2.7. instanceof operator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#typeof-operator">3.5.2.8. typeof operator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#comma-operator">3.5.2.9. Comma operator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bitwise-operators">3.5.2.10. Bitwise Operators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#operators-precedence">3.5.2.11. Operators precedence</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#table-constructor">3.5.3. Table Constructor</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#table-with-json-syntax">3.5.3.1. Table with JSON syntax</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#clone">3.5.4. clone</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#array-contructor">3.5.5. Array contructor</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tables.html">3.6. Tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="arrays.html">3.7. Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html">3.8. Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classes.html">3.9. Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generators.html">3.10. Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants_and_enumerations.html">3.11. Constants &amp; Enumerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="threads.html">3.12. Threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weak_references.html">3.13. Weak References</a></li>
+<li class="toctree-l2"><a class="reference internal" href="delegation.html">3.14. Delegation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metamethods.html">3.15. Metamethods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="builtin_functions.html">3.16. Built-in Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../eblink/index.html">4. EBlink Scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bookindex.html">5. Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">EBlink documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../language.html"><span class="section-number">3. </span>The script language</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">3.5. </span>Expressions</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="expressions">
+<span id="id1"></span><h1><span class="section-number">3.5. </span>Expressions<a class="headerlink" href="#expressions" title="Permalink to this heading"></a></h1>
+<section id="assignment">
+<span id="index-0"></span><h2><span class="section-number">3.5.1. </span>Assignment<a class="headerlink" href="#assignment" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-1"><div class="highlight"><pre><span></span><span class="n">exp</span> <span class="o">:=</span> <span class="n">derefexp</span> <span class="s1">&#39;=&#39;</span> <span class="n">exp</span>
+<span class="n">exp</span><span class="o">:=</span> <span class="n">derefexp</span> <span class="s1">&#39;&lt;-&#39;</span> <span class="n">exp</span>
+</pre></div>
+</div>
+<p>squirrel implements 2 kind of assignment: the normal assignment(=):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>and the “new slot” assignment.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">&lt;-</span> <span class="mi">10</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The new slot expression allows to add a new slot into a table(see <a class="reference internal" href="tables.html#tables"><span class="std std-ref">Tables</span></a>). If the slot
+already exists in the table it behaves like a normal assignment.</p>
+</section>
+<section id="operators">
+<h2><span class="section-number">3.5.2. </span>Operators<a class="headerlink" href="#operators" title="Permalink to this heading"></a></h2>
+<section id="operator">
+<span id="index-2"></span><h3><span class="section-number">3.5.2.1. </span>?: Operator<a class="headerlink" href="#operator" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate" id="index-3"><div class="highlight"><pre><span></span><span class="n">exp</span> <span class="o">:=</span> <span class="n">exp_cond</span> <span class="s1">&#39;?&#39;</span> <span class="n">exp1</span> <span class="s1">&#39;:&#39;</span> <span class="n">exp2</span>
+</pre></div>
+</div>
+<p>conditionally evaluate an expression depending on the result of an expression.</p>
+</section>
+<section id="arithmetic">
+<h3><span class="section-number">3.5.2.2. </span>Arithmetic<a class="headerlink" href="#arithmetic" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate" id="index-4"><div class="highlight"><pre><span></span><span class="n">exp</span><span class="o">:=</span> <span class="s1">&#39;exp&#39;</span> <span class="n">op</span> <span class="s1">&#39;exp&#39;</span>
+</pre></div>
+</div>
+<p>Squirrel supports the standard arithmetic operators <code class="docutils literal notranslate"><span class="pre">+,</span> <span class="pre">-,</span> <span class="pre">*,</span> <span class="pre">/</span> <span class="pre">and</span> <span class="pre">%</span></code>.
+Other than that is also supports compact operators (<code class="docutils literal notranslate"><span class="pre">+=,-=,*=,/=,%=</span></code>) and
+increment and decrement operators(++ and –);:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="o">//</span><span class="ow">is</span> <span class="n">the</span> <span class="n">same</span> <span class="k">as</span> <span class="n">writing</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">x</span><span class="o">++</span>
+<span class="o">//</span><span class="ow">is</span> <span class="n">the</span> <span class="n">same</span> <span class="k">as</span> <span class="n">writing</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>All operators work normally with integers and floats; if one operand is an integer and one
+is a float the result of the expression will be float.
+The + operator has a special behavior with strings; if one of the operands is a string the
+operator + will try to convert the other operand to string as well and concatenate both
+together. For instances and tables, <code class="docutils literal notranslate"><span class="pre">_tostring</span></code> is invoked.</p>
+</section>
+<section id="relational">
+<h3><span class="section-number">3.5.2.3. </span>Relational<a class="headerlink" href="#relational" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate" id="index-5"><div class="highlight"><pre><span></span><span class="n">exp</span><span class="o">:=</span> <span class="s1">&#39;exp&#39;</span> <span class="n">op</span> <span class="s1">&#39;exp&#39;</span>
+</pre></div>
+</div>
+<p>Relational operators in Squirrel are : <code class="docutils literal notranslate"><span class="pre">==,</span> <span class="pre">&lt;,</span> <span class="pre">&lt;=,</span> <span class="pre">&lt;,</span> <span class="pre">&lt;=,</span> <span class="pre">!=</span></code></p>
+<p>These operators return true if the expression is false and a value different than true if the
+expression is true. Internally the VM uses the integer 1 as true but this could change in
+the future.</p>
+</section>
+<section id="ways-compare">
+<h3><span class="section-number">3.5.2.4. </span>3 ways compare<a class="headerlink" href="#ways-compare" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate" id="index-6"><div class="highlight"><pre><span></span><span class="n">exp</span><span class="o">:=</span> <span class="s1">&#39;exp&#39;</span> <span class="o">&lt;=&gt;</span> <span class="s1">&#39;exp&#39;</span>
+</pre></div>
+</div>
+<p>the 3 ways compare operator &lt;=&gt; compares 2 values A and B and returns an integer less than 0
+if A &lt; B, 0 if A == B and an integer greater than 0 if A &gt; B.</p>
+</section>
+<section id="logical">
+<h3><span class="section-number">3.5.2.5. </span>Logical<a class="headerlink" href="#logical" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate" id="index-7"><div class="highlight"><pre><span></span><span class="n">exp</span> <span class="o">:=</span> <span class="n">exp</span> <span class="n">op</span> <span class="n">exp</span>
+<span class="n">exp</span> <span class="o">:=</span> <span class="s1">&#39;!&#39;</span> <span class="n">exp</span>
+</pre></div>
+</div>
+<p>Logical operators in Squirrel are : <code class="docutils literal notranslate"><span class="pre">&amp;&amp;,</span> <span class="pre">||,</span> <span class="pre">!</span></code></p>
+<p>The operator <code class="docutils literal notranslate"><span class="pre">&amp;&amp;</span></code> (logical and) returns null if its first argument is null, otherwise returns
+its second argument.
+The operator <code class="docutils literal notranslate"><span class="pre">||</span></code> (logical or) returns its first argument if is different than null, otherwise
+returns the second argument.</p>
+<p>The ‘!’ operator will return null if the given value to negate was different than null, or a
+value different than null if the given value was null.</p>
+</section>
+<section id="in-operator">
+<h3><span class="section-number">3.5.2.6. </span>in operator<a class="headerlink" href="#in-operator" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate" id="index-8"><div class="highlight"><pre><span></span><span class="n">exp</span><span class="o">:=</span> <span class="n">keyexp</span> <span class="s1">&#39;in&#39;</span> <span class="n">tableexp</span>
+</pre></div>
+</div>
+<p>Tests the existence of a slot in a table.
+Returns true if <em>keyexp</em> is a valid key in <em>tableexp</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">t</span><span class="o">=</span>
+<span class="p">{</span>
+    <span class="n">foo</span><span class="o">=</span><span class="s2">&quot;I&#39;m foo&quot;</span><span class="p">,</span>
+    <span class="p">[</span><span class="mi">123</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;I&#39;m not foo&quot;</span>
+<span class="p">}</span>
+
+<span class="k">if</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span> <span class="ow">in</span> <span class="n">t</span><span class="p">)</span> <span class="n">dostuff</span><span class="p">(</span><span class="s2">&quot;yep&quot;</span><span class="p">);</span>
+<span class="k">if</span><span class="p">(</span><span class="mi">123</span> <span class="ow">in</span> <span class="n">t</span><span class="p">)</span> <span class="n">dostuff</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
+<section id="instanceof-operator">
+<h3><span class="section-number">3.5.2.7. </span>instanceof operator<a class="headerlink" href="#instanceof-operator" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate" id="index-9"><div class="highlight"><pre><span></span><span class="n">exp</span><span class="o">:=</span> <span class="n">instanceexp</span> <span class="s1">&#39;instanceof&#39;</span> <span class="n">classexp</span>
+</pre></div>
+</div>
+<p>Tests if a class instance is an instance of a certain class.
+Returns true if <em>instanceexp</em> is an instance of <em>classexp</em>.</p>
+</section>
+<section id="typeof-operator">
+<h3><span class="section-number">3.5.2.8. </span>typeof operator<a class="headerlink" href="#typeof-operator" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate" id="index-10"><div class="highlight"><pre><span></span><span class="n">exp</span><span class="o">:=</span> <span class="s1">&#39;typeof&#39;</span> <span class="n">exp</span>
+</pre></div>
+</div>
+<p>returns the type name of a value as string.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">a</span><span class="o">=</span><span class="p">{},</span><span class="n">b</span><span class="o">=</span><span class="s2">&quot;squirrel&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">typeof</span> <span class="n">a</span><span class="p">);</span> <span class="o">//</span><span class="n">will</span> <span class="nb">print</span> <span class="s2">&quot;table&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">typeof</span> <span class="n">b</span><span class="p">);</span> <span class="o">//</span><span class="n">will</span> <span class="nb">print</span> <span class="s2">&quot;string&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="comma-operator">
+<h3><span class="section-number">3.5.2.9. </span>Comma operator<a class="headerlink" href="#comma-operator" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate" id="index-11"><div class="highlight"><pre><span></span><span class="n">exp</span><span class="o">:=</span> <span class="n">exp</span> <span class="s1">&#39;,&#39;</span> <span class="n">exp</span>
+</pre></div>
+</div>
+<p>The comma operator evaluates two expression left to right, the result of the operator is
+the result of the expression on the right; the result of the left expression is discarded.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">k</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span><span class="p">(</span><span class="n">local</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">,</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">local</span> <span class="n">a</span><span class="p">,</span><span class="n">k</span><span class="p">;</span>
+<span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span> <span class="o">//</span><span class="n">a</span> <span class="n">becomes</span> <span class="mi">3</span>
+</pre></div>
+</div>
+</section>
+<section id="bitwise-operators">
+<h3><span class="section-number">3.5.2.10. </span>Bitwise Operators<a class="headerlink" href="#bitwise-operators" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate" id="index-12"><div class="highlight"><pre><span></span><span class="n">exp</span><span class="o">:=</span> <span class="s1">&#39;exp&#39;</span> <span class="n">op</span> <span class="s1">&#39;exp&#39;</span>
+<span class="n">exp</span> <span class="o">:=</span> <span class="s1">&#39;~&#39;</span> <span class="n">exp</span>
+</pre></div>
+</div>
+<p>Squirrel supports the standard C-like bitwise operators <code class="docutils literal notranslate"><span class="pre">&amp;,</span> <span class="pre">|,</span> <span class="pre">^,</span> <span class="pre">~,</span> <span class="pre">&lt;&lt;,</span> <span class="pre">&gt;&gt;</span></code> plus the unsigned
+right shift operator <code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;</span></code>. The unsigned right shift works exactly like the normal right shift operator(<code class="docutils literal notranslate"><span class="pre">&gt;&gt;</span></code>)
+except for treating the left operand as an unsigned integer, so is not affected by the sign. Those operators
+only work on integer values; passing of any other operand type to these operators will
+cause an exception.</p>
+</section>
+<section id="operators-precedence">
+<h3><span class="section-number">3.5.2.11. </span>Operators precedence<a class="headerlink" href="#operators-precedence" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default" id="index-13">
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-,</span> <span class="pre">~,</span> <span class="pre">!,</span> <span class="pre">typeof</span> <span class="pre">,</span> <span class="pre">++,</span> <span class="pre">--</span></code></p></td>
+<td><p>highest</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/,</span> <span class="pre">*,</span> <span class="pre">%</span></code></p></td>
+<td><p>…</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">+,</span> <span class="pre">-</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;&lt;,</span> <span class="pre">&gt;&gt;,</span> <span class="pre">&gt;&gt;&gt;</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;,</span> <span class="pre">&lt;=,</span> <span class="pre">&gt;,</span> <span class="pre">&gt;=,</span> <span class="pre">instanceof</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">==,</span> <span class="pre">!=,</span> <span class="pre">&lt;=&gt;</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&amp;</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">^</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&amp;&amp;,</span> <span class="pre">in</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">+=,</span> <span class="pre">=,</span> <span class="pre">-=,</span> <span class="pre">/=,</span> <span class="pre">*=,</span> <span class="pre">%=</span></code></p></td>
+<td><p>…</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">,</span> <span class="pre">(comma</span> <span class="pre">operator)</span></code></p></td>
+<td><p>lowest</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="table-constructor">
+<span id="table-contructor"></span><h2><span class="section-number">3.5.3. </span>Table Constructor<a class="headerlink" href="#table-constructor" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-14"><div class="highlight"><pre><span></span><span class="n">tslots</span> <span class="o">:=</span> <span class="p">(</span> <span class="s1">&#39;id&#39;</span> <span class="s1">&#39;=&#39;</span> <span class="n">exp</span> <span class="o">|</span> <span class="s1">&#39;[&#39;</span> <span class="n">exp</span> <span class="s1">&#39;]&#39;</span> <span class="s1">&#39;=&#39;</span> <span class="n">exp</span> <span class="p">)</span> <span class="p">[</span><span class="s1">&#39;,&#39;</span><span class="p">]</span>
+<span class="n">exp</span> <span class="o">:=</span> <span class="s1">&#39;{&#39;</span> <span class="p">[</span><span class="n">tslots</span><span class="p">]</span> <span class="s1">&#39;}&#39;</span>
+</pre></div>
+</div>
+<p>Creates a new table.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">a</span> <span class="o">=</span> <span class="p">{}</span> <span class="o">//</span><span class="n">create</span> <span class="n">an</span> <span class="n">empty</span> <span class="n">table</span>
+</pre></div>
+</div>
+<p>A table constructor can also contain slots declaration; With the syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">a</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">slot1</span> <span class="o">=</span> <span class="s2">&quot;I&#39;m the slot value&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>An alternative syntax can be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;[&#39;</span> <span class="n">exp1</span> <span class="s1">&#39;]&#39;</span> <span class="o">=</span> <span class="n">exp2</span> <span class="p">[</span><span class="s1">&#39;,&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>A new slot with exp1 as key and exp2 as value is created:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">a</span><span class="o">=</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;I&#39;m the value&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Both syntaxes can be mixed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">table</span><span class="o">=</span>
+<span class="p">{</span>
+    <span class="n">a</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">b</span><span class="o">=</span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+    <span class="p">[</span><span class="mi">10</span><span class="p">]</span><span class="o">=</span><span class="p">{},</span>
+    <span class="n">function</span> <span class="n">bau</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The comma between slots is optional.</p>
+<section id="table-with-json-syntax">
+<h3><span class="section-number">3.5.3.1. </span>Table with JSON syntax<a class="headerlink" href="#table-with-json-syntax" title="Permalink to this heading"></a></h3>
+<p id="index-15">Since Squirrel 3.0 is possible to declare a table using JSON syntax(see <a class="reference external" href="http://www.wikipedia.org/wiki/JSON">http://www.wikipedia.org/wiki/JSON</a>).</p>
+<p>the following JSON snippet:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">x</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Foo&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>
+  <span class="s2">&quot;tags&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Bar&quot;</span><span class="p">,</span><span class="s2">&quot;Eek&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>is equivalent to the following squirrel code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">x</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nb">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Foo&quot;</span><span class="p">,</span>
+  <span class="n">price</span> <span class="o">=</span> <span class="mi">123</span><span class="p">,</span>
+  <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Bar&quot;</span><span class="p">,</span><span class="s2">&quot;Eek&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="clone">
+<h2><span class="section-number">3.5.4. </span>clone<a class="headerlink" href="#clone" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-16"><div class="highlight"><pre><span></span><span class="n">exp</span><span class="o">:=</span> <span class="s1">&#39;clone&#39;</span> <span class="n">exp</span>
+</pre></div>
+</div>
+<p>Clone performs shallow copy of a table, array or class instance (copies all slots in the new object without
+recursion). If the source table has a delegate, the same delegate will be assigned as
+delegate (not copied) to the new table (see <a class="reference internal" href="delegation.html#delegation"><span class="std std-ref">Delegation</span></a>).</p>
+<p>After the new object is ready the “_cloned” meta method is called (see <a class="reference internal" href="metamethods.html#metamethods"><span class="std std-ref">Metamethods</span></a>).</p>
+<p>When a class instance is cloned the constructor is not invoked(initializations must rely on <code class="docutils literal notranslate"><span class="pre">`_cloned`</span></code> instead</p>
+</section>
+<section id="array-contructor">
+<h2><span class="section-number">3.5.5. </span>Array contructor<a class="headerlink" href="#array-contructor" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-17"><div class="highlight"><pre><span></span><span class="n">exp</span> <span class="o">:=</span> <span class="s1">&#39;[&#39;</span> <span class="p">[</span><span class="n">explist</span><span class="p">]</span> <span class="s1">&#39;]&#39;</span>
+</pre></div>
+</div>
+<p>Creates a new array.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">&lt;-</span> <span class="p">[]</span> <span class="o">//</span><span class="n">creates</span> <span class="n">an</span> <span class="n">empty</span> <span class="n">array</span>
+</pre></div>
+</div>
+<p>Arrays can be initialized with values during the construction:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">&lt;-</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="s2">&quot;string!&quot;</span><span class="p">,[],{}]</span> <span class="o">//</span><span class="n">creates</span> <span class="n">an</span> <span class="n">array</span> <span class="k">with</span> <span class="mi">4</span> <span class="n">elements</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="statements.html" class="btn btn-neutral float-left" title="3.4. Statements" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tables.html" class="btn btn-neutral float-right" title="3.6. Tables" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2009-2026, Gerard Zagema.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

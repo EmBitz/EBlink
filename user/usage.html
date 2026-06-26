@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2. Usage &mdash; EBlink documentation 6.2 stable documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/EBlink.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=7218f4fa"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3. The script language" href="language.html" />
+    <link rel="prev" title="1. Introduction" href="introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            EBlink documentation
+              <img src="../_static/EBlink.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2. Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#before-you-start">2.1. Before you start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#your-first-command">2.2. Your first command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#saving-yourself-some-typing">2.3. Saving yourself some typing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-command-line-structure">2.4. The command line structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuring-the-probe-i">2.5. Configuring the probe: <code class="docutils literal notranslate"><span class="pre">-I</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#loading-a-script-s">2.6. Loading a script: <code class="docutils literal notranslate"><span class="pre">-S</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#flashing-firmware-f">2.7. Flashing firmware: <code class="docutils literal notranslate"><span class="pre">-F</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#debugging-with-gdb-g">2.8. Debugging with GDB: <code class="docutils literal notranslate"><span class="pre">-G</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#combining-f-and-g">2.8.1. Combining <code class="docutils literal notranslate"><span class="pre">-F</span></code> and <code class="docutils literal notranslate"><span class="pre">-G</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#configuring-the-cortex-m-core-t">2.9. Configuring the Cortex-M core: <code class="docutils literal notranslate"><span class="pre">-T</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#other-options">2.10. Other options</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="language.html">3. The script language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eblink/index.html">4. EBlink Scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bookindex.html">5. Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EBlink documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">2. </span>Usage</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="usage">
+<span id="id1"></span><h1><span class="section-number">2. </span>Usage<a class="headerlink" href="#usage" title="Permalink to this heading"></a></h1>
+<p>This chapter walks you through using EBlink from scratch — from connecting
+your first probe to running a GDB debug session.</p>
+<section id="before-you-start">
+<h2><span class="section-number">2.1. </span>Before you start<a class="headerlink" href="#before-you-start" title="Permalink to this heading"></a></h2>
+<p>You need two things before EBlink can do anything:</p>
+<ol class="arabic simple">
+<li><p><strong>A debug probe</strong> connected to your PC and to the target board (SWD or
+JTAG header).</p></li>
+<li><p><strong>A device script</strong> that tells EBlink about your target — its memory map,
+how to erase and write flash, and how to reset it.</p></li>
+</ol>
+<p>EBlink is shipped with device scripts for STMicro, NXP, Atmel, Silicon Labs
+and Renesas targets. If you are not sure which script to use, start with
+<code class="docutils literal notranslate"><span class="pre">auto</span></code> and EBlink will identify the connected device and select the right
+script for you.</p>
+</section>
+<section id="your-first-command">
+<h2><span class="section-number">2.2. </span>Your first command<a class="headerlink" href="#your-first-command" title="Permalink to this heading"></a></h2>
+<p>The minimal EBlink command is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">eblink</span> <span class="o">-</span><span class="n">I</span> <span class="n">stlink</span> <span class="o">-</span><span class="n">S</span> <span class="n">auto</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">-I</span> <span class="pre">stlink</span></code> tells EBlink to use an STlink probe.
+<code class="docutils literal notranslate"><span class="pre">-S</span> <span class="pre">auto</span></code> tells EBlink to auto-detect your device and load the right script.</p>
+<p>If EBlink starts without errors, your probe is connected and the target is
+recognised. EBlink will then exit immediately because you have not asked it
+to do anything yet — that is normal.</p>
+</section>
+<section id="saving-yourself-some-typing">
+<h2><span class="section-number">2.3. </span>Saving yourself some typing<a class="headerlink" href="#saving-yourself-some-typing" title="Permalink to this heading"></a></h2>
+<p>Typing <code class="docutils literal notranslate"><span class="pre">-I</span> <span class="pre">stlink</span> <span class="pre">-S</span> <span class="pre">auto</span></code> on every command gets old fast. EBlink reads two
+environment variables at startup so you can set your defaults once and leave
+them out of every command:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">EB_DEFAULT_PROBE</span></code></dt><dd><p>Used as the <code class="docutils literal notranslate"><span class="pre">-I</span></code> argument when <code class="docutils literal notranslate"><span class="pre">-I</span></code> is not on the command line.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">EB_DEFAULT_SCRIPT</span></code></dt><dd><p>Used as a <code class="docutils literal notranslate"><span class="pre">-S</span></code> argument when <code class="docutils literal notranslate"><span class="pre">-S</span></code> is not on the command line.</p>
+</dd>
+</dl>
+<p>Set them in your shell profile or system settings:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">EB_DEFAULT_PROBE</span><span class="o">=</span><span class="n">stlink</span>
+<span class="n">export</span> <span class="n">EB_DEFAULT_SCRIPT</span><span class="o">=</span><span class="n">auto</span>
+</pre></div>
+</div>
+<p>After this, <code class="docutils literal notranslate"><span class="pre">eblink</span> <span class="pre">-F</span> <span class="pre">file=firmware.elf</span></code> is enough to flash a board —
+EBlink picks up the probe and script from the environment. Anything you do
+specify on the command line overrides the environment variable, so you can
+always deviate from the default for a single session without changing the
+setting:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># normally uses stlink from environment, override for this session:</span>
+<span class="n">eblink</span> <span class="o">-</span><span class="n">I</span> <span class="n">cmsis</span><span class="o">-</span><span class="n">dap</span> <span class="o">-</span><span class="n">F</span> <span class="n">file</span><span class="o">=</span><span class="n">firmware</span><span class="o">.</span><span class="n">elf</span>
+</pre></div>
+</div>
+</section>
+<section id="the-command-line-structure">
+<h2><span class="section-number">2.4. </span>The command line structure<a class="headerlink" href="#the-command-line-structure" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">eblink</span> <span class="o">-</span><span class="n">I</span> <span class="o">&lt;</span><span class="n">probe</span><span class="o">&gt;</span><span class="p">[,</span><span class="n">options</span><span class="p">]</span> <span class="o">-</span><span class="n">S</span> <span class="o">&lt;</span><span class="n">script</span><span class="o">&gt;</span> <span class="p">[</span><span class="n">operation</span><span class="p">]</span> <span class="p">[</span><span class="n">options</span><span class="o">...</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>EBlink always follows this sequence when it starts:</p>
+<ol class="arabic simple">
+<li><p>Open the debug probe (<code class="docutils literal notranslate"><span class="pre">-I</span></code>).</p></li>
+<li><p>Load the device script(s) (<code class="docutils literal notranslate"><span class="pre">-S</span></code>).</p></li>
+<li><p>Call <code class="docutils literal notranslate"><span class="pre">ebMain()</span></code> in the script — this sets up the memory map and
+initialises the target.</p></li>
+<li><p>Carry out whatever operation you asked for (flash, GDB server, or both).</p></li>
+</ol>
+<p>If any step fails, EBlink stops and reports the error. The most common
+first-time problems are a wrong probe type in <code class="docutils literal notranslate"><span class="pre">-I</span></code>, a missing USB driver,
+or a target that is not powered.</p>
+</section>
+<section id="configuring-the-probe-i">
+<h2><span class="section-number">2.5. </span>Configuring the probe: <code class="docutils literal notranslate"><span class="pre">-I</span></code><a class="headerlink" href="#configuring-the-probe-i" title="Permalink to this heading"></a></h2>
+<p>The probe type comes first in the <code class="docutils literal notranslate"><span class="pre">-I</span></code> string, followed by comma-separated
+options:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">I</span> <span class="n">stlink</span><span class="p">,</span><span class="n">speed</span><span class="o">=</span><span class="mi">4000</span>
+</pre></div>
+</div>
+<p>The most useful options are:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">speed=&lt;kHz&gt;</span></code></dt><dd><p>The SWD clock speed. The default is the maximum the probe supports, which
+is fine in most cases. If you get connection errors, try a lower speed
+such as <code class="docutils literal notranslate"><span class="pre">speed=1000</span></code> — long cables or noisy boards can cause problems
+at high speeds.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">dr</span></code> (disable reset)</dt><dd><p>Normally EBlink resets the target when it connects. Add <code class="docutils literal notranslate"><span class="pre">dr</span></code> to connect
+without a reset — useful when the target is already running code that
+must not be interrupted, or when the reset pin is not wired to the header.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">swd</span></code> / <code class="docutils literal notranslate"><span class="pre">jtag</span></code></dt><dd><p>The debug protocol. SWD is the default and works on virtually all
+Cortex-M targets. Switch to <code class="docutils literal notranslate"><span class="pre">jtag</span></code> only if your hardware requires it.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">serial=&lt;sn&gt;</span></code></dt><dd><p>If you have more than one probe plugged in at the same time, use the
+serial number to pick the right one. You can find serial numbers by
+running EBlink without this option — it will list all connected probes
+if there is ambiguity.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">vcc=&lt;V&gt;</span></code></dt><dd><p>The target supply voltage (e.g. <code class="docutils literal notranslate"><span class="pre">3.3</span></code> or <code class="docutils literal notranslate"><span class="pre">1.8</span></code>). EBlink uses this
+for speed calibration; it does not control the actual supply rail.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">ap=&lt;n&gt;</span></code></dt><dd><p>By default EBlink scans the DAP and selects the first useful access port
+it finds. On multi-core devices such as the STM32H7, each core has its
+own AP, so you need to specify which one to use: <code class="docutils literal notranslate"><span class="pre">ap=0</span></code> for the CM7
+core, <code class="docutils literal notranslate"><span class="pre">ap=1</span></code> for the CM4 core.</p>
+</dd>
+</dl>
+</section>
+<section id="loading-a-script-s">
+<h2><span class="section-number">2.6. </span>Loading a script: <code class="docutils literal notranslate"><span class="pre">-S</span></code><a class="headerlink" href="#loading-a-script-s" title="Permalink to this heading"></a></h2>
+<p>The device script is what makes EBlink work with your specific target. It
+contains the memory map, the flash algorithm, and the reset strategy.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">S</span> <span class="n">auto</span>                         <span class="c1"># auto-detect the device</span>
+<span class="o">-</span><span class="n">S</span> <span class="n">stm32g0</span><span class="o">.</span><span class="n">script</span>               <span class="c1"># explicit script by name</span>
+<span class="o">-</span><span class="n">S</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">user</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">my</span><span class="o">.</span><span class="n">script</span> <span class="c1"># explicit script by full path</span>
+</pre></div>
+</div>
+<p>With <code class="docutils literal notranslate"><span class="pre">auto</span></code>, EBlink reads the device ID register from the target and
+selects the matching script from the installed scripts. If the device is not recognised,
+EBlink tells you so and exits — in that case you need a custom script.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">-P</span> <span class="pre">&lt;path&gt;</span></code> to add a directory to the script search path so you can
+refer to scripts by filename rather than full path:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">eblink</span> <span class="o">-</span><span class="n">I</span> <span class="n">stlink</span> <span class="o">-</span><span class="n">S</span> <span class="n">my_target</span><span class="o">.</span><span class="n">script</span> <span class="o">-</span><span class="n">P</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">user</span><span class="o">/</span><span class="n">my_scripts</span>
+</pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">-D</span> <span class="pre">name=value</span></code> to pass a value into the script as a global variable.
+Some scripts use this for configuration that differs between board variants:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">D</span> <span class="n">FLASH_SIZE</span><span class="o">=</span><span class="mh">0x200000</span>
+</pre></div>
+</div>
+</section>
+<section id="flashing-firmware-f">
+<h2><span class="section-number">2.7. </span>Flashing firmware: <code class="docutils literal notranslate"><span class="pre">-F</span></code><a class="headerlink" href="#flashing-firmware-f" title="Permalink to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">-F</span></code> option programs, verifies, or inspects flash memory. You combine
+keywords and values with commas:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">F</span> <span class="n">file</span><span class="o">=</span><span class="n">firmware</span><span class="o">.</span><span class="n">elf</span><span class="p">,</span><span class="n">erase</span><span class="p">,</span><span class="n">verify</span><span class="p">,</span><span class="n">run</span>
+</pre></div>
+</div>
+<p><strong>The most important thing to understand</strong> is that by default — without
+<code class="docutils literal notranslate"><span class="pre">erase</span></code> — EBlink only re-programs flash sectors that differ from the new
+image. Unchanged sectors are left alone. This is faster and reduces flash
+wear. It works for most development workflows.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">erase</span></code> when you need a clean slate: for example when changing
+partition layouts, clearing old data sectors, or recovering a board with
+write-protected flash.</p>
+<p>The most common operations:</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">file=&lt;file&gt;</span></code></dt><dd><p>The image to program. EBlink accepts ELF, Intel HEX, and SREC and detects
+the format automatically from the file contents.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">erase</span></code></dt><dd><p>Chip-erase the entire flash before programming. Use this when the default
+smart re-flash is not sufficient.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">verify</span></code></dt><dd><p>Read back every programmed sector and compare it with the image. If
+anything does not match, EBlink reports an error. Adds some time but
+gives you certainty.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">run</span></code></dt><dd><p>Release the target and let it start running after all operations are
+done. Without this the target stays halted.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cmp=&lt;file&gt;</span></code></dt><dd><p>Compare flash contents with a file without changing anything. Useful for
+checking whether a board already has the right firmware.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">write=&lt;hex&gt;&#64;&lt;address&gt;</span></code></dt><dd><p>Patch bytes at a specific flash address. The value is written as raw hex
+— two hex digits per byte, no <code class="docutils literal notranslate"><span class="pre">0x</span></code> prefix. The address uses the normal
+<code class="docutils literal notranslate"><span class="pre">0x</span></code> notation. This is done <em>after</em> the file upload, so you can patch
+a serial number or device-specific calibration into an otherwise
+identical firmware image:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">F</span> <span class="n">file</span><span class="o">=</span><span class="n">fw</span><span class="o">.</span><span class="n">elf</span><span class="p">,</span><span class="n">write</span><span class="o">=</span><span class="mi">0102030405</span><span class="o">@</span><span class="mh">0x0800FF00</span>
+</pre></div>
+</div>
+<p>Multiple <code class="docutils literal notranslate"><span class="pre">write</span></code> options are allowed in a single <code class="docutils literal notranslate"><span class="pre">-F</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">read=&lt;length&gt;&#64;&lt;address&gt;</span></code></dt><dd><p>Read bytes from the target and print them as hex. Handy for checking a
+register value or a specific memory location without a full debug
+session. Use <code class="docutils literal notranslate"><span class="pre">-v</span> <span class="pre">0</span></code> to suppress all other EBlink output so only the
+hex bytes appear:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">eblink</span> <span class="o">-</span><span class="n">I</span> <span class="n">stlink</span> <span class="o">-</span><span class="n">S</span> <span class="n">auto</span> <span class="o">-</span><span class="n">v</span> <span class="mi">0</span> <span class="o">-</span><span class="n">F</span> <span class="n">read</span><span class="o">=</span><span class="mi">4</span><span class="o">@</span><span class="mh">0x08000004</span>
+</pre></div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">dump=&lt;length&gt;&#64;&lt;address&gt;:&lt;file&gt;</span></code></dt><dd><p>Save a region of memory to a file. Use a <code class="docutils literal notranslate"><span class="pre">.hex</span></code> extension for Intel
+HEX format, any other extension for raw binary.</p>
+</dd>
+</dl>
+<p>Typical flashing examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Development: only re-program what changed</span>
+<span class="n">eblink</span> <span class="o">-</span><span class="n">I</span> <span class="n">stlink</span> <span class="o">-</span><span class="n">S</span> <span class="n">auto</span> <span class="o">-</span><span class="n">F</span> <span class="n">file</span><span class="o">=</span><span class="n">firmware</span><span class="o">.</span><span class="n">elf</span>
+
+<span class="c1"># Production: erase everything, program, verify, start</span>
+<span class="n">eblink</span> <span class="o">-</span><span class="n">I</span> <span class="n">stlink</span> <span class="o">-</span><span class="n">S</span> <span class="n">auto</span> <span class="o">-</span><span class="n">F</span> <span class="n">erase</span><span class="p">,</span><span class="n">verify</span><span class="p">,</span><span class="n">run</span><span class="p">,</span><span class="n">file</span><span class="o">=</span><span class="n">firmware</span><span class="o">.</span><span class="n">elf</span>
+
+<span class="c1"># Check if the board already has the right firmware</span>
+<span class="n">eblink</span> <span class="o">-</span><span class="n">I</span> <span class="n">stlink</span> <span class="o">-</span><span class="n">S</span> <span class="n">auto</span> <span class="o">-</span><span class="n">F</span> <span class="n">cmp</span><span class="o">=</span><span class="n">firmware</span><span class="o">.</span><span class="n">elf</span>
+</pre></div>
+</div>
+</section>
+<section id="debugging-with-gdb-g">
+<h2><span class="section-number">2.8. </span>Debugging with GDB: <code class="docutils literal notranslate"><span class="pre">-G</span></code><a class="headerlink" href="#debugging-with-gdb-g" title="Permalink to this heading"></a></h2>
+<p>Adding <code class="docutils literal notranslate"><span class="pre">-G</span></code> starts a GDB remote-serial-protocol server. You then point
+your debugger (arm-none-eabi-gdb, an IDE like EmBitz or VS Code) at that
+server and connect:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">eblink</span> <span class="o">-</span><span class="n">I</span> <span class="n">stlink</span> <span class="o">-</span><span class="n">S</span> <span class="n">auto</span> <span class="o">-</span><span class="n">G</span>
+</pre></div>
+</div>
+<p>By default EBlink listens on all network interfaces on TCP port 2331. Your
+GDB client connects with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">target</span> <span class="n">remote</span> <span class="n">localhost</span><span class="p">:</span><span class="mi">2331</span>
+</pre></div>
+</div>
+<p>The most useful <code class="docutils literal notranslate"><span class="pre">-G</span></code> options:</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">port=&lt;n&gt;</span></code></dt><dd><p>Use a different TCP port. Useful when the default port 2331 is already
+in use, or when you run multiple EBlink instances at the same time:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">G</span> <span class="n">port</span><span class="o">=</span><span class="mi">4242</span>
+</pre></div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">ap=&lt;n&gt;</span></code></dt><dd><p>Attach this GDB server to a specific DAP access port. By default EBlink
+selects the first useful AP it finds. On a dual-core device (e.g.
+STM32H7), run two separate EBlink instances — one with <code class="docutils literal notranslate"><span class="pre">-G</span> <span class="pre">ap=0</span></code> for
+the CM7 core and one with <code class="docutils literal notranslate"><span class="pre">-G</span> <span class="pre">ap=1</span></code> for the CM4 core. Each GDB session
+then controls its own core independently.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">s</span></code></dt><dd><p>Shut down EBlink when GDB disconnects. Without this, EBlink keeps
+running and waits for the next connection. Add <code class="docutils literal notranslate"><span class="pre">s</span></code> in automated test
+flows where EBlink should exit cleanly after each session.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">nc</span></code></dt><dd><p>Disable the flash cache. EBlink normally caches flash contents so that
+re-flashing from GDB is fast. If your target modifies its own flash
+at runtime (bootloaders, EEPROM emulation), disable the cache so EBlink
+always reads back the real flash contents.</p>
+</dd>
+</dl>
+<section id="combining-f-and-g">
+<h3><span class="section-number">2.8.1. </span>Combining <code class="docutils literal notranslate"><span class="pre">-F</span></code> and <code class="docutils literal notranslate"><span class="pre">-G</span></code><a class="headerlink" href="#combining-f-and-g" title="Permalink to this heading"></a></h3>
+<p>You do not need to flash anything to use the GDB server — <code class="docutils literal notranslate"><span class="pre">-G</span></code> works on
+its own and connects to whatever is already running on the target. Adding
+<code class="docutils literal notranslate"><span class="pre">-F</span></code> is useful when you want to write something to flash first, for
+example a bootloader, a certificate, or device-specific calibration data,
+and then hand control to the debugger:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">eblink</span> <span class="o">-</span><span class="n">I</span> <span class="n">stlink</span> <span class="o">-</span><span class="n">S</span> <span class="n">auto</span> <span class="o">-</span><span class="n">F</span> <span class="n">file</span><span class="o">=</span><span class="n">bootloader</span><span class="o">.</span><span class="n">elf</span> <span class="o">-</span><span class="n">G</span> <span class="n">port</span><span class="o">=</span><span class="mi">4242</span>
+</pre></div>
+</div>
+<p>EBlink programs the flash first, then starts the GDB server and waits for
+a connection.</p>
+</section>
+</section>
+<section id="configuring-the-cortex-m-core-t">
+<h2><span class="section-number">2.9. </span>Configuring the Cortex-M core: <code class="docutils literal notranslate"><span class="pre">-T</span></code><a class="headerlink" href="#configuring-the-cortex-m-core-t" title="Permalink to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">-T</span></code> is optional and rarely needed for everyday use. EBlink auto-detects
+the core type. You add <code class="docutils literal notranslate"><span class="pre">-T</span></code> only when you want to change the default
+fault handling or reset behaviour.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">fu=&lt;0..2&gt;</span></code></dt><dd><p>Fault unwind level. When your target crashes (HardFault, MemManage,
+etc.), EBlink can decode the exception stack frame and show you exactly
+which instruction faulted and why. <code class="docutils literal notranslate"><span class="pre">0</span></code> = disabled, <code class="docutils literal notranslate"><span class="pre">1</span></code> = passive
+(decode when halted), <code class="docutils literal notranslate"><span class="pre">2</span></code> = active (catch the fault immediately,
+default). This is one of EBlink’s most useful debugging features — leave
+it at the default <code class="docutils literal notranslate"><span class="pre">2</span></code> unless you have a specific reason not to.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">reset=&lt;0..2&gt;</span></code></dt><dd><p>Reset strategy: <code class="docutils literal notranslate"><span class="pre">0</span></code> = system reset (default), <code class="docutils literal notranslate"><span class="pre">1</span></code> = core-only
+reset, <code class="docutils literal notranslate"><span class="pre">2</span></code> = JTAG reset. Change this only if a system reset causes
+problems — for example when it reinitialises peripherals that need to
+stay powered.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">fc=&lt;flags&gt;</span></code></dt><dd><p>Controls which fault classes trigger the vector catch. Default is all
+faults. Remove <code class="docutils literal notranslate"><span class="pre">r</span></code> if you do not want reset vectors caught:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">T</span> <span class="n">cortex</span><span class="o">-</span><span class="n">m</span><span class="p">,</span><span class="n">fc</span><span class="o">=</span><span class="n">mncsbih</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</section>
+<section id="other-options">
+<h2><span class="section-number">2.10. </span>Other options<a class="headerlink" href="#other-options" title="Permalink to this heading"></a></h2>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">-v</span> <span class="pre">&lt;0..8&gt;</span></code></dt><dd><p>Verbosity level (default 4). Lower numbers give less output; higher
+numbers show internal debug traffic. Use <code class="docutils literal notranslate"><span class="pre">-v</span> <span class="pre">0</span></code> for scripted use where
+you only want the result of a <code class="docutils literal notranslate"><span class="pre">-F</span> <span class="pre">read</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-H</span></code></dt><dd><p>Connect without resetting the target — same as adding <code class="docutils literal notranslate"><span class="pre">dr</span></code> to the
+<code class="docutils literal notranslate"><span class="pre">-I</span></code> string.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-E</span> <span class="pre">&lt;call&gt;</span></code></dt><dd><p>Execute a Squirrel function after initialisation. Lets you call script
+functions from the command line without writing a wrapper script:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">E</span> <span class="s2">&quot;dataflash_erase(0x08000500)&quot;</span>
+</pre></div>
+</div>
+<p>Multiple <code class="docutils literal notranslate"><span class="pre">-E</span></code> options are executed in order.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-Q</span> <span class="pre">&lt;n|y|d&gt;</span></code></dt><dd><p>How EBlink handles yes/no questions from a script: <code class="docutils literal notranslate"><span class="pre">n</span></code> = always no,
+<code class="docutils literal notranslate"><span class="pre">y</span></code> = always yes, <code class="docutils literal notranslate"><span class="pre">d</span></code> = use the script default. Useful for
+unattended automation where no one is at the keyboard.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="introduction.html" class="btn btn-neutral float-left" title="1. Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="language.html" class="btn btn-neutral float-right" title="3. The script language" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2009-2026, Gerard Zagema.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

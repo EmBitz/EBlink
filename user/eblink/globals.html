@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4.4. Global Functions &mdash; EBlink documentation 6.2 stable documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/EBlink.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=7218f4fa"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4.5. Constants" href="constants.html" />
+    <link rel="prev" title="4.3. Logging &amp; Output" href="logging.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            EBlink documentation
+              <img src="../../_static/EBlink.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">2. Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../language.html">3. The script language</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">4. EBlink Scripting</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">4.1. Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="error_handling.html">4.2. Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">4.3. Logging &amp; Output</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.4. Global Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#script-loading">4.4.1. Script loading</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#include"><code class="docutils literal notranslate"><span class="pre">include()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#require"><code class="docutils literal notranslate"><span class="pre">require()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#type-checking">4.4.2. Type checking</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#isString"><code class="docutils literal notranslate"><span class="pre">isString()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#isInteger"><code class="docutils literal notranslate"><span class="pre">isInteger()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#isnull"><code class="docutils literal notranslate"><span class="pre">isnull()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#isScriptObject"><code class="docutils literal notranslate"><span class="pre">isScriptObject()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#data-conversion">4.4.3. Data conversion</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#strToNumber"><code class="docutils literal notranslate"><span class="pre">strToNumber()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Integer2Float"><code class="docutils literal notranslate"><span class="pre">Integer2Float()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Float2Integer"><code class="docutils literal notranslate"><span class="pre">Float2Integer()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#eblink-information">4.4.4. EBlink information</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#cliSwitch"><code class="docutils literal notranslate"><span class="pre">cliSwitch()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#string-utilities">4.4.5. String utilities</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#astrsep"><code class="docutils literal notranslate"><span class="pre">astrsep()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#amregex"><code class="docutils literal notranslate"><span class="pre">amregex()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#system-utilities">4.4.6. System utilities</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Sleep"><code class="docutils literal notranslate"><span class="pre">Sleep()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#GetTickCount"><code class="docutils literal notranslate"><span class="pre">GetTickCount()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#AnimateCursor"><code class="docutils literal notranslate"><span class="pre">AnimateCursor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#AnimateDone"><code class="docutils literal notranslate"><span class="pre">AnimateDone()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#math">4.4.7. Math</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#FL_MIN"><code class="docutils literal notranslate"><span class="pre">FL_MIN()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#FL_MAX"><code class="docutils literal notranslate"><span class="pre">FL_MAX()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#UN_MIN"><code class="docutils literal notranslate"><span class="pre">UN_MIN()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#UN_MAX"><code class="docutils literal notranslate"><span class="pre">UN_MAX()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#IN_MIN"><code class="docutils literal notranslate"><span class="pre">IN_MIN()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#IN_MAX"><code class="docutils literal notranslate"><span class="pre">IN_MAX()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">4.5. Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interaction.html">4.6. EBlink Interaction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ebbuffer.html">4.7. EBbuffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interfapi.html">4.8. InterfAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deviceapi.html">4.9. DeviceAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="targetapi.html">4.10. TargetAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servicesapi.html">4.11. ServicesAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugger.html">4.12. Script Debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html">4.13. Addendum: Squirrel Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apiindex.html">4.14. API Quick Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../bookindex.html">5. Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">EBlink documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html"><span class="section-number">4. </span>EBlink Scripting</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">4.4. </span>Global Functions</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="global-functions">
+<span id="eblink-globals"></span><h1><span class="section-number">4.4. </span>Global Functions<a class="headerlink" href="#global-functions" title="Permalink to this heading"></a></h1>
+<p>These functions are available in all EBlink scripts without any import or
+declaration.</p>
+<section id="script-loading">
+<h2><span class="section-number">4.4.1. </span>Script loading<a class="headerlink" href="#script-loading" title="Permalink to this heading"></a></h2>
+<dl class="js function">
+<dt class="sig sig-object js" id="include">
+<span class="sig-name descname"><span class="n"><span class="pre">include</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#include" title="Permalink to this definition"></a></dt>
+<dd><p>Loads and executes a Squirrel script file. Searches the configured script
+paths. Does nothing and returns <code class="docutils literal notranslate"><span class="pre">ERROR_OK</span></code> if the file is not found —
+use <code class="docutils literal notranslate"><span class="pre">require</span></code> when the file must exist.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="require">
+<span class="sig-name descname"><span class="n"><span class="pre">require</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#require" title="Permalink to this definition"></a></dt>
+<dd><p>Loads and executes a Squirrel script file. Throws a string exception if the
+file cannot be found or loaded. Use for dependencies that must be present.</p>
+</dd></dl>
+
+</section>
+<section id="type-checking">
+<h2><span class="section-number">4.4.2. </span>Type checking<a class="headerlink" href="#type-checking" title="Permalink to this heading"></a></h2>
+<dl class="js function">
+<dt class="sig sig-object js" id="isString">
+<span class="sig-name descname"><span class="n"><span class="pre">isString</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#isString" title="Permalink to this definition"></a></dt>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">value</span></code> is a string.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="isInteger">
+<span class="sig-name descname"><span class="n"><span class="pre">isInteger</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#isInteger" title="Permalink to this definition"></a></dt>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">value</span></code> is an integer.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="isnull">
+<span class="sig-name descname"><span class="n"><span class="pre">isnull</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#isnull" title="Permalink to this definition"></a></dt>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">instance</span></code> is a null object instance. Used to check
+whether an API object reference is valid.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="isScriptObject">
+<span class="sig-name descname"><span class="n"><span class="pre">isScriptObject</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#isScriptObject" title="Permalink to this definition"></a></dt>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if a global function or object with the given name exists
+in the script VM. Useful before calling an optional entry point:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="p">(</span><span class="n">isScriptObject</span><span class="p">(</span><span class="s2">&quot;myCustomInit&quot;</span><span class="p">))</span>
+    <span class="n">myCustomInit</span><span class="p">();</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="data-conversion">
+<h2><span class="section-number">4.4.3. </span>Data conversion<a class="headerlink" href="#data-conversion" title="Permalink to this heading"></a></h2>
+<dl class="js function">
+<dt class="sig sig-object js" id="strToNumber">
+<span class="sig-name descname"><span class="n"><span class="pre">strToNumber</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#strToNumber" title="Permalink to this definition"></a></dt>
+<dd><p>Parses a decimal or hexadecimal (<code class="docutils literal notranslate"><span class="pre">0x</span></code> prefix) string and returns the
+value as an integer. Returns <code class="docutils literal notranslate"><span class="pre">0</span></code> for invalid input.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">addr</span> <span class="o">=</span> <span class="n">strToNumber</span><span class="p">(</span><span class="s2">&quot;0x08004000&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="Integer2Float">
+<span class="sig-name descname"><span class="n"><span class="pre">Integer2Float</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Integer2Float" title="Permalink to this definition"></a></dt>
+<dd><p>Reinterprets the bit pattern of a 32-bit integer as an IEEE 754 float.
+Equivalent to a C <code class="docutils literal notranslate"><span class="pre">*(float*)&amp;value</span></code> cast. Useful when a register or
+memory location holds a float value.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="Float2Integer">
+<span class="sig-name descname"><span class="n"><span class="pre">Float2Integer</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Float2Integer" title="Permalink to this definition"></a></dt>
+<dd><p>Reinterprets the bit pattern of a float as a 32-bit integer.
+Equivalent to a C <code class="docutils literal notranslate"><span class="pre">*(uint32_t*)&amp;value</span></code> cast.</p>
+</dd></dl>
+
+</section>
+<section id="eblink-information">
+<h2><span class="section-number">4.4.4. </span>EBlink information<a class="headerlink" href="#eblink-information" title="Permalink to this heading"></a></h2>
+<dl class="js function">
+<dt class="sig sig-object js" id="cliSwitch">
+<span class="sig-name descname"><span class="n"><span class="pre">cliSwitch</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">switch</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cliSwitch" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the value string of a CLI option. Recognised switches are <code class="docutils literal notranslate"><span class="pre">&quot;-I&quot;</span></code>
+(interface), <code class="docutils literal notranslate"><span class="pre">&quot;-T&quot;</span></code> (target), <code class="docutils literal notranslate"><span class="pre">&quot;-F&quot;</span></code> (flash), <code class="docutils literal notranslate"><span class="pre">&quot;-G&quot;</span></code> (GDB). Returns
+an empty string if the option was not supplied:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">iface_opt</span> <span class="o">=</span> <span class="n">cliSwitch</span><span class="p">(</span><span class="s2">&quot;-I&quot;</span><span class="p">);</span>
+<span class="k">if</span><span class="p">(</span><span class="n">iface_opt</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">errorf</span><span class="p">(</span><span class="s2">&quot;No interface specified</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Also used in <code class="docutils literal notranslate"><span class="pre">ebServicesSetup()</span></code> to pass the original CLI service options
+to <code class="docutils literal notranslate"><span class="pre">ServicesAPI().addService()</span></code> — see <a class="reference internal" href="servicesapi.html#eblink-servicesapi"><span class="std std-ref">ServicesAPI</span></a>.</p>
+</dd></dl>
+
+</section>
+<section id="string-utilities">
+<h2><span class="section-number">4.4.5. </span>String utilities<a class="headerlink" href="#string-utilities" title="Permalink to this heading"></a></h2>
+<dl class="js function">
+<dt class="sig sig-object js" id="astrsep">
+<span class="sig-name descname"><span class="n"><span class="pre">astrsep</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separator</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#astrsep" title="Permalink to this definition"></a></dt>
+<dd><p>Splits <code class="docutils literal notranslate"><span class="pre">string</span></code> on each occurrence of <code class="docutils literal notranslate"><span class="pre">separator</span></code> and appends the
+resulting tokens to <code class="docutils literal notranslate"><span class="pre">array</span></code>. Returns the number of tokens added.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">parts</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="n">astrsep</span><span class="p">(</span><span class="n">parts</span><span class="p">,</span> <span class="s2">&quot;one:two:three&quot;</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">);</span>
+<span class="o">//</span> <span class="n">parts</span> <span class="o">==</span> <span class="p">[</span><span class="s2">&quot;one&quot;</span><span class="p">,</span> <span class="s2">&quot;two&quot;</span><span class="p">,</span> <span class="s2">&quot;three&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="amregex">
+<span class="sig-name descname"><span class="n"><span class="pre">amregex</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#amregex" title="Permalink to this definition"></a></dt>
+<dd><p>Applies the regular expression <code class="docutils literal notranslate"><span class="pre">pattern</span></code> to <code class="docutils literal notranslate"><span class="pre">string</span></code>. Appends all
+capture groups (or the full match if there are no groups) to <code class="docutils literal notranslate"><span class="pre">array</span></code>.
+Returns the number of matches appended, or <code class="docutils literal notranslate"><span class="pre">0</span></code> if no match.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">m</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="k">if</span><span class="p">(</span><span class="n">amregex</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="s2">&quot;REV=1.4&quot;</span><span class="p">,</span> <span class="s2">&quot;REV=([0-9.]+)&quot;</span><span class="p">))</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;Revision: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="system-utilities">
+<h2><span class="section-number">4.4.6. </span>System utilities<a class="headerlink" href="#system-utilities" title="Permalink to this heading"></a></h2>
+<dl class="js function">
+<dt class="sig sig-object js" id="Sleep">
+<span class="sig-name descname"><span class="n"><span class="pre">Sleep</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ms</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Sleep" title="Permalink to this definition"></a></dt>
+<dd><p>Suspends execution for <code class="docutils literal notranslate"><span class="pre">ms</span></code> milliseconds.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="GetTickCount">
+<span class="sig-name descname"><span class="n"><span class="pre">GetTickCount</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#GetTickCount" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the number of milliseconds elapsed since EBlink started. Useful
+for implementing timeouts:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">t0</span> <span class="o">=</span> <span class="n">GetTickCount</span><span class="p">();</span>
+<span class="k">while</span><span class="p">(</span><span class="n">GetTickCount</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span> <span class="o">&lt;</span> <span class="mi">500</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">getState</span><span class="p">()</span> <span class="o">==</span> <span class="n">TARGET_HALTED</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+    <span class="n">Sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="AnimateCursor">
+<span class="sig-name descname"><span class="n"><span class="pre">AnimateCursor</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AnimateCursor" title="Permalink to this definition"></a></dt>
+<dd><p>Starts a spinning cursor animation on the console. Call before a long
+operation.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="AnimateDone">
+<span class="sig-name descname"><span class="n"><span class="pre">AnimateDone</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AnimateDone" title="Permalink to this definition"></a></dt>
+<dd><p>Stops the cursor animation started by <code class="docutils literal notranslate"><span class="pre">AnimateCursor()</span></code>.</p>
+</dd></dl>
+
+</section>
+<section id="math">
+<h2><span class="section-number">4.4.7. </span>Math<a class="headerlink" href="#math" title="Permalink to this heading"></a></h2>
+<p>Each function takes two values of the appropriate type and returns the
+smaller or larger of the two.</p>
+<dl class="js function">
+<dt class="sig sig-object js" id="FL_MIN">
+<span class="sig-name descname"><span class="n"><span class="pre">FL_MIN</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#FL_MIN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="FL_MAX">
+<span class="sig-name descname"><span class="n"><span class="pre">FL_MAX</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#FL_MAX" title="Permalink to this definition"></a></dt>
+<dd><p>Float minimum / maximum.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="UN_MIN">
+<span class="sig-name descname"><span class="n"><span class="pre">UN_MIN</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#UN_MIN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="UN_MAX">
+<span class="sig-name descname"><span class="n"><span class="pre">UN_MAX</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#UN_MAX" title="Permalink to this definition"></a></dt>
+<dd><p>Unsigned integer minimum / maximum.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="IN_MIN">
+<span class="sig-name descname"><span class="n"><span class="pre">IN_MIN</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#IN_MIN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="IN_MAX">
+<span class="sig-name descname"><span class="n"><span class="pre">IN_MAX</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#IN_MAX" title="Permalink to this definition"></a></dt>
+<dd><p>Integer minimum / maximum.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="logging.html" class="btn btn-neutral float-left" title="4.3. Logging &amp; Output" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="constants.html" class="btn btn-neutral float-right" title="4.5. Constants" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2009-2026, Gerard Zagema.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

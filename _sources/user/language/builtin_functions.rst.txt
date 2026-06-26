@@ -1,0 +1,795 @@
+.. _builtin_functions:
+
+
+==================
+Built-in Functions
+==================
+
+.. index::
+    single: Built-in Functions
+    pair: Global Symbols; Built-in Functions
+
+
+^^^^^^^^^^^^^^
+Global Symbols
+^^^^^^^^^^^^^^
+
+.. js:function:: array(size,[fill])
+
+creates and returns array of a specified size. If the optional parameter fill is specified its value will be used to fill the new array's slots. If the fill parameter is omitted, null is used instead.
+
+.. js:function:: seterrorhandler(func)
+
+sets the runtime error handler
+
+.. js:function:: callee()
+
+returns the currently running closure
+
+.. js:function:: setdebughook(hook_func)
+
+sets the debug hook
+
+.. js:function:: enabledebuginfo(enable)
+
+enable/disable the debug line information generation at compile time. enable != null enables. enable == null disables.
+
+.. js:function:: getroottable()
+
+returns the root table of the VM.
+
+.. js:function:: setroottable(table)
+
+sets the root table of the VM. And returns the previous root table.
+
+.. js:function:: getconsttable()
+
+returns the const table of the VM.
+
+.. js:function:: setconsttable(table)
+
+sets the const table of the VM; returns the previous const table.
+
+.. js:function:: assert(exp, [message])
+
+throws an exception if exp is null or false. Throws "assertion failed" string by default, or message if specified.
+
+.. js:function:: print(x)
+
+prints x to the standard output
+
+.. js:function:: error(x)
+
+prints x in the standard error output
+
+.. js:function:: compilestring(string,[buffername])
+
+compiles a string containing a squirrel script into a function and returns it::
+
+    local compiledscript=compilestring("::print(\"ciao\")");
+    //run the script
+    compiledscript();
+
+.. js:function:: collectgarbage()
+
+    Runs the garbage collector and returns the number of reference cycles found (and deleted). This function only works on garbage collector builds.
+
+.. js:function:: resurrectunreachable()
+
+Runs the garbage collector and returns an array containing all unreachable object found. If no unreachable object is found, null is returned instead. This function is meant to help debugging reference cycles. This function only works on garbage collector builds.
+
+.. js:function:: type(obj)
+
+return the 'raw' type of an object without invoking the metamethod '_typeof'.
+
+.. js:function:: getstackinfos(level)
+
+returns the stack informations of a given call stack level. returns a table formatted as follow: ::
+
+    {
+        func="DoStuff", //function name
+
+        src="test.nut", //source file
+
+        line=10,        //line number
+
+        locals = {      //a table containing the local variables
+
+            a=10,
+
+            testy="I'm a string"
+        }
+    }
+
+level = 0 is getstackinfos() itself! level = 1 is the current function, level = 2 is the caller of the current function, and so on. If the stack level doesn't exist the function returns null.
+
+.. js:function:: newthread(threadfunc)
+
+creates a new cooperative thread object(coroutine) and returns it
+
+.. js:data:: _versionnumber_
+
+integer values describing the version of VM and compiler. e.g. for Squirrel 3.0.1 this value will be 301
+
+.. js:data:: _version_
+
+string values describing the version of VM and compiler.
+
+.. js:data:: _charsize_
+
+size in bytes of the internal VM representation for characters(1 for ASCII builds 2 for UNICODE builds).
+
+.. js:data:: _intsize_
+
+size in bytes of the internal VM representation for integers(4 for 32bits builds 8 for 64bits builds).
+
+.. js:data:: _floatsize_
+
+size in bytes of the internal VM representation for floats(4 for single precision builds 8 for double precision builds).
+
+-----------------
+Default delegates
+-----------------
+
+Except null and userdata every squirrel object has a default delegate containing a set of functions to manipulate and retrieve information from the object itself.
+
+^^^^^^^^
+Integer
+^^^^^^^^
+
+.. index:: single: integer; .tofloat()
+.. js:function:: integer.tofloat()
+   :noindex:
+
+convert the number to float and returns it
+
+.. index:: single: integer; .tostring()
+.. js:function:: integer.tostring()
+   :noindex:
+
+converts the number to string and returns it
+
+.. index:: single: integer; .tointeger()
+.. js:function:: integer.tointeger()
+   :noindex:
+
+dummy function; returns the value of the integer.
+
+.. index:: single: integer; .tochar()
+.. js:function:: integer.tochar()
+   :noindex:
+
+returns a string containing a single character represented by the integer.
+
+.. index:: single: integer; .weakref()
+.. js:function:: integer.weakref()
+   :noindex:
+
+dummy function; returns the integer itself.
+
+^^^^^
+Float
+^^^^^
+
+.. index:: single: float; .tofloat()
+.. js:function:: float.tofloat()
+   :noindex:
+
+returns the value of the float(dummy function)
+
+.. index:: single: float; .tointeger()
+.. js:function:: float.tointeger()
+   :noindex:
+
+converts the number to integer and returns it
+
+.. index:: single: float; .tostring()
+.. js:function:: float.tostring()
+   :noindex:
+
+converts the number to string and returns it
+
+.. index:: single: float; .tochar()
+.. js:function:: float.tochar()
+   :noindex:
+
+returns a string containing a single character represented by the integer part of the float.
+
+.. index:: single: float; .weakref()
+.. js:function:: float.weakref()
+   :noindex:
+
+dummy function; returns the float itself.
+
+^^^^
+Bool
+^^^^
+
+.. index:: single: bool; .tofloat()
+.. js:function:: bool.tofloat()
+   :noindex:
+
+returns 1.0 for true 0.0 for false
+
+.. index:: single: bool; .tointeger()
+.. js:function:: bool.tointeger()
+   :noindex:
+
+returns 1 for true 0 for false
+
+.. index:: single: bool; .tostring()
+.. js:function:: bool.tostring()
+   :noindex:
+
+returns "true" for true and "false" for false
+
+.. index:: single: bool; .weakref()
+.. js:function:: bool.weakref()
+   :noindex:
+
+dummy function; returns the bool itself.
+
+^^^^^^
+String
+^^^^^^
+
+.. index:: single: string; .len()
+.. js:function:: string.len()
+   :noindex:
+
+returns the string length
+
+.. index:: single: string; .tointeger()
+.. js:function:: string.tointeger([base])
+   :noindex:
+
+Converts the string to integer and returns it. An optional parameter base can be specified--if a base is not specified, it defaults to base 10.
+
+.. index:: single: string; .tofloat()
+.. js:function:: string.tofloat()
+   :noindex:
+
+converts the string to float and returns it
+
+.. index:: single: string; .tostring()
+.. js:function:: string.tostring()
+   :noindex:
+
+returns the string (really, a dummy function)
+
+.. index:: single: string; .slice()
+.. js:function:: string.slice(start,[end])
+   :noindex:
+
+returns a section of the string as new string. Copies from start to the end (not included). If start is negative the index is calculated as length + start, if end is negative the index is calculated as length + end. If end is omitted end is equal to the string length.
+
+.. index:: single: string; .find()
+.. js:function:: string.find(substr,[startidx])
+   :noindex:
+
+Searches a sub string (substr) starting from the index startidx and returns the index of its first occurrence. If startidx is omitted the search operation starts from the beginning of the string. The function returns null if substr is not found.
+
+.. index:: single: string; .tolower()
+.. js:function:: string.tolower()
+   :noindex:
+
+returns a lowercase copy of the string.
+
+.. index:: single: string; .toupper()
+.. js:function:: string.toupper()
+   :noindex:
+
+returns a uppercase copy of the string.
+
+.. index:: single: string; .weakref()
+.. js:function:: string.weakref()
+   :noindex:
+
+returns a weak reference to the object.
+
+^^^^^
+Table
+^^^^^
+
+.. index:: single: table; .len()
+.. js:function:: table.len()
+   :noindex:
+
+returns the number of slots contained in a table
+
+.. index:: single: table; .rawget()
+.. js:function:: table.rawget(key)
+   :noindex:
+
+tries to get a value from the slot 'key' without employing delegation
+
+.. index:: single: table; .rawset()
+.. js:function:: table.rawset(key,val)
+   :noindex:
+
+Sets the slot 'key' with the value 'val' without employing delegation. If the slot does not exists, it will be created. Returns table itself.
+
+.. index:: single: table; .rawdelete()
+.. js:function:: table.rawdelete()
+   :noindex:
+
+Deletes the slot key without employing delegation and returns its value. If the slot does not exists, returns null.
+
+.. index:: single: table; .rawin()
+.. js:function:: table.rawin(key)
+   :noindex:
+
+returns true if the slot 'key' exists. the function has the same effect as the operator 'in' but does not employ delegation.
+
+.. index:: single: table; .weakref()
+.. js:function:: table.weakref()
+   :noindex:
+
+returns a weak reference to the object.
+
+.. index:: single: table; .tostring()
+.. js:function:: table.tostring()
+   :noindex:
+
+Tries to invoke the _tostring metamethod. If that fails, it returns "(table : pointer)".
+
+.. index:: single: table; .clear()
+.. js:function:: table.clear()
+   :noindex:
+
+removes all the slots from the table. Returns table itself.
+
+.. index:: single: table; .setdelegate()
+.. js:function:: table.setdelegate(table)
+   :noindex:
+
+Sets the delegate of the table. To remove a delegate, 'null' must be passed to the function. The function returns the table itself (e.g. a.setdelegate(b) -- in this case 'a' is the return value).
+
+.. index:: single: table; .getdelegate()
+.. js:function:: table.getdelegate()
+   :noindex:
+
+returns the table's delegate or null if no delegate was set.
+
+.. index:: single: table; .filter()
+.. js:function:: table.filter(func(key,val))
+   :noindex:
+
+Creates a new table with all values that pass the test implemented by the provided function. In detail, it creates a new table, invokes the specified function for each key-value pair in the original table; if the function returns 'true', then the value is added to the newly created table at the same key.
+
+.. index:: single: table; .keys()
+.. js:function:: table.keys()
+   :noindex:
+
+returns an array containing all the keys of the table slots.
+
+.. index:: single: table; .values()
+.. js:function:: table.values()
+   :noindex:
+
+returns an array containing all the values of the table slots.
+
+^^^^^^
+Array
+^^^^^^
+
+.. index:: single: array; .len()
+.. js:function:: array.len()
+   :noindex:
+
+returns the length of the array
+
+.. index:: single: array; .append()
+.. js:function:: array.append(val)
+   :noindex:
+
+appends the value 'val' at the end of the array. Returns array itself.
+
+.. index:: single: array; .push()
+.. js:function:: array.push(val)
+   :noindex:
+
+appends the value 'val' at the end of the array. Returns array itself.
+
+.. index:: single: array; .extend()
+.. js:function:: array.extend(array)
+   :noindex:
+
+Extends the array by appending all the items in the given array. Returns array itself.
+
+.. index:: single: array; .pop()
+.. js:function:: array.pop()
+   :noindex:
+
+removes a value from the back of the array and returns it.
+
+.. index:: single: array; .top()
+.. js:function:: array.top()
+   :noindex:
+
+returns the value of the array with the higher index
+
+.. index:: single: array; .insert()
+.. js:function:: array.insert(idx,val)
+   :noindex:
+
+inserts the value 'val' at the position 'idx' in the array. Returns array itself.
+
+.. index:: single: array; .remove()
+.. js:function:: array.remove(idx)
+   :noindex:
+
+removes the value at the position 'idx' in the array and returns its value.
+
+.. index:: single: array; .resize()
+.. js:function:: array.resize(size,[fill])
+   :noindex:
+
+Resizes the array. If the optional parameter 'fill' is specified, its value will be used to fill the new array's slots when the size specified is bigger than the previous size. If the fill parameter is omitted, null is used instead. Returns array itself.
+
+.. index:: single: array; .sort()
+.. js:function:: array.sort([compare_func])
+   :noindex:
+
+Sorts the array in-place. A custom compare function can be optionally passed. The function prototype as to be the following.::
+
+    function custom_compare(a,b)
+    {
+        if(a>b) return 1
+        else if(a<b) return -1
+        return 0;
+    }
+
+a more compact version of a custom compare can be written using a lambda expression and the operator <=> ::
+
+    arr.sort(@(a,b) a <=> b);
+
+Returns array itself.
+
+.. index:: single: array; .reverse()
+.. js:function:: array.reverse()
+   :noindex:
+
+reverse the elements of the array in place. Returns array itself.
+
+.. index:: single: array; .slice()
+.. js:function:: array.slice(start,[end])
+   :noindex:
+
+Returns a section of the array as new array. Copies from start to the end (not included). If start is negative the index is calculated as length + start, if end is negative the index is calculated as length + end. If end is omitted end is equal to the array length.
+
+.. index:: single: array; .weakref()
+.. js:function:: array.weakref()
+   :noindex:
+
+returns a weak reference to the object.
+
+.. index:: single: array; .tostring()
+.. js:function:: array.tostring()
+   :noindex:
+
+returns the string "(array : pointer)".
+
+.. index:: single: array; .clear()
+.. js:function:: array.clear()
+   :noindex:
+
+removes all the items from the array
+
+.. index:: single: array; .map()
+.. js:function:: array.map(func(item_value, [item_index], [array_ref]))
+   :noindex:
+
+Creates a new array of the same size. For each element in the original array invokes the function 'func' and assigns the return value of the function to the corresponding element of the newly created array.
+Provided func can accept up to 3 arguments: array item value (required), array item index (optional), reference to array itself (optional).
+
+.. index:: single: array; .apply()
+.. js:function:: array.apply(func([item_value, [item_index], [array_ref]))
+   :noindex:
+
+for each element in the array invokes the function 'func' and replace the original value of the element with the return value of the function.
+
+.. index:: single: array; .reduce()
+.. js:function:: array.reduce(func(prevval,curval), [initializer])
+   :noindex:
+
+Reduces an array to a single value. For each element in the array invokes the function 'func' passing
+the initial value (or value from the previous callback call) and the value of the current element.
+The return value of the function is then used as 'prevval' for the next element.
+If the optional initializer is present, it is placed before the items of the array in the calculation,
+and serves as a default when the sequence is empty.
+If initializer is not given then for sequence contains only one item, reduce() returns the first item,
+and for empty sequence returns null.
+
+Given an sequence with 2 or more elements (including initializer) calls the function with the first two elements as the parameters,
+gets that result, then calls the function with that result and the third element, gets that result,
+calls the function with that result and the fourth parameter and so on until all element have been processed.
+Finally, returns the return value of the last invocation of func.
+
+.. index:: single: array; .filter()
+.. js:function:: array.filter(func(index,val))
+   :noindex:
+
+Creates a new array with all elements that pass the test implemented by the provided function. In detail, it creates a new array, for each element in the original array invokes the specified function passing the index of the element and it's value; if the function returns 'true', then the value of the corresponding element is added on the newly created array.
+
+.. index:: single: array; .find()
+.. js:function:: array.find(value)
+   :noindex:
+
+Performs a linear search for the value in the array. Returns the index of the value if it was found null otherwise.
+
+^^^^^^^^
+Function
+^^^^^^^^
+
+.. index:: single: function; .call()
+.. js:function:: function.call(_this,args...)
+   :noindex:
+
+calls the function with the specified environment object('this') and parameters
+
+.. index:: single: function; .pcall()
+.. js:function:: function.pcall(_this,args...)
+   :noindex:
+
+calls the function with the specified environment object('this') and parameters, this function will not invoke the error callback in case of failure(pcall stays for 'protected call')
+
+.. index:: single: function; .acall()
+.. js:function:: function.acall(array_args)
+   :noindex:
+
+calls the function with the specified environment object('this') and parameters. The function accepts an array containing the parameters that will be passed to the called function.Where array_args has to contain the required 'this' object at the [0] position.
+
+.. index:: single: function; .pacall()
+.. js:function:: function.pacall(array_args)
+   :noindex:
+
+calls the function with the specified environment object('this') and parameters. The function accepts an array containing the parameters that will be passed to the called function.Where array_args has to contain the required 'this' object at the [0] position. This function will not invoke the error callback in case of failure(pacall stays for 'protected array call')
+
+.. index:: single: function; .weakref()
+.. js:function:: function.weakref()
+   :noindex:
+
+returns a weak reference to the object.
+
+.. index:: single: function; .tostring()
+.. js:function:: function.tostring()
+   :noindex:
+
+returns the string "(closure : pointer)".
+
+.. index:: single: function; .setroot()
+.. js:function:: function.setroot(table)
+   :noindex:
+
+sets the root table of a closure
+
+.. index:: single: function; .getroot()
+.. js:function:: function.getroot()
+   :noindex:
+
+returns the root table of the closure
+
+.. index:: single: function; .bindenv()
+.. js:function:: function.bindenv(env)
+   :noindex:
+
+clones the function(aka closure) and bind the environment object to it(table,class or instance). the this parameter of the newly create function will always be set to env. Note that the created function holds a weak reference to its environment object so cannot be used to control its lifetime.
+
+.. index:: single: function; .getinfos()
+.. js:function:: function.getinfos()
+   :noindex:
+
+returns a table containing informations about the function, like parameters, name and source name; ::
+
+    //the data is returned as a table is in form
+    //pure squirrel function
+    {
+      native = false
+      name = "zefuncname"
+      src = "/somthing/something.nut"
+      parameters = ["a","b","c"]
+      defparams = [1,"def"]
+      varargs = 2
+    }
+    //native C function
+    {
+      native = true
+      name = "zefuncname"
+      paramscheck = 2
+      typecheck = [83886082,83886384] //this is the typemask (see C defines OT_INTEGER,OT_FLOAT etc...)
+    }
+
+^^^^^
+Class
+^^^^^
+
+.. index:: single: class; .instance()
+.. js:function:: class.instance()
+   :noindex:
+
+returns a new instance of the class. this function does not invoke the instance constructor. The constructor must be explicitly called (eg. class_inst.constructor(class_inst) ).
+
+.. index:: single: class; .getattributes()
+.. js:function:: class.getattributes(membername)
+   :noindex:
+
+returns the attributes of the specified member. if the parameter member is null the function returns the class level attributes.
+
+.. index:: single: class; .setattributes()
+.. js:function:: class.setattributes(membername,attr)
+   :noindex:
+
+sets the attribute of the specified member and returns the previous attribute value. if the parameter member is null the function sets the class level attributes.
+
+.. index:: single: class; .rawin()
+.. js:function:: class.rawin(key)
+   :noindex:
+
+returns true if the slot 'key' exists. the function has the same effect as the operator 'in' but does not employ delegation.
+
+.. index:: single: class; .weakref()
+.. js:function:: class.weakref()
+   :noindex:
+
+returns a weak reference to the object.
+
+.. index:: single: class; .tostring()
+.. js:function:: class.tostring()
+   :noindex:
+
+returns the string "(class : pointer)".
+
+.. index:: single: class; .rawget()
+.. js:function:: class.rawget(key)
+   :noindex:
+
+tries to get a value from the slot 'key' without employing delegation
+
+.. index:: single: class; .rawset()
+.. js:function:: class.rawset(key,val)
+   :noindex:
+
+sets the slot 'key' with the value 'val' without employing delegation. If the slot does not exists, it will be created.
+
+.. index:: single: class; .newmember()
+.. js:function:: class.newmember(key,val,[attrs],[bstatic])
+   :noindex:
+
+sets/adds the slot 'key' with the value 'val' and attributes 'attrs' and if present invokes the _newmember metamethod. If bstatic is true the slot will be added as static. If the slot does not exists , it will be created.
+
+.. index:: single: class; .rawnewmember()
+.. js:function:: class.rawnewmember(key,val,[attrs],[bstatic])
+   :noindex:
+
+sets/adds the slot 'key' with the value 'val' and attributes 'attrs'. If bstatic is true the slot will be added as static. If the slot does not exist, it will be created. It doesn't invoke any metamethod.
+
+^^^^^^^^^^^^^^
+Class Instance
+^^^^^^^^^^^^^^
+
+.. index:: single: instance; .getclass()
+.. js:function:: instance.getclass()
+   :noindex:
+
+returns the class that created the instance.
+
+.. index:: single: instance; .rawin()
+.. js:function:: instance.rawin(key)
+   :noindex:
+
+returns true if the slot 'key' exists. the function has the same effect as the operator 'in' but does not employ delegation.
+
+.. index:: single: instance; .weakref()
+.. js:function:: instance.weakref()
+   :noindex:
+
+returns a weak reference to the object.
+
+.. index:: single: instance; .tostring()
+.. js:function:: instance.tostring()
+   :noindex:
+
+tries to invoke the _tostring metamethod, if failed. returns "(instance : pointer)".
+
+.. index:: single: instance; .rawget()
+.. js:function:: instance.rawget(key)
+   :noindex:
+
+tries to get a value from the slot 'key' without employing delegation
+
+.. index:: single: instance; .rawset()
+.. js:function:: instance.rawset(key,val)
+   :noindex:
+
+sets the slot 'key' with the value 'val' without employing delegation. If the slot does not exists, it will be created.
+
+^^^^^^^^^^^^^^
+Generator
+^^^^^^^^^^^^^^
+
+.. index:: single: generator; .getstatus()
+.. js:function:: generator.getstatus()
+   :noindex:
+
+returns the status of the generator as string : "running", "dead" or "suspended".
+
+.. index:: single: generator; .weakref()
+.. js:function:: generator.weakref()
+   :noindex:
+
+returns a weak reference to the object.
+
+.. index:: single: generator; .tostring()
+.. js:function:: generator.tostring()
+   :noindex:
+
+returns the string "(generator : pointer)".
+
+^^^^^^^^^^^^^^
+Thread
+^^^^^^^^^^^^^^
+
+.. index:: single: thread; .call()
+.. js:function:: thread.call(...)
+   :noindex:
+
+starts the thread with the specified parameters
+
+.. index:: single: thread; .wakeup()
+.. js:function:: thread.wakeup([wakeupval])
+   :noindex:
+
+wakes up a suspended thread, accepts a optional parameter that will be used as return value for the function that suspended the thread(usually suspend())
+
+.. index:: single: thread; .wakeupthrow()
+.. js:function:: thread.wakeupthrow(objtothrow,[propagateerror = true])
+   :noindex:
+
+wakes up a suspended thread, throwing an exception in the awaken thread, throwing the object 'objtothrow'.
+
+.. index:: single: thread; .getstatus()
+.. js:function:: thread.getstatus()
+   :noindex:
+
+returns the status of the thread ("idle","running","suspended")
+
+.. index:: single: thread; .weakref()
+.. js:function:: thread.weakref()
+   :noindex:
+
+returns a weak reference to the object.
+
+.. index:: single: thread; .tostring()
+.. js:function:: thread.tostring()
+   :noindex:
+
+returns the string "(thread : pointer)".
+
+.. index:: single: thread; .getstackinfos()
+.. js:function:: thread.getstackinfos(stacklevel)
+   :noindex:
+
+returns the stack frame informations at the given stack level (0 is the current function 1 is the caller and so on).
+
+^^^^^^^^^^^^^^
+Weak Reference
+^^^^^^^^^^^^^^
+
+.. index:: single: weakreference; .ref()
+.. js:function:: weakreference.ref()
+   :noindex:
+
+returns the object that the weak reference is pointing at; null if the object that was point at was destroyed.
+
+.. index:: single: weakreference; .weakref()
+.. js:function:: weakreference.weakref()
+   :noindex:
+
+returns a weak reference to the object.
+
+.. index:: single: weakreference; .tostring()
+.. js:function:: weakreference.tostring()
+   :noindex:
+
+returns the string "(weakref : pointer)".

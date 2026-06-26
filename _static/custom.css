@@ -1,0 +1,9 @@
+.mandatory {
+    font-style: italic;
+    color: #cc6600;
+}
+
+.optional {
+    font-style: italic;
+    color: #2a7a2a;
+}

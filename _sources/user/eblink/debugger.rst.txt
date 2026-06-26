@@ -1,0 +1,119 @@
+.. _eblink_debugger:
+
+===============
+Script Debugger
+===============
+
+EBlink includes a built-in Squirrel script debugger. It is activated through
+the verbosity flag and lets you trace, step through, and inspect script
+execution from the console without an external IDE.
+
+Enabling the debugger
+---------------------
+
++--------+-------------------------------------------------------+
+| Flag   | Effect                                                |
++========+=======================================================+
+| ``-v7``| Enables the debug hook. EBlink prints each function   |
+|        | call and return. ``brkPt()`` calls become active.     |
+|        | Interactive stepping on call/return/exception events. |
++--------+-------------------------------------------------------+
+| ``-v8``| Additionally enables line-level debug info in the     |
+|        | compiled bytecode. Stepping to the next source line   |
+|        | becomes available. Produces more detailed output.     |
++--------+-------------------------------------------------------+
+
+With ``-v7`` the output shows the function name and event type for each
+call/return. With ``-v8`` each source line is also reported.
+
+Trace output format
+-------------------
+
+While the debugger is active, EBlink prints a trace line for each event::
+
+    Squirrel debug          ebMain(c)[  0]    {stm32.script}
+    Squirrel debug      ebFlashWrite(c)[  0]    {stm32.script}
+    Squirrel debug      ebFlashWrite(r)[145]    {stm32.script}
+
+Columns: ``debug``/``trace`` mode, function name (padded), event type in
+parentheses, line number in brackets, source file in braces.
+
+Event types:
+
++-------+-------------------------------------------+
+| ``c`` | Function call (entering a function)       |
++-------+-------------------------------------------+
+| ``r`` | Function return (leaving a function)      |
++-------+-------------------------------------------+
+| ``e`` | Exception (a ``throw`` is about to fire)  |
++-------+-------------------------------------------+
+| ``l`` | Source line (only with ``-v8``)           |
++-------+-------------------------------------------+
+
+Script breakpoints
+------------------
+
+.. js:function:: brkPt()
+
+   Inserts a breakpoint at the call site. Only active with ``-v7`` or higher;
+   has no effect otherwise. When hit, EBlink prints the call stack with local
+   variables and pauses for console input::
+
+       function ebFlashErase(sector, address)
+       {
+           brkPt();           // execution stops here under -v7
+           flash_unlock();
+           // ...
+       }
+
+Interactive commands
+--------------------
+
+At a breakpoint or step-stop, EBlink shows the call stack and prompts::
+
+    == BREAKPOINT ==
+    *FUNCTION [ebFlashErase()] stm32.script line [42]
+    *FUNCTION [ebMain()] stm32.script line [15]
+    -LOCALS:
+        [sector] INTEGER( 0 )
+        [address] INTEGER( 134217728 )
+
+    Go, next Call, Return or Exception? [g,c,r,e]
+
+Available commands:
+
++-------+----------+-----------------------------------------------------+
+| Key   | Level    | Action                                              |
++=======+==========+=====================================================+
+| ``g`` | -v7      | **Go**: continue until the next ``brkPt()`` or end  |
++-------+----------+-----------------------------------------------------+
+| ``c`` | -v7      | **Call**: run until the next function call          |
++-------+----------+-----------------------------------------------------+
+| ``r`` | -v7      | **Return**: run until the current function returns  |
++-------+----------+-----------------------------------------------------+
+| ``e`` | -v7      | **Exception**: run until the next ``throw``         |
++-------+----------+-----------------------------------------------------+
+| ``l`` | -v8 only | **Line**: run until the next source line            |
++-------+----------+-----------------------------------------------------+
+
+Call stack and locals
+---------------------
+
+At every stop, EBlink prints the full call stack from the current function
+up to the top level, followed by all visible local variables with their
+types and values. Supported types: ``INTEGER``, ``FLOAT``, ``STRING``,
+``NULL``, ``TABLE``, ``ARRAY``, ``CLOSURE``, ``INSTANCE``, ``USERPOINTER``.
+
+This information is the primary tool for understanding unexpected script
+behaviour — check the locals before stepping further to confirm the values
+are what you expect.
+
+Tips
+----
+
+- Place ``brkPt()`` just before the operation you suspect is wrong, not at
+  the top of a function, to reduce the number of steps needed.
+- Use ``-v7`` for function-level tracing during initial development; switch
+  to ``-v8`` only when you need to trace individual lines.
+- The debugger pauses the entire EBlink process — a GDB session connected
+  to the same instance will time out if you leave a breakpoint open too long.

@@ -1,0 +1,97 @@
+.. _eblink_extensions:
+
+==============================
+Addendum: Squirrel Extensions
+==============================
+
+EBlink modifies the Squirrel compiler and lexer in two places to make
+common MCU scripting patterns more concise. These extensions are not part
+of the upstream Squirrel language.
+
+Multiline verbatim strings
+--------------------------
+
+Standard Squirrel verbatim strings (``@"..."``") suppress escape processing
+but do not allow embedded newlines. EBlink adds a double-prefix form
+``@@"..."`` that allows newlines inside the string literal::
+
+    const mem_map = @@"<?xml version=\"1.0\"?>
+    <memory-map>
+      <memory type=\"flash\" start=\"0x08000000\" length=\"0x80000\">
+        <property name=\"pagesize\">0x800</property>
+      </memory>
+      <memory type=\"ram\" start=\"0x20000000\" length=\"0x20000\"/>
+    </memory-map>";
+
+The string is copied verbatim including all embedded newline characters.
+Backslash escapes inside ``@@"..."`` are not interpreted (same as ``@"..."``
+for single-line strings). This makes it practical to embed XML memory maps
+and other multi-line text directly in a script.
+
+.. note::
+
+   ``@"..."`` — single-line verbatim: no escape processing, no newlines.
+
+   ``@@"..."`` — multiline verbatim: no escape processing, newlines allowed.
+
+Pseudo BNF::
+
+    MultilineVerbatimStringLiteral : '@@' '"' .* '"'
+
+Compile-time constant expressions
+----------------------------------
+
+Standard Squirrel ``const`` and ``enum`` values may only be integer, float,
+or string literals — no expressions are permitted. EBlink extends this so
+that an integer expression wrapped in parentheses is evaluated at compile
+time::
+
+    const BASE   = 0x40020000;
+    const CR1    = (BASE + 0x00);
+    const CR2    = (BASE + 0x04);
+    const ENABLE = (1 << 0);
+    const MODE   = (3 << 2);
+
+    enum Flags {
+        FLAG_A = (1 << 0),
+        FLAG_B = (1 << 4)
+    }
+
+Supported operators inside the parentheses:
+
++----------+-----------------------------+
+| Operator | Operation                   |
++==========+=============================+
+| ``<<``   | Left shift                  |
++----------+-----------------------------+
+| ``>>``   | Right shift                 |
++----------+-----------------------------+
+| ``*``    | Multiply                    |
++----------+-----------------------------+
+| ``/``    | Divide                      |
++----------+-----------------------------+
+| ``+``    | Add                         |
++----------+-----------------------------+
+| ``-``    | Subtract / unary minus      |
++----------+-----------------------------+
+
+**Constraints:**
+
+- Only integer operands — no floats, no strings.
+- An operand may be an integer literal or the name of a previously declared
+  integer constant.
+- Exactly one operator per expression. ``(A + B)`` is valid;
+  ``(A + B + C)`` is a compile error. Chain constants to work around this::
+
+    const AB  = (A + B);
+    const ABC = (AB + C);
+
+- Bitwise operators (``|``, ``&``, ``^``) are **not** supported inside
+  ``( )``.
+
+Pseudo BNF::
+
+    ConstExpr : '(' Operand ')'
+              | '(' Operand Operator Operand ')'
+    Operand   : ['-'] ( IntegerLiteral | ConstantName )
+    Operator  : '<<' | '>>' | '*' | '/' | '+' | '-'

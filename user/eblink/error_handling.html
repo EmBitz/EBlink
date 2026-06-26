@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4.2. Error Handling &mdash; EBlink documentation 6.2 stable documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/EBlink.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=7218f4fa"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4.3. Logging &amp; Output" href="logging.html" />
+    <link rel="prev" title="4.1. Introduction" href="introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            EBlink documentation
+              <img src="../../_static/EBlink.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">2. Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../language.html">3. The script language</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">4. EBlink Scripting</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">4.1. Introduction</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.2. Error Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#exception-types">4.2.1. Exception types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#return-values">4.2.2. Return values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#propagating-errors">4.2.3. Propagating errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helper-functions">4.2.4. Helper functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#catchString"><code class="docutils literal notranslate"><span class="pre">catchString()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#catchThrowStr"><code class="docutils literal notranslate"><span class="pre">catchThrowStr()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#errorToStr"><code class="docutils literal notranslate"><span class="pre">errorToStr()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#user-defined-error-codes">4.2.5. User-defined error codes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">4.3. Logging &amp; Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="globals.html">4.4. Global Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">4.5. Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interaction.html">4.6. EBlink Interaction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ebbuffer.html">4.7. EBbuffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interfapi.html">4.8. InterfAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deviceapi.html">4.9. DeviceAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="targetapi.html">4.10. TargetAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servicesapi.html">4.11. ServicesAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugger.html">4.12. Script Debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html">4.13. Addendum: Squirrel Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apiindex.html">4.14. API Quick Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../bookindex.html">5. Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">EBlink documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html"><span class="section-number">4. </span>EBlink Scripting</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">4.2. </span>Error Handling</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="error-handling">
+<span id="eblink-error-handling"></span><h1><span class="section-number">4.2. </span>Error Handling<a class="headerlink" href="#error-handling" title="Permalink to this heading"></a></h1>
+<p>EBlink uses Squirrel exceptions for all error signalling. Understanding the
+convention is essential because every API call can throw.</p>
+<section id="exception-types">
+<h2><span class="section-number">4.2.1. </span>Exception types<a class="headerlink" href="#exception-types" title="Permalink to this heading"></a></h2>
+<p>API methods throw one of two exception types:</p>
+<p><strong>Integer exception</strong> — a negative <code class="docutils literal notranslate"><span class="pre">ERROR_xxx</span></code> constant. Thrown by hardware
+operations when the probe reports an error (target lost, flash failure, etc.):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span> <span class="p">{</span>
+    <span class="n">local</span> <span class="n">value</span> <span class="o">=</span> <span class="n">intrfApi</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mh">0x20000000</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="n">catch</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">isInteger</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="n">errorf</span><span class="p">(</span><span class="s2">&quot;Hardware error </span><span class="si">%d</span><span class="s2">: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">errorToStr</span><span class="p">(</span><span class="n">e</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>String exception</strong> — a human-readable message. Thrown for usage errors:
+wrong argument type, buffer overflow, NULL instance, etc.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span> <span class="p">{</span>
+    <span class="n">local</span> <span class="n">buf</span> <span class="o">=</span> <span class="n">EBbuffer</span><span class="p">(</span><span class="mi">64</span><span class="p">);</span>
+    <span class="n">buf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>          <span class="o">//</span> <span class="n">offset</span> <span class="n">beyond</span> <span class="n">buffer</span>
+<span class="p">}</span>
+<span class="n">catch</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">isString</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="n">errorf</span><span class="p">(</span><span class="s2">&quot;Script error: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="return-values">
+<h2><span class="section-number">4.2.2. </span>Return values<a class="headerlink" href="#return-values" title="Permalink to this heading"></a></h2>
+<p>Functions that succeed return <code class="docutils literal notranslate"><span class="pre">ERROR_OK</span></code> (0) or a positive value (e.g. byte
+count). A negative return value is always an <code class="docutils literal notranslate"><span class="pre">ERROR_xxx</span></code> code. The convention
+is that you either throw on failure or return the code — never both:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">ebFlashWrite</span><span class="p">(</span><span class="n">sector</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">buffer</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+        <span class="n">intrfApi</span><span class="o">.</span><span class="n">writeBuf</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">address</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">catch</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">isString</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>  <span class="p">{</span> <span class="n">errorf</span><span class="p">(</span><span class="n">e</span><span class="p">);</span> <span class="k">return</span> <span class="n">ERROR_NOTIFIED</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">isInteger</span><span class="p">(</span><span class="n">e</span><span class="p">))</span> <span class="p">{</span> <span class="k">return</span> <span class="n">e</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">ERROR_OK</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="propagating-errors">
+<h2><span class="section-number">4.2.3. </span>Propagating errors<a class="headerlink" href="#propagating-errors" title="Permalink to this heading"></a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">ERROR_NOTIFIED</span></code> (-1) when you have already printed an error message and
+want EBlink to abort without printing a second one:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">errorf</span><span class="p">(</span><span class="s2">&quot;Flash unlock failed at 0x</span><span class="si">%08X</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">addr</span><span class="p">);</span>
+<span class="k">return</span> <span class="n">ERROR_NOTIFIED</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>For errors the script did not handle, re-throw so EBlink can report them:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">catch</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">catchString</span><span class="p">(</span><span class="n">e</span><span class="p">))</span> <span class="k">return</span> <span class="n">ERROR_NOTIFIED</span><span class="p">;</span>  <span class="o">//</span> <span class="n">string</span><span class="p">:</span> <span class="n">already</span> <span class="n">printed</span>
+    <span class="n">throw</span> <span class="n">e</span><span class="p">;</span>                                   <span class="o">//</span> <span class="n">integer</span><span class="p">:</span> <span class="n">let</span> <span class="n">EBlink</span> <span class="n">handle</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="helper-functions">
+<h2><span class="section-number">4.2.4. </span>Helper functions<a class="headerlink" href="#helper-functions" title="Permalink to this heading"></a></h2>
+<dl class="js function">
+<dt class="sig sig-object js" id="catchString">
+<span class="sig-name descname"><span class="n"><span class="pre">catchString</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">throwValue</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#catchString" title="Permalink to this definition"></a></dt>
+<dd><p>If <code class="docutils literal notranslate"><span class="pre">value</span></code> is a string exception, prints it as an error and returns
+<code class="docutils literal notranslate"><span class="pre">true</span></code>. If <code class="docutils literal notranslate"><span class="pre">throwValue</span></code> is supplied and <code class="docutils literal notranslate"><span class="pre">value</span></code> is a string, throws
+<code class="docutils literal notranslate"><span class="pre">throwValue</span></code> after printing. Returns <code class="docutils literal notranslate"><span class="pre">false</span></code> if <code class="docutils literal notranslate"><span class="pre">value</span></code> is not a
+string.</p>
+<p>Typical use in a catch block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">catch</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">catchString</span><span class="p">(</span><span class="n">e</span><span class="p">))</span> <span class="k">return</span> <span class="n">ERROR_NOTIFIED</span><span class="p">;</span>
+    <span class="n">throw</span> <span class="n">e</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="catchThrowStr">
+<span class="sig-name descname"><span class="n"><span class="pre">catchThrowStr</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catchThrowStr" title="Permalink to this definition"></a></dt>
+<dd><p>If <code class="docutils literal notranslate"><span class="pre">value</span></code> is a string, re-throws it as a string exception. Has no effect
+when <code class="docutils literal notranslate"><span class="pre">value</span></code> is not a string. Useful to propagate string errors up through
+nested try/catch blocks.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="errorToStr">
+<span class="sig-name descname"><span class="n"><span class="pre">errorToStr</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#errorToStr" title="Permalink to this definition"></a></dt>
+<dd><p>Returns a short description string for an <code class="docutils literal notranslate"><span class="pre">ERROR_xxx</span></code> integer code.
+Returns an empty string for unknown codes.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">errorf</span><span class="p">(</span><span class="s2">&quot;Error </span><span class="si">%d</span><span class="s2">: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">errorToStr</span><span class="p">(</span><span class="n">e</span><span class="p">));</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="user-defined-error-codes">
+<h2><span class="section-number">4.2.5. </span>User-defined error codes<a class="headerlink" href="#user-defined-error-codes" title="Permalink to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">ERROR_USER</span></code> (<code class="docutils literal notranslate"><span class="pre">-1000</span></code>) is the boundary reserved for script errors. All
+built-in <code class="docutils literal notranslate"><span class="pre">ERROR_xxx</span></code> codes are between <code class="docutils literal notranslate"><span class="pre">-1</span></code> and <code class="docutils literal notranslate"><span class="pre">-999</span></code>. Scripts must
+define their own codes <strong>below</strong> <code class="docutils literal notranslate"><span class="pre">ERROR_USER</span></code> to avoid collisions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">FLASH_UNLOCK_FAIL</span>  <span class="o">=</span> <span class="n">ERROR_USER</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>   <span class="o">//</span> <span class="o">-</span><span class="mi">1001</span>
+<span class="n">const</span> <span class="n">FLASH_TIMEOUT</span>      <span class="o">=</span> <span class="n">ERROR_USER</span> <span class="o">-</span> <span class="mi">2</span><span class="p">;</span>   <span class="o">//</span> <span class="o">-</span><span class="mi">1002</span>
+<span class="n">const</span> <span class="n">FLASH_VERIFY_FAIL</span>  <span class="o">=</span> <span class="n">ERROR_USER</span> <span class="o">-</span> <span class="mi">3</span><span class="p">;</span>   <span class="o">//</span> <span class="o">-</span><span class="mi">1003</span>
+</pre></div>
+</div>
+<p>These constants behave exactly like built-in error codes — they can be thrown,
+returned, or passed to <code class="docutils literal notranslate"><span class="pre">errorToStr()</span></code>. Because <code class="docutils literal notranslate"><span class="pre">errorToStr()</span></code> does not know
+about script-defined codes it returns an empty string for them; print your own
+message before returning or throwing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">unlockFlash</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">intrfApi</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">FLASH_CR</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">FLASH_LOCKED</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">intrfApi</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">FLASH_KEYR</span><span class="p">,</span> <span class="n">KEY1</span><span class="p">);</span>
+        <span class="n">intrfApi</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">FLASH_KEYR</span><span class="p">,</span> <span class="n">KEY2</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">intrfApi</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">FLASH_CR</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">FLASH_LOCKED</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">errorf</span><span class="p">(</span><span class="s2">&quot;Flash unlock failed</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+            <span class="k">return</span> <span class="n">FLASH_UNLOCK_FAIL</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">ERROR_OK</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Never define script error codes between <code class="docutils literal notranslate"><span class="pre">-1</span></code> and <code class="docutils literal notranslate"><span class="pre">-999</span></code> — that range
+belongs to EBlink built-ins. Always subtract from <code class="docutils literal notranslate"><span class="pre">ERROR_USER</span></code>.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="introduction.html" class="btn btn-neutral float-left" title="4.1. Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="logging.html" class="btn btn-neutral float-right" title="4.3. Logging &amp; Output" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2009-2026, Gerard Zagema.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

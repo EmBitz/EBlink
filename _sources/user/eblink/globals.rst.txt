@@ -1,0 +1,159 @@
+.. _eblink_globals:
+
+================
+Global Functions
+================
+
+These functions are available in all EBlink scripts without any import or
+declaration.
+
+Script loading
+--------------
+
+.. js:function:: include(filename)
+
+   Loads and executes a Squirrel script file. Searches the configured script
+   paths. Does nothing and returns ``ERROR_OK`` if the file is not found —
+   use ``require`` when the file must exist.
+
+.. js:function:: require(filename)
+
+   Loads and executes a Squirrel script file. Throws a string exception if the
+   file cannot be found or loaded. Use for dependencies that must be present.
+
+Type checking
+-------------
+
+.. js:function:: isString(value)
+
+   Returns ``true`` if ``value`` is a string.
+
+.. js:function:: isInteger(value)
+
+   Returns ``true`` if ``value`` is an integer.
+
+.. js:function:: isnull(instance)
+
+   Returns ``true`` if ``instance`` is a null object instance. Used to check
+   whether an API object reference is valid.
+
+.. js:function:: isScriptObject(name)
+
+   Returns ``true`` if a global function or object with the given name exists
+   in the script VM. Useful before calling an optional entry point::
+
+       if(isScriptObject("myCustomInit"))
+           myCustomInit();
+
+Data conversion
+---------------
+
+.. js:function:: strToNumber(str)
+
+   Parses a decimal or hexadecimal (``0x`` prefix) string and returns the
+   value as an integer. Returns ``0`` for invalid input.
+
+   Example::
+
+       local addr = strToNumber("0x08004000");
+
+.. js:function:: Integer2Float(value)
+
+   Reinterprets the bit pattern of a 32-bit integer as an IEEE 754 float.
+   Equivalent to a C ``*(float*)&value`` cast. Useful when a register or
+   memory location holds a float value.
+
+.. js:function:: Float2Integer(value)
+
+   Reinterprets the bit pattern of a float as a 32-bit integer.
+   Equivalent to a C ``*(uint32_t*)&value`` cast.
+
+EBlink information
+------------------
+
+.. js:function:: cliSwitch(switch)
+
+   Returns the value string of a CLI option. Recognised switches are ``"-I"``
+   (interface), ``"-T"`` (target), ``"-F"`` (flash), ``"-G"`` (GDB). Returns
+   an empty string if the option was not supplied::
+
+       local iface_opt = cliSwitch("-I");
+       if(iface_opt == "")
+           errorf("No interface specified\n");
+
+   Also used in ``ebServicesSetup()`` to pass the original CLI service options
+   to ``ServicesAPI().addService()`` — see :ref:`eblink_servicesapi`.
+
+String utilities
+----------------
+
+.. js:function:: astrsep(array, string, separator)
+
+   Splits ``string`` on each occurrence of ``separator`` and appends the
+   resulting tokens to ``array``. Returns the number of tokens added.
+
+   Example::
+
+       local parts = [];
+       astrsep(parts, "one:two:three", ":");
+       // parts == ["one", "two", "three"]
+
+.. js:function:: amregex(array, string, pattern)
+
+   Applies the regular expression ``pattern`` to ``string``. Appends all
+   capture groups (or the full match if there are no groups) to ``array``.
+   Returns the number of matches appended, or ``0`` if no match.
+
+   Example::
+
+       local m = [];
+       if(amregex(m, "REV=1.4", "REV=([0-9.]+)"))
+           printf("Revision: %s\n", m[0]);
+
+System utilities
+----------------
+
+.. js:function:: Sleep(ms)
+
+   Suspends execution for ``ms`` milliseconds.
+
+.. js:function:: GetTickCount()
+
+   Returns the number of milliseconds elapsed since EBlink started. Useful
+   for implementing timeouts::
+
+       local t0 = GetTickCount();
+       while(GetTickCount() - t0 < 500) {
+           if(target.getState() == TARGET_HALTED) break;
+           Sleep(10);
+       }
+
+.. js:function:: AnimateCursor()
+
+   Starts a spinning cursor animation on the console. Call before a long
+   operation.
+
+.. js:function:: AnimateDone()
+
+   Stops the cursor animation started by ``AnimateCursor()``.
+
+Math
+----
+
+Each function takes two values of the appropriate type and returns the
+smaller or larger of the two.
+
+.. js:function:: FL_MIN(a, b)
+.. js:function:: FL_MAX(a, b)
+
+   Float minimum / maximum.
+
+.. js:function:: UN_MIN(a, b)
+.. js:function:: UN_MAX(a, b)
+
+   Unsigned integer minimum / maximum.
+
+.. js:function:: IN_MIN(a, b)
+.. js:function:: IN_MAX(a, b)
+
+   Integer minimum / maximum.

@@ -1,0 +1,78 @@
+.. _eblink_logging:
+
+=================
+Logging & Output
+=================
+
+EBlink routes script output through its verbosity system. Each output function
+maps to a verbosity level; output is only shown when the corresponding level is
+active. The verbosity is set with the ``-v`` command-line flag.
+
+Output functions
+----------------
+
+All output functions accept a printf-style format string followed by optional
+arguments. They do not return a value.
+
+``printf(fmt, ...)``
+   Default script output. Visible at ``-v4`` and above (``SCRIPT_INFO``).
+
+``userf(fmt, ...)``
+   User-facing output. Visible at ``-v2`` and above (``USER_INFO``). For
+   messages relevant to the end user.
+
+``noticef(fmt, ...)``
+   Notice-level output. Visible at ``-v3`` and above (``NOTICE_INFO``).
+
+``warnf(fmt, ...)``
+   Warning output. Visible at ``-v6`` and above (``WARN_INFO``).
+
+``errorf(fmt, ...)``
+   Error output. Always visible regardless of verbosity level.
+
+``debugf(fmt, ...)``
+   Debug output. Visible at ``-v7`` and above (``DEBUG_INFO``). For detailed
+   internal state during script development.
+
+``tracef(fmt, ...)``
+   Trace output. Visible at ``-v8`` (``TRACE_INFO``). For fine-grained
+   step-by-step tracing.
+
+``yesNof(default, fmt, ...)``
+   Presents an interactive yes/no question. ``default`` is returned when no
+   interactive console is available: ``1`` for yes, ``0`` for no. Returns
+   the user's choice or ``default``::
+
+       local answer = yesNof(0, "Erase entire chip? [y/n] ");
+       if(answer)
+           device_chip_erase();
+
+Verbosity levels
+----------------
+
++----------+------------------+---------------------+
+| Flag     | Constant         | Functions visible   |
++==========+==================+=====================+
+| ``-v2``  | ``USER_INFO``    | userf               |
++----------+------------------+---------------------+
+| ``-v3``  | ``NOTICE_INFO``  | + noticef           |
++----------+------------------+---------------------+
+| ``-v4``  | ``SCRIPT_INFO``  | + printf            |
++----------+------------------+---------------------+
+| ``-v6``  | ``WARN_INFO``    | + warnf             |
++----------+------------------+---------------------+
+| ``-v7``  | ``DEBUG_INFO``   | + debugf, brkPt     |
++----------+------------------+---------------------+
+| ``-v8``  | ``TRACE_INFO``   | + tracef, line step |
++----------+------------------+---------------------+
+
+``errorf`` is always shown. ``-v1`` shows only the EBlink header.
+
+Format strings
+--------------
+
+Standard C ``printf`` conventions: ``%d``, ``%u``, ``%x``, ``%X``, ``%f``,
+``%s``, ``%c``. Width and precision modifiers are supported. Use ``%08X``
+for addresses (no ``%p``)::
+
+    printf("Sector %d at 0x%08X (%d bytes)\n", sector, address, buffer.getSize());

@@ -1,0 +1,80 @@
+.. _eblink_servicesapi:
+
+===========
+ServicesAPI
+===========
+
+``ServicesAPI`` is a class registered by EBlink, used to register EBlink
+services from within the ``ebServicesSetup()`` script function.
+
+Service start behaviour
+-----------------------
+
+When ``ebServicesSetup()`` is **not defined** in the script, EBlink starts
+services as specified on the command line (e.g. ``-G`` for a GDB server).
+
+As soon as the script calls ``ServicesAPI().addService()`` **at least once**,
+EBlink no longer starts any services on its own. From that point the script
+is fully responsible for starting all required services.
+
+The script can retrieve the original CLI option string with ``cliSwitch()``
+and use it as the base for the service options. This is useful when the script
+needs to add extra parameters (such as a DAP access port) while still
+honouring the options the user passed on the command line.
+
+.. note::
+
+   Place any script-added options **after** the ``cliSwitch()`` string so
+   they override the CLI defaults, not the other way around.
+
+Example: dual-core GDB setup
+-----------------------------
+
+The following pattern is taken from the STM32H7 dual-core script. When two
+cores are present, two separate GDB servers are started — one per core — each
+using the original ``-G`` CLI options with an overridden DAP access port::
+
+    function ebServicesSetup()
+    {
+        // Single-core: let EBlink handle services via CLI as usual
+        if(!hasDualCore)
+            return ERROR_OK;
+
+        try {
+            local servicesApi = :: ServicesAPI()
+
+            //                        type          name       options
+            servicesApi.addService("GDB-server", "GDB_CM7", format("%s,ap=%d", cliSwitch("-G"), CM7_AP))
+            servicesApi.addService("GDB-server", "GDB_CM4", format("%s,ap=%d", cliSwitch("-G"), CM4_AP))
+        }
+        catch(e) {
+            if(catchString(e)) return ERROR_NOTIFIED;
+            return e;
+        }
+
+        return ERROR_OK;
+    }
+
+The ``cliSwitch("-G")`` call returns the full ``-G`` option string as supplied
+on the command line (e.g. ``"port=4242"``). The ``ap=`` parameter is appended
+after it so it takes precedence over any ``ap=`` value in the original CLI
+string.
+
+Reference
+---------
+
+.. index:: single: ServicesAPI; .addService()
+
+.. js:function:: ServicesAPI.addService(type, name, options)
+   :noindex:
+
+   Registers a service of the given ``type`` with the given ``name`` and
+   ``options`` string. Throws an integer exception on failure.
+
+   - ``type`` — service type string (e.g. ``"GDB-server"``)
+   - ``name`` — instance name for this service
+   - ``options`` — option string passed to the service (format depends on type)
+
+   Calling this function at least once causes EBlink to hand full service
+   control to the script — no CLI-specified services will be started
+   automatically.

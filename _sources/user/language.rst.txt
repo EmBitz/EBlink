@@ -1,0 +1,33 @@
+.. _thelanguage:
+
+**********************
+The script language
+**********************
+
+EBlink uses **Squirrel** as its scripting language — a high-level,
+imperative, object-oriented language designed by Alberto Demichelis as a
+lightweight yet powerful scripting tool. The language home page and full
+reference are at `squirrel-lang.org <http://squirrel-lang.org>`_.
+
+Squirrel offers dynamic typing, delegation, higher-order functions,
+generators, tail recursion, exception handling, and automatic memory
+management, with both compiler and virtual machine fitting in about 6k lines
+of C++ code.
+
+.. toctree::
+   language/lexical_structure.rst
+   language/datatypes.rst
+   language/execution_context.rst
+   language/statements.rst
+   language/expressions.rst
+   language/tables.rst
+   language/arrays.rst
+   language/functions.rst
+   language/classes.rst
+   language/generators.rst
+   language/constants_and_enumerations.rst
+   language/threads.rst
+   language/weak_references.rst
+   language/delegation.rst
+   language/metamethods.rst
+   language/builtin_functions.rst

@@ -1,0 +1,109 @@
+.. _eblink_apiindex:
+
+===================
+API Quick Reference
+===================
+
+.. rubric:: :ref:`DeviceAPI <eblink_deviceapi>`
+
+* :js:func:`isChipErase() <DeviceAPI.isChipErase>`
+* :js:func:`memmap() <DeviceAPI.memmap>`
+* :js:func:`memmapFromFile() <DeviceAPI.memmapFromFile>`
+* :js:func:`modifyFlash() <DeviceAPI.modifyFlash>`
+* :js:func:`sectorCount() <DeviceAPI.sectorCount>`
+* :js:func:`setFlashDontTrim() <DeviceAPI.setFlashDontTrim>`
+* :js:func:`setFlashEraseValue() <DeviceAPI.setFlashEraseValue>`
+
+.. rubric:: :ref:`EBbuffer <eblink_ebbuffer>`
+
+* :js:func:`EBbuffer() <EBbuffer>` (constructor)
+* :js:func:`access() <EBbuffer.access>`
+* :js:func:`allocate() <EBbuffer.allocate>`
+* :js:func:`format() <EBbuffer.format>`
+* :js:func:`get() <EBbuffer.get>`
+* :js:func:`getSize() <EBbuffer.getSize>`
+* :js:func:`getTrim() <EBbuffer.getTrim>`
+* :js:func:`set() <EBbuffer.set>`
+* :js:func:`trim() <EBbuffer.trim>`
+
+.. rubric:: :ref:`InterfAPI <eblink_interfapi>`
+
+* :js:func:`getDapAp() <InterfAPI.getDapAp>`
+* :js:func:`getName() <InterfAPI.getName>`
+* :js:func:`getSpeed() <InterfAPI.getSpeed>`
+* :js:func:`getTapId() <InterfAPI.getTapId>`
+* :js:func:`loadBin() <InterfAPI.loadBin>`
+* :js:func:`loadString() <InterfAPI.loadString>`
+* :js:func:`read() <InterfAPI.read>`
+* :js:func:`readBuf() <InterfAPI.readBuf>`
+* :js:func:`readDap() <InterfAPI.readDap>`
+* :js:func:`resetCtrl() <InterfAPI.resetCtrl>`
+* :js:func:`setDapAp() <InterfAPI.setDapAp>`
+* :js:func:`setSpeed() <InterfAPI.setSpeed>`
+* :js:func:`targetVoltage() <InterfAPI.targetVoltage>`
+* :js:func:`write() <InterfAPI.write>`
+* :js:func:`writeBuf() <InterfAPI.writeBuf>`
+* :js:func:`writeDap() <InterfAPI.writeDap>`
+
+.. rubric:: :ref:`ServicesAPI <eblink_servicesapi>`
+
+* :js:func:`addService() <ServicesAPI.addService>`
+
+.. rubric:: :ref:`TargetAPI <eblink_targetapi>`
+
+* :js:func:`execute() <TargetAPI.execute>`
+* :js:func:`getCpuName() <TargetAPI.getCpuName>`
+* :js:func:`getName() <TargetAPI.getName>`
+* :js:func:`getState() <TargetAPI.getState>`
+* :js:func:`halt() <TargetAPI.halt>`
+* :js:func:`poll() <TargetAPI.poll>`
+* :js:func:`readReg() <TargetAPI.readReg>`
+* :js:func:`reset() <TargetAPI.reset>`
+* :js:func:`resume() <TargetAPI.resume>`
+* :js:func:`writeReg() <TargetAPI.writeReg>`
+
+.. rubric:: :ref:`Error handling <eblink_error_handling>`
+
+* :js:func:`catchString`
+* :js:func:`catchThrowStr`
+* :js:func:`errorToStr`
+
+.. rubric:: :ref:`Global functions <eblink_globals>`
+
+* :js:func:`amregex`
+* :js:func:`AnimateCursor`
+* :js:func:`AnimateDone`
+* :js:func:`astrsep`
+* :js:func:`cliSwitch`
+* :js:func:`FL_MAX`
+* :js:func:`FL_MIN`
+* :js:func:`Float2Integer`
+* :js:func:`GetTickCount`
+* :js:func:`IN_MAX`
+* :js:func:`IN_MIN`
+* :js:func:`include`
+* :js:func:`Integer2Float`
+* :js:func:`isInteger`
+* :js:func:`isnull`
+* :js:func:`isScriptObject`
+* :js:func:`isString`
+* :js:func:`require`
+* :js:func:`Sleep`
+* :js:func:`strToNumber`
+* :js:func:`UN_MAX`
+* :js:func:`UN_MIN`
+
+.. rubric:: :ref:`Logging <eblink_logging>`
+
+* ``debugf(fmt, ...)``
+* ``errorf(fmt, ...)``
+* ``noticef(fmt, ...)``
+* ``printf(fmt, ...)``
+* ``tracef(fmt, ...)``
+* ``userf(fmt, ...)``
+* ``warnf(fmt, ...)``
+* ``yesNof(default, fmt, ...)``
+
+.. rubric:: :ref:`Debugger <eblink_debugger>`
+
+* :js:func:`brkPt`

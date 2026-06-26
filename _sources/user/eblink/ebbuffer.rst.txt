@@ -1,0 +1,157 @@
+.. _eblink_ebbuffer:
+
+========
+EBbuffer
+========
+
+``EBbuffer`` is a general-purpose binary data buffer. Unlike the other API
+objects it can be created freely by scripts. It is the standard way to pass
+blocks of data to and from hardware interface functions.
+
+An ``EBbuffer`` has a fixed size once allocated, a configurable access width
+(8, 16, or 32 bits) that governs how the ``[]`` index operator works, and an
+optional trim value for alignment padding.
+
+Construction
+------------
+
+.. index:: single: EBbuffer; (constructor)
+
+.. js:function:: EBbuffer([size_or_other])
+   :noindex:
+
+   Creates an ``EBbuffer``. Three forms:
+
+   - ``EBbuffer()`` — empty, unallocated. Use ``allocate()`` before access,
+     or pass directly to ``readBuf()`` which allocates internally.
+   - ``EBbuffer(size)`` — allocates ``size`` bytes, zero-initialised.
+   - ``EBbuffer(other)`` — copies another ``EBbuffer``. Access width resets
+     to 32 bits.
+
+Memory access
+-------------
+
+.. index:: single: EBbuffer; .get()
+
+.. js:function:: EBbuffer.get(offset [, width])
+   :noindex:
+
+   Returns the value at byte ``offset``. ``width`` is 8, 16, or 32 bits;
+   defaults to 32. Throws a string exception if the access would exceed the
+   buffer.
+
+.. index:: single: EBbuffer; .set()
+
+.. js:function:: EBbuffer.set(offset, value [, width])
+   :noindex:
+
+   Writes ``value`` at byte ``offset``. ``width`` is 8, 16, or 32 bits;
+   defaults to 32. Throws a string exception if the access would exceed the
+   buffer.
+
+Index operator
+--------------
+
+``buf[index]`` reads or writes one element using the current access width set
+by ``access()``. The byte offset is ``index * (accessWidth / 8)``::
+
+    local buf = EBbuffer(64);
+    buf.access(8);       // set 8-bit access
+    buf[0] = 0xDE;
+    buf[1] = 0xAD;
+    printf("0x%02X 0x%02X\n", buf[0], buf[1]);
+
+Buffer management
+-----------------
+
+.. index:: single: EBbuffer; .allocate()
+
+.. js:function:: EBbuffer.allocate(size)
+   :noindex:
+
+   Allocates ``size`` bytes for an unallocated buffer. Throws if the buffer
+   is already allocated or is a reference buffer. The buffer is
+   zero-initialised.
+
+.. index:: single: EBbuffer; .getSize()
+
+.. js:function:: EBbuffer.getSize()
+   :noindex:
+
+   Returns the buffer size in bytes.
+
+.. index:: single: EBbuffer; .access()
+
+.. js:function:: EBbuffer.access([width])
+   :noindex:
+
+   Sets the access width used by the ``[]`` operator to ``width`` (8, 16, or
+   32). Passing ``0`` queries the current width without changing it. Returns
+   the previous width.
+
+   Default access width is 32 bits.
+
+.. index:: single: EBbuffer; .format()
+
+.. js:function:: EBbuffer.format(fmt, ...)
+   :noindex:
+
+   Fills the buffer with the result of a ``printf``-style format operation,
+   replacing any existing content. The buffer is re-allocated to fit the
+   formatted string exactly. Returns the number of bytes written.
+
+   Useful for building XML or text payloads to write to target memory::
+
+       local buf = EBbuffer();
+       buf.format("BOOT=%d\n", boot_mode);
+       intrfApi.writeBuf(buf, 0x20001000);
+
+Trimming
+--------
+
+Trim is used with reference buffers (obtained from ``readBuf``) to pad the
+logical size to an alignment boundary without allocating extra memory.
+
+.. index:: single: EBbuffer; .trim()
+
+.. js:function:: EBbuffer.trim(boundary)
+   :noindex:
+
+   Sets the trim so that ``trimmedSize()`` is rounded up to a multiple of
+   ``boundary`` bytes. Only valid for reference buffers (those filled by
+   ``readBuf``). Pass ``0`` to clear the trim.
+
+.. index:: single: EBbuffer; .getTrim()
+
+.. js:function:: EBbuffer.getTrim()
+   :noindex:
+
+   Returns the current trim padding in bytes.
+
+Operators
+---------
+
+``buf1 + buf2``
+   Concatenates two buffers and returns a new ``EBbuffer`` containing the
+   data of ``buf1`` followed by ``buf2``.
+
+``buf1 <=> buf2``
+   Compares the contents of two buffers byte by byte. Returns ``0`` if equal,
+   ``-1`` if ``buf1`` is less than ``buf2``, ``1`` if greater. Used by the
+   Squirrel ``==`` and comparison operators.
+
+Example
+-------
+
+Reading a flash sector and comparing it to a file::
+
+    local sector = EBbuffer();
+    intrfApi.readBuf(sector, 0x08000000, 2048);
+
+    local expected = EBbuffer();
+    // ... fill expected from file ...
+
+    if((sector <=> expected) == 0)
+        printf("Sector matches\n");
+    else
+        printf("Sector differs\n");

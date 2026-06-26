@@ -1,0 +1,330 @@
+.. _usage:
+
+*****
+Usage
+*****
+
+This chapter walks you through using EBlink from scratch — from connecting
+your first probe to running a GDB debug session.
+
+Before you start
+----------------
+
+You need two things before EBlink can do anything:
+
+1. **A debug probe** connected to your PC and to the target board (SWD or
+   JTAG header).
+2. **A device script** that tells EBlink about your target — its memory map,
+   how to erase and write flash, and how to reset it.
+
+EBlink is shipped with device scripts for STMicro, NXP, Atmel, Silicon Labs
+and Renesas targets. If you are not sure which script to use, start with
+``auto`` and EBlink will identify the connected device and select the right
+script for you.
+
+Your first command
+------------------
+
+The minimal EBlink command is::
+
+    eblink -I stlink -S auto
+
+``-I stlink`` tells EBlink to use an STlink probe.
+``-S auto`` tells EBlink to auto-detect your device and load the right script.
+
+If EBlink starts without errors, your probe is connected and the target is
+recognised. EBlink will then exit immediately because you have not asked it
+to do anything yet — that is normal.
+
+Saving yourself some typing
+---------------------------
+
+Typing ``-I stlink -S auto`` on every command gets old fast. EBlink reads two
+environment variables at startup so you can set your defaults once and leave
+them out of every command:
+
+``EB_DEFAULT_PROBE``
+    Used as the ``-I`` argument when ``-I`` is not on the command line.
+
+``EB_DEFAULT_SCRIPT``
+    Used as a ``-S`` argument when ``-S`` is not on the command line.
+
+Set them in your shell profile or system settings::
+
+    export EB_DEFAULT_PROBE=stlink
+    export EB_DEFAULT_SCRIPT=auto
+
+After this, ``eblink -F file=firmware.elf`` is enough to flash a board —
+EBlink picks up the probe and script from the environment. Anything you do
+specify on the command line overrides the environment variable, so you can
+always deviate from the default for a single session without changing the
+setting::
+
+    # normally uses stlink from environment, override for this session:
+    eblink -I cmsis-dap -F file=firmware.elf
+
+The command line structure
+--------------------------
+
+::
+
+    eblink -I <probe>[,options] -S <script> [operation] [options...]
+
+EBlink always follows this sequence when it starts:
+
+1. Open the debug probe (``-I``).
+2. Load the device script(s) (``-S``).
+3. Call ``ebMain()`` in the script — this sets up the memory map and
+   initialises the target.
+4. Carry out whatever operation you asked for (flash, GDB server, or both).
+
+If any step fails, EBlink stops and reports the error. The most common
+first-time problems are a wrong probe type in ``-I``, a missing USB driver,
+or a target that is not powered.
+
+Configuring the probe: ``-I``
+------------------------------
+
+The probe type comes first in the ``-I`` string, followed by comma-separated
+options::
+
+    -I stlink,speed=4000
+
+The most useful options are:
+
+``speed=<kHz>``
+    The SWD clock speed. The default is the maximum the probe supports, which
+    is fine in most cases. If you get connection errors, try a lower speed
+    such as ``speed=1000`` — long cables or noisy boards can cause problems
+    at high speeds.
+
+``dr`` (disable reset)
+    Normally EBlink resets the target when it connects. Add ``dr`` to connect
+    without a reset — useful when the target is already running code that
+    must not be interrupted, or when the reset pin is not wired to the header.
+
+``swd`` / ``jtag``
+    The debug protocol. SWD is the default and works on virtually all
+    Cortex-M targets. Switch to ``jtag`` only if your hardware requires it.
+
+``serial=<sn>``
+    If you have more than one probe plugged in at the same time, use the
+    serial number to pick the right one. You can find serial numbers by
+    running EBlink without this option — it will list all connected probes
+    if there is ambiguity.
+
+``vcc=<V>``
+    The target supply voltage (e.g. ``3.3`` or ``1.8``). EBlink uses this
+    for speed calibration; it does not control the actual supply rail.
+
+``ap=<n>``
+    By default EBlink scans the DAP and selects the first useful access port
+    it finds. On multi-core devices such as the STM32H7, each core has its
+    own AP, so you need to specify which one to use: ``ap=0`` for the CM7
+    core, ``ap=1`` for the CM4 core.
+
+Loading a script: ``-S``
+-------------------------
+
+The device script is what makes EBlink work with your specific target. It
+contains the memory map, the flash algorithm, and the reset strategy.
+
+::
+
+    -S auto                         # auto-detect the device
+    -S stm32g0.script               # explicit script by name
+    -S /home/user/scripts/my.script # explicit script by full path
+
+With ``auto``, EBlink reads the device ID register from the target and
+selects the matching script from the installed scripts. If the device is not recognised,
+EBlink tells you so and exits — in that case you need a custom script.
+
+Use ``-P <path>`` to add a directory to the script search path so you can
+refer to scripts by filename rather than full path::
+
+    eblink -I stlink -S my_target.script -P /home/user/my_scripts
+
+Use ``-D name=value`` to pass a value into the script as a global variable.
+Some scripts use this for configuration that differs between board variants::
+
+    -D FLASH_SIZE=0x200000
+
+Flashing firmware: ``-F``
+--------------------------
+
+The ``-F`` option programs, verifies, or inspects flash memory. You combine
+keywords and values with commas::
+
+    -F file=firmware.elf,erase,verify,run
+
+**The most important thing to understand** is that by default — without
+``erase`` — EBlink only re-programs flash sectors that differ from the new
+image. Unchanged sectors are left alone. This is faster and reduces flash
+wear. It works for most development workflows.
+
+Use ``erase`` when you need a clean slate: for example when changing
+partition layouts, clearing old data sectors, or recovering a board with
+write-protected flash.
+
+The most common operations:
+
+``file=<file>``
+    The image to program. EBlink accepts ELF, Intel HEX, and SREC and detects
+    the format automatically from the file contents.
+
+``erase``
+    Chip-erase the entire flash before programming. Use this when the default
+    smart re-flash is not sufficient.
+
+``verify``
+    Read back every programmed sector and compare it with the image. If
+    anything does not match, EBlink reports an error. Adds some time but
+    gives you certainty.
+
+``run``
+    Release the target and let it start running after all operations are
+    done. Without this the target stays halted.
+
+``cmp=<file>``
+    Compare flash contents with a file without changing anything. Useful for
+    checking whether a board already has the right firmware.
+
+``write=<hex>@<address>``
+    Patch bytes at a specific flash address. The value is written as raw hex
+    — two hex digits per byte, no ``0x`` prefix. The address uses the normal
+    ``0x`` notation. This is done *after* the file upload, so you can patch
+    a serial number or device-specific calibration into an otherwise
+    identical firmware image::
+
+        -F file=fw.elf,write=0102030405@0x0800FF00
+
+    Multiple ``write`` options are allowed in a single ``-F``.
+
+``read=<length>@<address>``
+    Read bytes from the target and print them as hex. Handy for checking a
+    register value or a specific memory location without a full debug
+    session. Use ``-v 0`` to suppress all other EBlink output so only the
+    hex bytes appear::
+
+        eblink -I stlink -S auto -v 0 -F read=4@0x08000004
+
+``dump=<length>@<address>:<file>``
+    Save a region of memory to a file. Use a ``.hex`` extension for Intel
+    HEX format, any other extension for raw binary.
+
+Typical flashing examples::
+
+    # Development: only re-program what changed
+    eblink -I stlink -S auto -F file=firmware.elf
+
+    # Production: erase everything, program, verify, start
+    eblink -I stlink -S auto -F erase,verify,run,file=firmware.elf
+
+    # Check if the board already has the right firmware
+    eblink -I stlink -S auto -F cmp=firmware.elf
+
+Debugging with GDB: ``-G``
+---------------------------
+
+Adding ``-G`` starts a GDB remote-serial-protocol server. You then point
+your debugger (arm-none-eabi-gdb, an IDE like EmBitz or VS Code) at that
+server and connect::
+
+    eblink -I stlink -S auto -G
+
+By default EBlink listens on all network interfaces on TCP port 2331. Your
+GDB client connects with::
+
+    target remote localhost:2331
+
+The most useful ``-G`` options:
+
+``port=<n>``
+    Use a different TCP port. Useful when the default port 2331 is already
+    in use, or when you run multiple EBlink instances at the same time::
+
+        -G port=4242
+
+``ap=<n>``
+    Attach this GDB server to a specific DAP access port. By default EBlink
+    selects the first useful AP it finds. On a dual-core device (e.g.
+    STM32H7), run two separate EBlink instances — one with ``-G ap=0`` for
+    the CM7 core and one with ``-G ap=1`` for the CM4 core. Each GDB session
+    then controls its own core independently.
+
+``s``
+    Shut down EBlink when GDB disconnects. Without this, EBlink keeps
+    running and waits for the next connection. Add ``s`` in automated test
+    flows where EBlink should exit cleanly after each session.
+
+``nc``
+    Disable the flash cache. EBlink normally caches flash contents so that
+    re-flashing from GDB is fast. If your target modifies its own flash
+    at runtime (bootloaders, EEPROM emulation), disable the cache so EBlink
+    always reads back the real flash contents.
+
+Combining ``-F`` and ``-G``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You do not need to flash anything to use the GDB server — ``-G`` works on
+its own and connects to whatever is already running on the target. Adding
+``-F`` is useful when you want to write something to flash first, for
+example a bootloader, a certificate, or device-specific calibration data,
+and then hand control to the debugger::
+
+    eblink -I stlink -S auto -F file=bootloader.elf -G port=4242
+
+EBlink programs the flash first, then starts the GDB server and waits for
+a connection.
+
+Configuring the Cortex-M core: ``-T``
+--------------------------------------
+
+``-T`` is optional and rarely needed for everyday use. EBlink auto-detects
+the core type. You add ``-T`` only when you want to change the default
+fault handling or reset behaviour.
+
+``fu=<0..2>``
+    Fault unwind level. When your target crashes (HardFault, MemManage,
+    etc.), EBlink can decode the exception stack frame and show you exactly
+    which instruction faulted and why. ``0`` = disabled, ``1`` = passive
+    (decode when halted), ``2`` = active (catch the fault immediately,
+    default). This is one of EBlink's most useful debugging features — leave
+    it at the default ``2`` unless you have a specific reason not to.
+
+``reset=<0..2>``
+    Reset strategy: ``0`` = system reset (default), ``1`` = core-only
+    reset, ``2`` = JTAG reset. Change this only if a system reset causes
+    problems — for example when it reinitialises peripherals that need to
+    stay powered.
+
+``fc=<flags>``
+    Controls which fault classes trigger the vector catch. Default is all
+    faults. Remove ``r`` if you do not want reset vectors caught::
+
+        -T cortex-m,fc=mncsbih
+
+Other options
+-------------
+
+``-v <0..8>``
+    Verbosity level (default 4). Lower numbers give less output; higher
+    numbers show internal debug traffic. Use ``-v 0`` for scripted use where
+    you only want the result of a ``-F read``.
+
+``-H``
+    Connect without resetting the target — same as adding ``dr`` to the
+    ``-I`` string.
+
+``-E <call>``
+    Execute a Squirrel function after initialisation. Lets you call script
+    functions from the command line without writing a wrapper script::
+
+        -E "dataflash_erase(0x08000500)"
+
+    Multiple ``-E`` options are executed in order.
+
+``-Q <n|y|d>``
+    How EBlink handles yes/no questions from a script: ``n`` = always no,
+    ``y`` = always yes, ``d`` = use the script default. Useful for
+    unattended automation where no one is at the keyboard.

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3.8. Functions &mdash; EBlink documentation 6.2 stable documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/EBlink.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=7218f4fa"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3.9. Classes" href="classes.html" />
+    <link rel="prev" title="3.7. Arrays" href="arrays.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            EBlink documentation
+              <img src="../../_static/EBlink.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">2. Usage</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../language.html">3. The script language</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="lexical_structure.html">3.1. Lexical Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datatypes.html">3.2. Values and Data types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="execution_context.html">3.3. Execution Context</a></li>
+<li class="toctree-l2"><a class="reference internal" href="statements.html">3.4. Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expressions.html">3.5. Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tables.html">3.6. Tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="arrays.html">3.7. Arrays</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.8. Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#function-declaration">3.8.1. Function declaration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#default-paramaters">3.8.1.1. Default Paramaters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#function-with-variable-number-of-paramaters">3.8.1.2. Function with variable number of paramaters</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#function-calls">3.8.2. Function calls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#binding-an-environment-to-a-function">3.8.3. Binding an environment to a function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lambda-expressions">3.8.4. Lambda Expressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#free-variables">3.8.5. Free Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tail-recursion">3.8.6. Tail Recursion</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classes.html">3.9. Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generators.html">3.10. Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants_and_enumerations.html">3.11. Constants &amp; Enumerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="threads.html">3.12. Threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weak_references.html">3.13. Weak References</a></li>
+<li class="toctree-l2"><a class="reference internal" href="delegation.html">3.14. Delegation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metamethods.html">3.15. Metamethods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="builtin_functions.html">3.16. Built-in Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../eblink/index.html">4. EBlink Scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bookindex.html">5. Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">EBlink documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../language.html"><span class="section-number">3. </span>The script language</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">3.8. </span>Functions</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="functions">
+<span id="id1"></span><h1><span class="section-number">3.8. </span>Functions<a class="headerlink" href="#functions" title="Permalink to this heading"></a></h1>
+<p id="index-0">Functions are first class values like integer or strings and can be stored in table slots,
+local variables, arrays and passed as function parameters.
+Functions can be implemented in Squirrel or in a native language with calling conventions
+compatible with ANSI C.</p>
+<section id="function-declaration">
+<h2><span class="section-number">3.8.1. </span>Function declaration<a class="headerlink" href="#function-declaration" title="Permalink to this heading"></a></h2>
+<p id="index-1">Functions are declared through the function expression:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">a</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">-</span> <span class="n">c</span><span class="p">;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>or with the syntactic sugar:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">ciao</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="o">-</span><span class="n">c</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>that is equivalent to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">this</span><span class="o">.</span><span class="n">ciao</span> <span class="o">&lt;-</span> <span class="n">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="o">-</span><span class="n">c</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>a local function can be declared with this syntactic sugar:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">function</span> <span class="n">tuna</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="o">-</span><span class="n">c</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>that is equivalent to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">tuna</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="o">-</span><span class="n">c</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>is also possible to declare something like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">T</span> <span class="o">&lt;-</span> <span class="p">{}</span>
+<span class="n">function</span> <span class="n">T</span><span class="p">::</span><span class="n">ciao</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="o">-</span><span class="n">c</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="o">//</span><span class="n">that</span> <span class="ow">is</span> <span class="n">equivalent</span> <span class="n">to</span> <span class="n">write</span>
+
+<span class="n">T</span><span class="o">.</span><span class="n">ciao</span> <span class="o">&lt;-</span> <span class="n">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="o">-</span><span class="n">c</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="o">//</span><span class="ow">or</span>
+
+<span class="n">T</span> <span class="o">&lt;-</span> <span class="p">{</span>
+    <span class="n">function</span> <span class="n">ciao</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="o">-</span><span class="n">c</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<section id="default-paramaters">
+<h3><span class="section-number">3.8.1.1. </span>Default Paramaters<a class="headerlink" href="#default-paramaters" title="Permalink to this heading"></a></h3>
+<p id="index-2">Squirrel’s functions can have default parameters.</p>
+<p>A function with default parameters is declared as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">test</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="o">....</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>when the function <em>test</em> is invoked and the parameter c or d are not specified,
+the VM autometically assigns the default value to the unspecified parameter. A default parameter can be
+any valid squirrel expression. The expression is evaluated at runtime.</p>
+</section>
+<section id="function-with-variable-number-of-paramaters">
+<h3><span class="section-number">3.8.1.2. </span>Function with variable number of paramaters<a class="headerlink" href="#function-with-variable-number-of-paramaters" title="Permalink to this heading"></a></h3>
+<p id="index-3">Squirrel’s functions can have variable number of parameters(varargs functions).</p>
+<p>A vararg function is declared by adding three dots (<cite>…</cite>) at the end of its parameter list.</p>
+<p>When the function is called all the extra parameters will be accessible through the <em>array</em>
+called <code class="docutils literal notranslate"><span class="pre">vargv</span></code>, that is passed as implicit parameter.</p>
+<p><code class="docutils literal notranslate"><span class="pre">vargv</span></code> is a regular squirrel array and can be used accordingly.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">test</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="o">...</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">for</span><span class="p">(</span><span class="n">local</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span> <span class="n">vargv</span><span class="o">.</span><span class="n">len</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="p">::</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;varparam &quot;</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s2">&quot; = &quot;</span><span class="o">+</span><span class="n">vargv</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="n">foreach</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">val</span> <span class="ow">in</span> <span class="n">vargv</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="p">::</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;varparam &quot;</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s2">&quot; = &quot;</span><span class="o">+</span><span class="n">val</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">test</span><span class="p">(</span><span class="s2">&quot;goes in a&quot;</span><span class="p">,</span><span class="s2">&quot;goes in b&quot;</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="function-calls">
+<h2><span class="section-number">3.8.2. </span>Function calls<a class="headerlink" href="#function-calls" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-4"><div class="highlight"><pre><span></span><span class="n">exp</span><span class="o">:=</span> <span class="n">derefexp</span> <span class="s1">&#39;(&#39;</span> <span class="n">explist</span> <span class="s1">&#39;)&#39;</span>
+</pre></div>
+</div>
+<p>The expression is evaluated in this order: derefexp after the explist (arguments) and at
+the end the call.</p>
+<p>A function call in Squirrel passes the current environment object <em>this</em> as a hidden parameter.
+But when the function was immediately indexed from an object, <em>this</em> shall be the object
+which was indexed, instead.</p>
+<p>If we call a function with the syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mytable</span><span class="o">.</span><span class="n">foo</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>the environment object passed to ‘foo’ as <em>this</em> will be ‘mytable’ (since ‘foo’ was immediately indexed from ‘mytable’)</p>
+<p>Whereas with the syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">foo</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="o">//</span> <span class="n">implicitly</span> <span class="n">equivalent</span> <span class="n">to</span> <span class="n">this</span><span class="o">.</span><span class="n">foo</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>the environment object will be the current <em>this</em> (that is, propagated from the caller’s <em>this</em>).</p>
+<p>It may help to remember the rules in the following way:</p>
+<blockquote>
+<div><p>foo(x,y) —&gt; this.foo(x,y)
+table.foo(x,y) —&gt; call foo with (table,x,y)</p>
+</div></blockquote>
+<p>It may also help to consider why it works this way: it’s designed to assist with object-oriented style.
+When calling ‘foo(x,y)’ it’s assumed you’re calling another member of the object (or of the file) and
+so should operate on the same object.
+When calling ‘mytable.foo(x,y)’ it’s written plainly that you’re calling a member of a different object.</p>
+</section>
+<section id="binding-an-environment-to-a-function">
+<h2><span class="section-number">3.8.3. </span>Binding an environment to a function<a class="headerlink" href="#binding-an-environment-to-a-function" title="Permalink to this heading"></a></h2>
+<p id="index-5">while by default a squirrel function call passes as environment object ‘this’, the object
+where the function was indexed from. However, is also possible to statically bind an evironment to a
+closure using the built-in method <code class="docutils literal notranslate"><span class="pre">closure.bindenv(env_obj)</span></code>.
+The method bindenv() returns a new instance of a closure with the environment bound to it.
+When an environment object is bound to a function, every time the function is invoked, its
+‘this’ parameter will always be the previously bound environent.
+This mechanism is useful to implement callbacks systems similar to C# delegates.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The closure keeps a weak reference to the bound environmet object, because of this if
+the object is deleted, the next call to the closure will result in a <code class="docutils literal notranslate"><span class="pre">null</span></code>
+environment object.</p>
+</div>
+</section>
+<section id="lambda-expressions">
+<h2><span class="section-number">3.8.4. </span>Lambda Expressions<a class="headerlink" href="#lambda-expressions" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate" id="index-6"><div class="highlight"><pre><span></span><span class="n">exp</span> <span class="o">:=</span> <span class="s1">&#39;@&#39;</span> <span class="s1">&#39;(&#39;</span> <span class="n">paramlist</span> <span class="s1">&#39;)&#39;</span> <span class="n">exp</span>
+</pre></div>
+</div>
+<p>Lambda expressions are a syntactic sugar to quickly define a function that consists of a single expression.
+This feature comes handy when functional programming patterns are applied, like map/reduce or passing a compare method to
+array.sort().</p>
+<p>here a lambda expression:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">myexp</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+</pre></div>
+</div>
+<p>that is equivalent to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">myexp</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>a more useful usage could be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">];</span>
+<span class="n">arr</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="o">@</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="n">a</span> <span class="o">&lt;=&gt;</span> <span class="n">b</span><span class="p">);</span>
+<span class="n">arr</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="o">@</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="o">-</span><span class="p">(</span><span class="n">a</span> <span class="o">&lt;=&gt;</span> <span class="n">b</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>that could have been written as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">];</span>
+<span class="n">arr</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">a</span> <span class="o">&lt;=&gt;</span> <span class="n">b</span><span class="p">;</span> <span class="p">}</span> <span class="p">);</span>
+<span class="n">arr</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="o">-</span><span class="p">(</span><span class="n">a</span> <span class="o">&lt;=&gt;</span> <span class="n">b</span><span class="p">);</span> <span class="p">}</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>other than being limited to a single expression lambdas support all features of regular functions.
+in fact are implemented as a compile time feature.</p>
+</section>
+<section id="free-variables">
+<h2><span class="section-number">3.8.5. </span>Free Variables<a class="headerlink" href="#free-variables" title="Permalink to this heading"></a></h2>
+<p id="index-7">A free variable is a variable external from the function scope as is not a local variable
+or parameter of the function.
+Free variables reference a local variable from a outer scope.
+In the following example the variables ‘testy’, ‘x’ and ‘y’ are bound to the function ‘foo’.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">x</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="mi">20</span>
+<span class="n">local</span> <span class="n">testy</span><span class="o">=</span><span class="s2">&quot;I&#39;m testy&quot;</span>
+
+<span class="n">function</span> <span class="n">foo</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="p">::</span><span class="nb">print</span><span class="p">(</span><span class="n">testy</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="o">+</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A program can read or write a free variable.</p>
+</section>
+<section id="tail-recursion">
+<h2><span class="section-number">3.8.6. </span>Tail Recursion<a class="headerlink" href="#tail-recursion" title="Permalink to this heading"></a></h2>
+<p id="index-8">Tail recursion is a method for partially transforming a recursion in a program into an
+iteration: it applies when the recursive calls in a function are the last executed
+statements in that function (just before the return).
+If this happenes the squirrel interpreter collapses the caller stack frame before the
+recursive call; because of that very deep recursions are possible without risk of a stack
+overflow.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">loopy</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">n</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">){</span>
+        <span class="p">::</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;n=&quot;</span><span class="o">+</span><span class="n">n</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">loopy</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">loopy</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="arrays.html" class="btn btn-neutral float-left" title="3.7. Arrays" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="classes.html" class="btn btn-neutral float-right" title="3.9. Classes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2009-2026, Gerard Zagema.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

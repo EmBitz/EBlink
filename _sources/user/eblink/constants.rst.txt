@@ -1,0 +1,111 @@
+.. _eblink_constants:
+
+=========
+Constants
+=========
+
+All constants listed here are available in every EBlink script without
+declaration.
+
+VERSION
+-------
+
+``VERSION`` is a float containing the EBlink API version::
+
+    if(VERSION < 3.0)
+        errorf("This script requires EBlink API 3.0 or newer\n");
+
+Target state
+------------
+
+Returned by :js:func:`TargetAPI.getState`.
+
++----------------------+-------+-----------------------------------------+
+| Constant             | Value | Meaning                                 |
++======================+=======+=========================================+
+| ``TARGET_UNKNOWN``   |   0   | State cannot be determined              |
++----------------------+-------+-----------------------------------------+
+| ``TARGET_RUNNING``   |   1   | CPU is executing code                   |
++----------------------+-------+-----------------------------------------+
+| ``TARGET_HALTED``    |   2   | CPU is halted (debug state)             |
++----------------------+-------+-----------------------------------------+
+| ``TARGET_RESET``     |   3   | CPU is held in reset                    |
++----------------------+-------+-----------------------------------------+
+
+Reset types
+-----------
+
+Passed to :js:func:`TargetAPI.reset`.
+
++-------------------------+-------+-----------------------------------------------+
+| Constant                | Value | Effect                                        |
++=========================+=======+===============================================+
+| ``SYSTEM_RESET``        |   0   | Full system reset via AIRCR.SYSRESETREQ       |
++-------------------------+-------+-----------------------------------------------+
+| ``CORE_RESET``          |   1   | Core-only reset via AIRCR.VECTRESET           |
++-------------------------+-------+-----------------------------------------------+
+| ``JTAG_RESET``          |   2   | Hardware reset via the nRESET pin             |
++-------------------------+-------+-----------------------------------------------+
+| ``USER_RESET``          |   3   | Custom reset — calls ``ebResetUser()``        |
++-------------------------+-------+-----------------------------------------------+
+
+Error codes
+-----------
+
+All negative integers thrown by API methods correspond to one of these
+constants. Scripts can compare a caught integer exception against them::
+
+    catch(e) {
+        if(e == ERROR_TARGET_LOST) { errorf("Target disconnected\n"); return e; }
+        throw e;
+    }
+
+User-defined error codes must be more negative than ``ERROR_USER``::
+
+    const MY_UNLOCK_FAIL = (ERROR_USER - 1);  // -1001
+
++--------------------------------+--------+------------------------------------------+
+| Constant                       | Value  | Description                              |
++================================+========+==========================================+
+| ``ERROR_OK``                   |  0     | No error                                 |
++--------------------------------+--------+------------------------------------------+
+| ``ERROR_NOTIFIED``             | -1     | Error already reported, abort silently   |
++--------------------------------+--------+------------------------------------------+
+| ``ERROR_SYNTAX``               | -2     | Script syntax error                      |
++--------------------------------+--------+------------------------------------------+
+| ``ERROR_OUT_MEMM``             | -3     | Out of memory                            |
++--------------------------------+--------+------------------------------------------+
+| ``ERROR_TARGET_LOST``          | -4     | Target connection lost                   |
++--------------------------------+--------+------------------------------------------+
+| ``ERROR_SOCKET_CLOSE``         | -5     | GDB socket closed                        |
++--------------------------------+--------+------------------------------------------+
+| ``ERROR_SOCKET_ERR``           | -6     | GDB socket error                         |
++--------------------------------+--------+------------------------------------------+
+| ``ERROR_NO_DEVICE``            | -7     | No device found                          |
++--------------------------------+--------+------------------------------------------+
+| ``ERROR_OUT_OF_RANGE``         | -8     | Value out of range                       |
++--------------------------------+--------+------------------------------------------+
+| ``INTERFACE_NOT_SUPPORTED``    | -20    | Feature not supported by this interface  |
++--------------------------------+--------+------------------------------------------+
+| ``INTERFACE_WAIT``             | -21    | Interface speed too high                 |
++--------------------------------+--------+------------------------------------------+
+| ``INTERFACE_ERROR``            | -22    | Interface communication error            |
++--------------------------------+--------+------------------------------------------+
+| ``ERROR_INTERNAL``             | -23    | Internal EBlink error                    |
++--------------------------------+--------+------------------------------------------+
+| ``ERROR_NOT_FOUND``            | -100   | Requested item not found                 |
++--------------------------------+--------+------------------------------------------+
+| ``ERROR_UNLOCK``               | -300   | Flash unlock failed                      |
++--------------------------------+--------+------------------------------------------+
+| ``ERROR_VOLTAGE``              | -301   | Target voltage out of range              |
++--------------------------------+--------+------------------------------------------+
+| ``ERROR_FLASH``                | -302   | Flash operation failed                   |
++--------------------------------+--------+------------------------------------------+
+| ``ERROR_TIMEOUT``              | -303   | Operation timed out                      |
++--------------------------------+--------+------------------------------------------+
+| ``ERROR_USER``                 | -1000  | Base for user-defined error codes        |
++--------------------------------+--------+------------------------------------------+
+
+``INTERFACE_WAIT`` (-21) usually means the probe speed set with
+``iface.setSpeed()`` is too high for the target. Try reducing it or use the
+``-D FLASH_SPEED=<KHz>`` CLI option.

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3.3. Execution Context &mdash; EBlink documentation 6.2 stable documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/EBlink.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=7218f4fa"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3.4. Statements" href="statements.html" />
+    <link rel="prev" title="3.2. Values and Data types" href="datatypes.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            EBlink documentation
+              <img src="../../_static/EBlink.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">2. Usage</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../language.html">3. The script language</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="lexical_structure.html">3.1. Lexical Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datatypes.html">3.2. Values and Data types</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.3. Execution Context</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#variables">3.3.1. Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="statements.html">3.4. Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expressions.html">3.5. Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tables.html">3.6. Tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="arrays.html">3.7. Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html">3.8. Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classes.html">3.9. Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generators.html">3.10. Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants_and_enumerations.html">3.11. Constants &amp; Enumerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="threads.html">3.12. Threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weak_references.html">3.13. Weak References</a></li>
+<li class="toctree-l2"><a class="reference internal" href="delegation.html">3.14. Delegation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metamethods.html">3.15. Metamethods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="builtin_functions.html">3.16. Built-in Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../eblink/index.html">4. EBlink Scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bookindex.html">5. Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">EBlink documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../language.html"><span class="section-number">3. </span>The script language</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">3.3. </span>Execution Context</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="execution-context">
+<span id="executioncontext"></span><h1><span class="section-number">3.3. </span>Execution Context<a class="headerlink" href="#execution-context" title="Permalink to this heading"></a></h1>
+<p id="index-0">The execution context is the union of the function stack frame and the function
+environment object(this) and the function root(root table).
+The stack frame is the portion of stack where the local variables declared in its body are
+stored.
+The environment object is an implicit parameter that is automatically passed by the
+function caller (see see <a class="reference internal" href="functions.html#functions"><span class="std std-ref">functions</span></a>).
+The root table is a table associated to the function during its creation.
+The root table value of a function is the root table of the VM at the function creation.
+The root table of function can also be changed after creation with closure.setroot().
+During the execution, the body of a function can only transparently refer to his execution
+context.
+This mean that a single identifier can refer to a local variable, to an environment object slot
+or to the slot of the closure root table;
+The environment object can be explicitly accessed by the keyword <code class="docutils literal notranslate"><span class="pre">this</span></code>.
+The closure root table can be explicitly accessed through the operator <code class="docutils literal notranslate"><span class="pre">::</span></code> (see <a class="reference internal" href="#variables"><span class="std std-ref">Variables</span></a>).</p>
+<section id="variables">
+<span id="id1"></span><h2><span class="section-number">3.3.1. </span>Variables<a class="headerlink" href="#variables" title="Permalink to this heading"></a></h2>
+<p>There are two types of variables in Squirrel, local variables and tables/arrays slots.
+Because global variables(variables stored in the root of a closure) are stored in a table, they are table slots.</p>
+<p>A single identifier refers to a local variable or a slot in the environment object.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">derefexp</span> <span class="o">:=</span> <span class="nb">id</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">_table</span><span class="p">[</span><span class="s2">&quot;foo&quot;</span><span class="p">]</span>
+<span class="n">_array</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>with tables we can also use the ‘.’ syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">derefexp</span> <span class="o">:=</span> <span class="n">exp</span> <span class="s1">&#39;.&#39;</span> <span class="nb">id</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">_table</span><span class="o">.</span><span class="n">foo</span>
+</pre></div>
+</div>
+<p>Squirrel first checks if an identifier is a local variable (function arguments are local
+variables) if not looks up the environment object (this) and finally looks up
+to the closure root.</p>
+<p>For instance::</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">testy</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">local</span> <span class="n">a</span><span class="o">=</span><span class="mi">10</span><span class="p">;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">arg</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>in this case ‘foo’ will be equivalent to ‘this.foo’ or this[“foo”].</p>
+<p>Global variables are stored in a table called the root table. Usually in the global scope the
+environment object is the root table, but to explicitly access the closure root of the function from
+another scope, the slot name must be prefixed with <code class="docutils literal notranslate"><span class="pre">'::'</span></code> (<code class="docutils literal notranslate"><span class="pre">::foo</span></code>).</p>
+<p>For instance::</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">testy</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">local</span> <span class="n">a</span><span class="o">=</span><span class="mi">10</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">arg</span><span class="o">+</span><span class="p">::</span><span class="n">foo</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>accesses the variable ‘foo’ in the closure root table.</p>
+<p>Since Squirrel 3.1 each function has a weak reference to a specific root table, this can differ from the current VM root table.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">test</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">foo</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>is equivalent to write:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">test</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span> <span class="ow">in</span> <span class="n">this</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">this</span><span class="o">.</span><span class="n">foo</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="p">}</span><span class="k">else</span> <span class="p">{</span>
+        <span class="p">::</span><span class="n">foo</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="datatypes.html" class="btn btn-neutral float-left" title="3.2. Values and Data types" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="statements.html" class="btn btn-neutral float-right" title="3.4. Statements" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2009-2026, Gerard Zagema.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

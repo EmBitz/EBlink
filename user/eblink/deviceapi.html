@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4.9. DeviceAPI &mdash; EBlink documentation 6.2 stable documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/EBlink.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=7218f4fa"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4.10. TargetAPI" href="targetapi.html" />
+    <link rel="prev" title="4.8. InterfAPI" href="interfapi.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            EBlink documentation
+              <img src="../../_static/EBlink.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">2. Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../language.html">3. The script language</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">4. EBlink Scripting</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">4.1. Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="error_handling.html">4.2. Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">4.3. Logging &amp; Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="globals.html">4.4. Global Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">4.5. Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interaction.html">4.6. EBlink Interaction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ebbuffer.html">4.7. EBbuffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interfapi.html">4.8. InterfAPI</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.9. DeviceAPI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#memory-map">4.9.1. Memory map</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#flash-management">4.9.2. Flash management</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="targetapi.html">4.10. TargetAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servicesapi.html">4.11. ServicesAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugger.html">4.12. Script Debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html">4.13. Addendum: Squirrel Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apiindex.html">4.14. API Quick Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../bookindex.html">5. Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">EBlink documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html"><span class="section-number">4. </span>EBlink Scripting</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">4.9. </span>DeviceAPI</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="deviceapi">
+<span id="eblink-deviceapi"></span><h1><span class="section-number">4.9. </span>DeviceAPI<a class="headerlink" href="#deviceapi" title="Permalink to this heading"></a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">DeviceAPI</span></code> is a class registered by EBlink that manages the device memory
+map and the flash sector cache. A new instance is created where needed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DeviceAPI</span><span class="p">()</span><span class="o">.</span><span class="n">memmap</span><span class="p">(</span> <span class="o">...</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>The memory map must be set in <code class="docutils literal notranslate"><span class="pre">ebMain()</span></code>; without it EBlink cannot operate.</p>
+<section id="memory-map">
+<h2><span class="section-number">4.9.1. </span>Memory map<a class="headerlink" href="#memory-map" title="Permalink to this heading"></a></h2>
+<span class="target" id="index-0"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DeviceAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">memmap</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xml</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Sets the device memory map from an XML string. The XML format is the GDB
+memory-map DTD. Must be called in <code class="docutils literal notranslate"><span class="pre">ebMain()</span></code>. Returns <code class="docutils literal notranslate"><span class="pre">ERROR_OK</span></code> on
+success or a negative error code if the XML could not be parsed.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">pagesize</span></code> property inside a flash region defines the sector size
+used for the flash cache:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>DeviceAPI().memmap( @@&quot;&lt;?xml version=\&quot;1.0\&quot;?&gt;
+    &lt;!DOCTYPE memory-map PUBLIC \&quot;+//IDN gnu.org//DTD GDB Memory Map V1.0//EN\&quot;
+                                \&quot;http://sourceware.org/gdb/gdb-memory-map.dtd\&quot;&gt;
+    &lt;memory-map&gt;
+      &lt;memory type=\&quot;flash\&quot; start=\&quot;0x08000000\&quot; length=\&quot;0x100000\&quot;&gt;
+        &lt;property name=\&quot;pagesize\&quot;&gt;0x800&lt;/property&gt;
+      &lt;/memory&gt;
+      &lt;memory type=\&quot;ram\&quot; start=\&quot;0x20000000\&quot; length=\&quot;0x20000\&quot;/&gt;
+    &lt;/memory-map&gt;&quot; );
+</pre></div>
+</div>
+<p>Multiple flash and RAM regions can be defined. GDB uses this information
+for breakpoints, stack unwinding, and the memory display.</p>
+</dd></dl>
+
+<span class="target" id="index-1"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DeviceAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">memmapFromFile</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Loads the memory map XML from a file instead of an inline string. Returns
+<code class="docutils literal notranslate"><span class="pre">ERROR_OK</span></code> on success or <code class="docutils literal notranslate"><span class="pre">-1</span></code> on failure (file not found, read error,
+or XML parse error).</p>
+</dd></dl>
+
+</section>
+<section id="flash-management">
+<h2><span class="section-number">4.9.2. </span>Flash management<a class="headerlink" href="#flash-management" title="Permalink to this heading"></a></h2>
+<span class="target" id="index-2"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DeviceAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">isChipErase</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if a full chip erase was requested (e.g. EBlink
+<code class="docutils literal notranslate"><span class="pre">-F</span> <span class="pre">erase</span></code> option). Use in <code class="docutils literal notranslate"><span class="pre">ebFlashStart()</span></code> to select the erase
+strategy:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">ebFlashStart</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">DeviceAPI</span><span class="p">()</span><span class="o">.</span><span class="n">isChipErase</span><span class="p">())</span>
+        <span class="n">flash_mass_erase</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<span class="target" id="index-3"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DeviceAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">sectorCount</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns the total number of flash sectors defined in the memory map.</p>
+</dd></dl>
+
+<span class="target" id="index-4"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DeviceAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">setFlashEraseValue</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Sets the byte value that EBlink considers an “erased” cell. Default is
+<code class="docutils literal notranslate"><span class="pre">0xFF</span></code> (standard NOR flash). Change this for devices with a different
+erase value (e.g. <code class="docutils literal notranslate"><span class="pre">0x00</span></code>).</p>
+</dd></dl>
+
+<span class="target" id="index-5"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DeviceAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">setFlashDontTrim</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>When <code class="docutils literal notranslate"><span class="pre">value</span></code> is <code class="docutils literal notranslate"><span class="pre">true</span></code>, disables the automatic trimming of the flash
+write buffer to the erased value. By default EBlink strips trailing erased
+bytes from the end of each sector before calling <code class="docutils literal notranslate"><span class="pre">ebFlashWrite()</span></code> to
+avoid unnecessary writes.</p>
+</dd></dl>
+
+<span class="target" id="index-6"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DeviceAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">modifyFlash</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Writes <code class="docutils literal notranslate"><span class="pre">buffer</span></code> directly into the EBlink flash sector cache at address
+<code class="docutils literal notranslate"><span class="pre">addr</span></code>, without touching the target hardware. EBlink will include these
+modified sectors in the next flash programming cycle. Returns <code class="docutils literal notranslate"><span class="pre">ERROR_OK</span></code>
+or a negative error code.</p>
+<p>Use this to patch data in flash before the normal write cycle:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">patch</span> <span class="o">=</span> <span class="n">EBbuffer</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mh">0xDEADBEEF</span><span class="p">);</span>
+<span class="n">DeviceAPI</span><span class="p">()</span><span class="o">.</span><span class="n">modifyFlash</span><span class="p">(</span><span class="mh">0x080FFFFC</span><span class="p">,</span> <span class="n">patch</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="interfapi.html" class="btn btn-neutral float-left" title="4.8. InterfAPI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="targetapi.html" class="btn btn-neutral float-right" title="4.10. TargetAPI" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2009-2026, Gerard Zagema.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4.5. Constants &mdash; EBlink documentation 6.2 stable documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/EBlink.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=7218f4fa"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4.6. EBlink Interaction" href="interaction.html" />
+    <link rel="prev" title="4.4. Global Functions" href="globals.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            EBlink documentation
+              <img src="../../_static/EBlink.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">2. Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../language.html">3. The script language</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">4. EBlink Scripting</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">4.1. Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="error_handling.html">4.2. Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">4.3. Logging &amp; Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="globals.html">4.4. Global Functions</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.5. Constants</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#version">4.5.1. VERSION</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#target-state">4.5.2. Target state</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reset-types">4.5.3. Reset types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#error-codes">4.5.4. Error codes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="interaction.html">4.6. EBlink Interaction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ebbuffer.html">4.7. EBbuffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interfapi.html">4.8. InterfAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deviceapi.html">4.9. DeviceAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="targetapi.html">4.10. TargetAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servicesapi.html">4.11. ServicesAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugger.html">4.12. Script Debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html">4.13. Addendum: Squirrel Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apiindex.html">4.14. API Quick Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../bookindex.html">5. Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">EBlink documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html"><span class="section-number">4. </span>EBlink Scripting</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">4.5. </span>Constants</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="constants">
+<span id="eblink-constants"></span><h1><span class="section-number">4.5. </span>Constants<a class="headerlink" href="#constants" title="Permalink to this heading"></a></h1>
+<p>All constants listed here are available in every EBlink script without
+declaration.</p>
+<section id="version">
+<h2><span class="section-number">4.5.1. </span>VERSION<a class="headerlink" href="#version" title="Permalink to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">VERSION</span></code> is a float containing the EBlink API version:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="p">(</span><span class="n">VERSION</span> <span class="o">&lt;</span> <span class="mf">3.0</span><span class="p">)</span>
+    <span class="n">errorf</span><span class="p">(</span><span class="s2">&quot;This script requires EBlink API 3.0 or newer</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="target-state">
+<h2><span class="section-number">4.5.2. </span>Target state<a class="headerlink" href="#target-state" title="Permalink to this heading"></a></h2>
+<p>Returned by <code class="xref js js-func docutils literal notranslate"><span class="pre">TargetAPI.getState()</span></code>.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Constant</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TARGET_UNKNOWN</span></code></p></td>
+<td><p>0</p></td>
+<td><p>State cannot be determined</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TARGET_RUNNING</span></code></p></td>
+<td><p>1</p></td>
+<td><p>CPU is executing code</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TARGET_HALTED</span></code></p></td>
+<td><p>2</p></td>
+<td><p>CPU is halted (debug state)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TARGET_RESET</span></code></p></td>
+<td><p>3</p></td>
+<td><p>CPU is held in reset</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="reset-types">
+<h2><span class="section-number">4.5.3. </span>Reset types<a class="headerlink" href="#reset-types" title="Permalink to this heading"></a></h2>
+<p>Passed to <code class="xref js js-func docutils literal notranslate"><span class="pre">TargetAPI.reset()</span></code>.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Constant</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Effect</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SYSTEM_RESET</span></code></p></td>
+<td><p>0</p></td>
+<td><p>Full system reset via AIRCR.SYSRESETREQ</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CORE_RESET</span></code></p></td>
+<td><p>1</p></td>
+<td><p>Core-only reset via AIRCR.VECTRESET</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">JTAG_RESET</span></code></p></td>
+<td><p>2</p></td>
+<td><p>Hardware reset via the nRESET pin</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">USER_RESET</span></code></p></td>
+<td><p>3</p></td>
+<td><p>Custom reset — calls <code class="docutils literal notranslate"><span class="pre">ebResetUser()</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="error-codes">
+<h2><span class="section-number">4.5.4. </span>Error codes<a class="headerlink" href="#error-codes" title="Permalink to this heading"></a></h2>
+<p>All negative integers thrown by API methods correspond to one of these
+constants. Scripts can compare a caught integer exception against them:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">catch</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">e</span> <span class="o">==</span> <span class="n">ERROR_TARGET_LOST</span><span class="p">)</span> <span class="p">{</span> <span class="n">errorf</span><span class="p">(</span><span class="s2">&quot;Target disconnected</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span> <span class="k">return</span> <span class="n">e</span><span class="p">;</span> <span class="p">}</span>
+    <span class="n">throw</span> <span class="n">e</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>User-defined error codes must be more negative than <code class="docutils literal notranslate"><span class="pre">ERROR_USER</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">MY_UNLOCK_FAIL</span> <span class="o">=</span> <span class="p">(</span><span class="n">ERROR_USER</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>  <span class="o">//</span> <span class="o">-</span><span class="mi">1001</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Constant</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ERROR_OK</span></code></p></td>
+<td><p>0</p></td>
+<td><p>No error</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ERROR_NOTIFIED</span></code></p></td>
+<td><p>-1</p></td>
+<td><p>Error already reported, abort silently</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ERROR_SYNTAX</span></code></p></td>
+<td><p>-2</p></td>
+<td><p>Script syntax error</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ERROR_OUT_MEMM</span></code></p></td>
+<td><p>-3</p></td>
+<td><p>Out of memory</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ERROR_TARGET_LOST</span></code></p></td>
+<td><p>-4</p></td>
+<td><p>Target connection lost</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ERROR_SOCKET_CLOSE</span></code></p></td>
+<td><p>-5</p></td>
+<td><p>GDB socket closed</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ERROR_SOCKET_ERR</span></code></p></td>
+<td><p>-6</p></td>
+<td><p>GDB socket error</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ERROR_NO_DEVICE</span></code></p></td>
+<td><p>-7</p></td>
+<td><p>No device found</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ERROR_OUT_OF_RANGE</span></code></p></td>
+<td><p>-8</p></td>
+<td><p>Value out of range</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">INTERFACE_NOT_SUPPORTED</span></code></p></td>
+<td><p>-20</p></td>
+<td><p>Feature not supported by this interface</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">INTERFACE_WAIT</span></code></p></td>
+<td><p>-21</p></td>
+<td><p>Interface speed too high</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">INTERFACE_ERROR</span></code></p></td>
+<td><p>-22</p></td>
+<td><p>Interface communication error</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ERROR_INTERNAL</span></code></p></td>
+<td><p>-23</p></td>
+<td><p>Internal EBlink error</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ERROR_NOT_FOUND</span></code></p></td>
+<td><p>-100</p></td>
+<td><p>Requested item not found</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ERROR_UNLOCK</span></code></p></td>
+<td><p>-300</p></td>
+<td><p>Flash unlock failed</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ERROR_VOLTAGE</span></code></p></td>
+<td><p>-301</p></td>
+<td><p>Target voltage out of range</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ERROR_FLASH</span></code></p></td>
+<td><p>-302</p></td>
+<td><p>Flash operation failed</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ERROR_TIMEOUT</span></code></p></td>
+<td><p>-303</p></td>
+<td><p>Operation timed out</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ERROR_USER</span></code></p></td>
+<td><p>-1000</p></td>
+<td><p>Base for user-defined error codes</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">INTERFACE_WAIT</span></code> (-21) usually means the probe speed set with
+<code class="docutils literal notranslate"><span class="pre">iface.setSpeed()</span></code> is too high for the target. Try reducing it or use the
+<code class="docutils literal notranslate"><span class="pre">-D</span> <span class="pre">FLASH_SPEED=&lt;KHz&gt;</span></code> CLI option.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="globals.html" class="btn btn-neutral float-left" title="4.4. Global Functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="interaction.html" class="btn btn-neutral float-right" title="4.6. EBlink Interaction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2009-2026, Gerard Zagema.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

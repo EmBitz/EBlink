@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4.10. TargetAPI &mdash; EBlink documentation 6.2 stable documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/EBlink.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=7218f4fa"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4.11. ServicesAPI" href="servicesapi.html" />
+    <link rel="prev" title="4.9. DeviceAPI" href="deviceapi.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            EBlink documentation
+              <img src="../../_static/EBlink.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">2. Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../language.html">3. The script language</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">4. EBlink Scripting</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">4.1. Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="error_handling.html">4.2. Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">4.3. Logging &amp; Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="globals.html">4.4. Global Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">4.5. Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interaction.html">4.6. EBlink Interaction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ebbuffer.html">4.7. EBbuffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interfapi.html">4.8. InterfAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deviceapi.html">4.9. DeviceAPI</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.10. TargetAPI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#target-information">4.10.1. Target information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#execution-control">4.10.2. Execution control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#register-access">4.10.3. Register access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-read-and-print-all-core-registers">4.10.4. Example: read and print all core registers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="servicesapi.html">4.11. ServicesAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugger.html">4.12. Script Debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html">4.13. Addendum: Squirrel Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apiindex.html">4.14. API Quick Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../bookindex.html">5. Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">EBlink documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html"><span class="section-number">4. </span>EBlink Scripting</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">4.10. </span>TargetAPI</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="targetapi">
+<span id="eblink-targetapi"></span><h1><span class="section-number">4.10. </span>TargetAPI<a class="headerlink" href="#targetapi" title="Permalink to this heading"></a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">TargetAPI</span></code> is a class registered by EBlink that controls the CPU state:
+halting, resuming, reading and writing registers, executing code, and
+resetting the device. Scripts instantiate it once at global scope:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">targetApi</span> <span class="o">&lt;-</span> <span class="n">TargetAPI</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>All methods throw an integer <code class="docutils literal notranslate"><span class="pre">ERROR_xxx</span></code> exception on failure.</p>
+<section id="target-information">
+<h2><span class="section-number">4.10.1. </span>Target information<a class="headerlink" href="#target-information" title="Permalink to this heading"></a></h2>
+<span class="target" id="index-0"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">TargetAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">getName</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns the device name string as reported by the target driver (e.g.
+<code class="docutils literal notranslate"><span class="pre">&quot;STM32F4&quot;</span></code>) or <code class="docutils literal notranslate"><span class="pre">null</span></code> if no target is attached.</p>
+</dd></dl>
+
+<span class="target" id="index-1"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">TargetAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">getCpuName</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns the ARM CPU core name (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;M0&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;M3&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;M4&quot;</span></code>).</p>
+</dd></dl>
+
+<span class="target" id="index-2"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">TargetAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">getState</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns the current CPU state as one of the <code class="docutils literal notranslate"><span class="pre">TARGET_xxx</span></code> constants:
+<code class="docutils literal notranslate"><span class="pre">TARGET_UNKNOWN</span></code>, <code class="docutils literal notranslate"><span class="pre">TARGET_RUNNING</span></code>, <code class="docutils literal notranslate"><span class="pre">TARGET_HALTED</span></code>,
+<code class="docutils literal notranslate"><span class="pre">TARGET_RESET</span></code>.</p>
+</dd></dl>
+
+</section>
+<section id="execution-control">
+<h2><span class="section-number">4.10.2. </span>Execution control<a class="headerlink" href="#execution-control" title="Permalink to this heading"></a></h2>
+<span class="target" id="index-3"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">TargetAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">halt</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Requests the CPU to halt. Throws on error.</p>
+</dd></dl>
+
+<span class="target" id="index-4"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">TargetAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">resume</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Resumes a halted CPU. Throws on error.</p>
+</dd></dl>
+
+<span class="target" id="index-5"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">TargetAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">poll</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Polls the target hardware and updates the internal state. Call this after
+<code class="docutils literal notranslate"><span class="pre">resume()</span></code> before reading <code class="docutils literal notranslate"><span class="pre">getState()</span></code> if you need an immediate
+state update.</p>
+</dd></dl>
+
+<span class="target" id="index-6"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">TargetAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">execute</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Writes <code class="docutils literal notranslate"><span class="pre">addr</span></code> to the program counter (PC register) and resumes the CPU.
+If <code class="docutils literal notranslate"><span class="pre">wait</span></code> is <code class="docutils literal notranslate"><span class="pre">true</span></code>, blocks until the CPU halts again. Useful for
+running a small RAM-resident flash algorithm:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Upload</span> <span class="n">algorithm</span> <span class="n">to</span> <span class="n">RAM</span><span class="p">,</span> <span class="n">then</span> <span class="n">execute</span> <span class="n">it</span>
+<span class="n">intrfApi</span><span class="o">.</span><span class="n">writeBuf</span><span class="p">(</span><span class="n">algo_buf</span><span class="p">,</span> <span class="mh">0x20000000</span><span class="p">);</span>
+<span class="n">targetApi</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="mh">0x20000000</span><span class="p">,</span> <span class="n">true</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<span class="target" id="index-7"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">TargetAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">reset</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Resets the device using one of the <code class="docutils literal notranslate"><span class="pre">xxx_RESET</span></code> constants:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">targetApi</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">SYSTEM_RESET</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>For <code class="docutils literal notranslate"><span class="pre">USER_RESET</span></code>, the <code class="docutils literal notranslate"><span class="pre">ebResetUser()</span></code> script function is called
+instead of a hardware reset. After the reset the <code class="docutils literal notranslate"><span class="pre">ebResetPost()</span></code>
+function is called if it exists.</p>
+</dd></dl>
+
+</section>
+<section id="register-access">
+<h2><span class="section-number">4.10.3. </span>Register access<a class="headerlink" href="#register-access" title="Permalink to this heading"></a></h2>
+<p>Register names are core-specific. For ARM Cortex-M the standard names are
+<code class="docutils literal notranslate"><span class="pre">&quot;r0&quot;</span></code> through <code class="docutils literal notranslate"><span class="pre">&quot;r15&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;pc&quot;</span></code> (same as <code class="docutils literal notranslate"><span class="pre">&quot;r15&quot;</span></code>), <code class="docutils literal notranslate"><span class="pre">&quot;sp&quot;</span></code>
+(same as <code class="docutils literal notranslate"><span class="pre">&quot;r13&quot;</span></code>), <code class="docutils literal notranslate"><span class="pre">&quot;lr&quot;</span></code> (same as <code class="docutils literal notranslate"><span class="pre">&quot;r14&quot;</span></code>), and <code class="docutils literal notranslate"><span class="pre">&quot;xpsr&quot;</span></code>.</p>
+<span class="target" id="index-8"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">TargetAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">readReg</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Returns the 32-bit value of the named register. Throws on error or if the
+register name is unknown:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">pc</span> <span class="o">=</span> <span class="n">targetApi</span><span class="o">.</span><span class="n">readReg</span><span class="p">(</span><span class="s2">&quot;pc&quot;</span><span class="p">);</span>
+<span class="n">printf</span><span class="p">(</span><span class="s2">&quot;PC = 0x</span><span class="si">%08X</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">pc</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<span class="target" id="index-9"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">TargetAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">writeReg</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Writes <code class="docutils literal notranslate"><span class="pre">value</span></code> to the named register. Throws on error or if the
+register name is unknown:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">targetApi</span><span class="o">.</span><span class="n">writeReg</span><span class="p">(</span><span class="s2">&quot;r0&quot;</span><span class="p">,</span> <span class="mh">0x00000000</span><span class="p">);</span>  <span class="o">//</span> <span class="n">clear</span> <span class="n">R0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="example-read-and-print-all-core-registers">
+<h2><span class="section-number">4.10.4. </span>Example: read and print all core registers<a class="headerlink" href="#example-read-and-print-all-core-registers" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">dump_regs</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">local</span> <span class="n">regs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;r0&quot;</span><span class="p">,</span><span class="s2">&quot;r1&quot;</span><span class="p">,</span><span class="s2">&quot;r2&quot;</span><span class="p">,</span><span class="s2">&quot;r3&quot;</span><span class="p">,</span><span class="s2">&quot;r4&quot;</span><span class="p">,</span><span class="s2">&quot;r5&quot;</span><span class="p">,</span><span class="s2">&quot;r6&quot;</span><span class="p">,</span><span class="s2">&quot;r7&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;r8&quot;</span><span class="p">,</span><span class="s2">&quot;r9&quot;</span><span class="p">,</span><span class="s2">&quot;r10&quot;</span><span class="p">,</span><span class="s2">&quot;r11&quot;</span><span class="p">,</span><span class="s2">&quot;r12&quot;</span><span class="p">,</span><span class="s2">&quot;sp&quot;</span><span class="p">,</span><span class="s2">&quot;lr&quot;</span><span class="p">,</span><span class="s2">&quot;pc&quot;</span><span class="p">,</span><span class="s2">&quot;xpsr&quot;</span><span class="p">];</span>
+    <span class="n">foreach</span><span class="p">(</span><span class="n">name</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">)</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%-6s</span><span class="s2"> = 0x</span><span class="si">%08X</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">targetApi</span><span class="o">.</span><span class="n">readReg</span><span class="p">(</span><span class="n">name</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="deviceapi.html" class="btn btn-neutral float-left" title="4.9. DeviceAPI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="servicesapi.html" class="btn btn-neutral float-right" title="4.11. ServicesAPI" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2009-2026, Gerard Zagema.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

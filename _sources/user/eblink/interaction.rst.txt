@@ -1,0 +1,328 @@
+.. _eblink_interaction:
+
+====================
+EBlink Interaction
+====================
+
+EBlink calls specific functions in the script at defined points in its
+operation. Functions not defined in the script are silently skipped, except
+where marked mandatory.
+
+Overview
+--------
+
++------------------------------------------+-----------+-----------------------------------------------+
+| Function                                 | Required  | Called when                                   |
++==========================================+===========+===============================================+
+| ``ebMain()``                             | mandatory | All scripts loaded, CLI defines set           |
++------------------------------------------+-----------+-----------------------------------------------+
+| ``ebFlashStart()``                       | optional  | Flash operation is about to begin             |
++------------------------------------------+-----------+-----------------------------------------------+
+| ``ebFlashErase(sector_nr, sector_addr)`` | optional  | A sector must be erased before writing        |
++------------------------------------------+-----------+-----------------------------------------------+
+| ``ebFlashWrite(sector_nr, addr, buf)``   | mandatory | A sector must be written                      |
++------------------------------------------+-----------+-----------------------------------------------+
+| ``ebFlashDone()``                        | optional  | All flash sectors processed                   |
++------------------------------------------+-----------+-----------------------------------------------+
+| ``ebFlashEraseChip()``                   | optional  | Full chip erase requested (``-F erase``)      |
++------------------------------------------+-----------+-----------------------------------------------+
+| ``ebResetUser()``                        | optional* | A ``USER_RESET`` is requested                 |
++------------------------------------------+-----------+-----------------------------------------------+
+| ``ebResetPost(reset_type)``              | optional  | After every reset, regardless of type         |
++------------------------------------------+-----------+-----------------------------------------------+
+| ``ebServicesSetup()``                    | optional  | EBlink service initialisation                 |
++------------------------------------------+-----------+-----------------------------------------------+
+| ``ebGDBqRcmd(cmd, length, buffer)``      | optional  | GDB ``monitor`` command received              |
++------------------------------------------+-----------+-----------------------------------------------+
+
+\* Mandatory when the script uses ``USER_RESET`` as its reset strategy.
+
+Call order
+----------
+
+::
+
+    Script loaded
+         |
+         v
+    ebMain()                   <- mandatory: set memmap, initialise device
+         |
+         +--- flash operation requested
+         |         |
+         |         v
+         |    ebFlashStart()          <- optional: prepare hardware for flash
+         |         |
+         |    +----+------------------------------------------+
+         |    |  for each modified sector:                     |
+         |    |    ebFlashErase(nr, addr)    <- optional       |
+         |    |    ebFlashWrite(nr, addr, buf) <- mandatory    |
+         |    +-----------------------------------------------+
+         |         |
+         |    ebFlashDone()           <- optional: clean up after flash
+         |
+         +--- chip erase requested
+         |         |
+         |    ebFlashEraseChip()      <- optional (falls back to sector loop)
+         |
+         +--- reset requested
+                   |
+              ebResetUser()           <- mandatory when USER_RESET type used
+              ebResetPost(type)       <- optional: called after every reset
+
+``ebServicesSetup()`` is called once during service initialisation, independent
+of the flash or reset flow. ``ebGDBqRcmd()`` is called on every incoming GDB
+monitor command, independent of the other flows.
+
+Reference
+---------
+
+.. js:function:: ebMain()
+
+   :mandatory:`mandatory`
+
+   - Called once after all scripts are loaded and all ``-D`` defines are set.
+   - Must call ``DeviceAPI().memmap()`` — EBlink aborts if no memory map is set.
+   - Typical use: detect device, set interface speed, configure flash parameters.
+
+   Returns: nothing required.
+
+   ::
+
+       intrfApi  <- InterfAPI()
+       targetApi <- TargetAPI()
+
+       function ebMain()
+       {
+           intrfApi.setSpeed(4000);
+
+           DeviceAPI().memmap( @@"<?xml version=\"1.0\"?>
+       <memory-map>
+         <memory type=\"flash\" start=\"0x08000000\" length=\"0x80000\">
+           <property name=\"pagesize\">0x800</property>
+         </memory>
+         <memory type=\"ram\" start=\"0x20000000\" length=\"0x20000\"/>
+       </memory-map>" );
+       }
+
+.. js:function:: ebFlashStart()
+
+   :optional:`optional`
+
+   - Called once before the first sector is touched.
+   - Typical use: unlock flash, reset target to known state, set interface speed.
+
+   Returns: ``ERROR_OK`` or a negative error code.
+
+.. js:function:: ebFlashErase(sector_nr, sector_addr)
+
+   :optional:`optional`
+
+   - ``sector_nr`` — zero-based sector index from the memory map.
+   - ``sector_addr`` — start address of the sector.
+   - If not defined, EBlink performs no explicit sector erase.
+
+   Returns: ``ERROR_OK`` or a negative error code.
+
+.. js:function:: ebFlashWrite(sector_nr, sector_addr, buffer)
+
+   :mandatory:`mandatory when flashing`
+
+   - ``sector_nr`` — zero-based sector index from the memory map.
+   - ``sector_addr`` — start address of the sector in target memory.
+   - ``buffer`` — :ref:`EBbuffer <eblink_ebbuffer>` containing the sector data,
+     trimmed to the last non-erased byte.
+   - Called for every sector that needs to be written, after erasure.
+
+   Returns: ``ERROR_OK`` or a negative error code.
+
+   ::
+
+       function ebFlashWrite(sector, address, buffer)
+       {
+           try {
+               intrfApi.writeBuf(buffer, address);
+           }
+           catch(e) {
+               if(catchString(e)) return ERROR_NOTIFIED;
+               return e;
+           }
+           return ERROR_OK;
+       }
+
+.. js:function:: ebFlashDone()
+
+   :optional:`optional`
+
+   - Called once after all sectors have been processed, success or failure.
+   - Typical use: re-lock flash, reset the device.
+
+   Returns: ``ERROR_OK`` or a negative error code.
+
+.. js:function:: ebFlashEraseChip()
+
+   :optional:`optional`
+
+   - Called when a full chip erase is requested (``-F erase`` option).
+   - Runs standalone — ``ebFlashStart`` and ``ebFlashDone`` are **not** called
+     around it.
+   - If not defined, EBlink falls back to calling ``ebFlashStart``,
+     ``ebFlashErase`` for every sector, and ``ebFlashDone``.
+
+   Returns: ``ERROR_OK`` or a negative error code.
+
+.. js:function:: ebResetUser()
+
+   :mandatory:`mandatory when USER_RESET type is used`
+
+   - Implement a custom reset sequence — for example via a peripheral register
+     when the nRESET pin is not available.
+
+   Returns: nothing required.
+
+   ::
+
+       function ebResetUser()
+       {
+           intrfApi.write(0xE000ED0C, 0x05FA0004);  // SYSRESETREQ via AIRCR
+           Sleep(50);
+       }
+
+.. js:function:: ebResetPost(reset_type)
+
+   :optional:`optional`
+
+   - ``reset_type`` — one of the ``xxx_RESET`` constants
+     (see :ref:`eblink_constants`).
+   - Called after every reset, regardless of type.
+   - Typical use: set stack pointer and PC from the vector table, wait for
+     the device to come out of reset.
+
+   Returns: ``ERROR_OK`` or a negative error code.
+
+   ::
+
+       function ebResetPost(type)
+       {
+           if(type != USER_RESET) {
+               targetApi.writeReg("SP", intrfApi.read(0x08000000));
+               targetApi.writeReg("PC", intrfApi.read(0x08000004));
+           }
+           return ERROR_OK;
+       }
+
+.. js:function:: ebServicesSetup()
+
+   :optional:`optional`
+
+   - Called during EBlink service initialisation.
+   - If not defined, EBlink starts services as specified on the CLI.
+   - As soon as one ``ServicesAPI().addService()`` call is made, EBlink no
+     longer starts any services automatically — the script is responsible
+     for starting all services.
+   - Use ``cliSwitch("-G")`` to retrieve the CLI GDB option and pass it to
+     ``addService()`` if needed.
+
+   Returns: ``ERROR_OK`` or a negative error code.
+
+.. js:function:: ebGDBqRcmd(cmd, length, buffer)
+
+   :optional:`optional`
+
+   - Called when a GDB ``monitor`` command arrives, before EBlink's own
+     built-in monitor handling.
+   - ``cmd`` — the monitor command string.
+   - ``length`` — length of the command string in bytes.
+   - ``buffer`` — an :ref:`EBbuffer <eblink_ebbuffer>` the script fills with
+     the response text to send back to GDB.
+   - If the script handles the command: fill ``buffer`` and return ``ERROR_OK``.
+     EBlink sends the buffer contents back to GDB and skips built-in handling.
+   - If the script does not handle the command: return a negative error code
+     or leave ``buffer`` empty. EBlink then falls through to its own monitor
+     command dispatcher.
+
+   Returns: ``ERROR_OK`` (command handled) or a negative error code (pass through).
+
+   The two examples below show the same ``ReadMemAP`` command implemented with
+   two different parsing strategies.
+
+   **Parsing with** ``amregex`` — a single regex captures all arguments at once::
+
+       function ebGDBqRcmd(packet, length, ebBuffer)
+       {
+           try {
+               local matches = []
+               // ReadMemAP <APBaseAddr> <Addr> <NumItems> <Flags>
+               if(amregex(matches, packet,
+                   @"ReadMemAP\s+(0x[0-9a-fA-F]+|[0-9]+)\s+(0x[0-9a-fA-F]+|[0-9]+)" +
+                   @"\s+(0x[0-9a-fA-F]+|[0-9]+)\s+(0x[0-9a-fA-F]+|[0-9]+)") > 0)
+               {
+                   local APbase  = strToNumber(matches[1])
+                   local addr    = strToNumber(matches[2])
+                   local num     = strToNumber(matches[3])
+                   local flags   = strToNumber(matches[4])
+
+                   local byteLen = (flags == 0 ? 4 : flags)
+                   local width   = (flags == 0 ? -1 : byteLen * 8)
+                   local fspec   = format("0x%%0%dX", byteLen * 2)
+
+                   local eb = EBbuffer()
+                   InterfAPI().readBuf(eb, addr, num * byteLen, width)
+                   if(width > 0) eb.access(width)
+
+                   local outStr = "O.K.:"
+                   for(local i = 0; i < num; i++) {
+                       outStr += format(fspec, eb[i])
+                       if(i < num - 1) outStr += ","
+                   }
+                   ebBuffer.format(outStr + "\n")
+               }
+               return ERROR_OK
+           }
+           catch(e) {
+               if(catchString(e)) return ERROR_NOTIFIED
+               return ERROR_NOTIFIED
+           }
+       }
+
+   **Parsing with** ``astrsep`` — tokenises on spaces, then checks token by name::
+
+       function ebGDBqRcmd(packet, length, ebBuffer)
+       {
+           try {
+               local tokens = []
+               astrsep(tokens, packet, " ")
+
+               // ReadMemAP <APBaseAddr> <Addr> <NumItems> <Flags>
+               if(tokens[0] == "ReadMemAP") {
+                   if(tokens.len() < 5) return ERROR_OK
+
+                   local APbase  = strToNumber(tokens[1])
+                   local addr    = strToNumber(tokens[2])
+                   local num     = strToNumber(tokens[3])
+                   local flags   = strToNumber(tokens[4])
+
+                   local byteLen = (flags == 0 ? 4 : flags)
+                   local width   = (flags == 0 ? -1 : byteLen * 8)
+                   local fspec   = format("0x%%0%dX", byteLen * 2)
+
+                   local eb = EBbuffer()
+                   InterfAPI().readBuf(eb, addr, num * byteLen, width)
+                   if(width > 0) eb.access(width)
+
+                   local outStr = "O.K.:"
+                   for(local i = 0; i < num; i++) {
+                       outStr += format(fspec, eb[i])
+                       if(i < num - 1) outStr += ","
+                   }
+                   ebBuffer.format(outStr + "\n")
+               }
+               return ERROR_OK
+           }
+           catch(e) {
+               if(catchString(e)) return ERROR_NOTIFIED
+               return ERROR_NOTIFIED
+           }
+       }
+
+   Use ``amregex`` when the command syntax is complex or needs strict validation.
+   Use ``astrsep`` when the command is simple whitespace-delimited tokens.

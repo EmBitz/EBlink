@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4.12. Script Debugger &mdash; EBlink documentation 6.2 stable documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/EBlink.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=7218f4fa"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4.13. Addendum: Squirrel Extensions" href="extensions.html" />
+    <link rel="prev" title="4.11. ServicesAPI" href="servicesapi.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            EBlink documentation
+              <img src="../../_static/EBlink.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">2. Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../language.html">3. The script language</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">4. EBlink Scripting</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">4.1. Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="error_handling.html">4.2. Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">4.3. Logging &amp; Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="globals.html">4.4. Global Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">4.5. Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interaction.html">4.6. EBlink Interaction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ebbuffer.html">4.7. EBbuffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interfapi.html">4.8. InterfAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deviceapi.html">4.9. DeviceAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="targetapi.html">4.10. TargetAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servicesapi.html">4.11. ServicesAPI</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.12. Script Debugger</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#enabling-the-debugger">4.12.1. Enabling the debugger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#trace-output-format">4.12.2. Trace output format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#script-breakpoints">4.12.3. Script breakpoints</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#brkPt"><code class="docutils literal notranslate"><span class="pre">brkPt()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#interactive-commands">4.12.4. Interactive commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#call-stack-and-locals">4.12.5. Call stack and locals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tips">4.12.6. Tips</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html">4.13. Addendum: Squirrel Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apiindex.html">4.14. API Quick Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../bookindex.html">5. Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">EBlink documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html"><span class="section-number">4. </span>EBlink Scripting</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">4.12. </span>Script Debugger</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="script-debugger">
+<span id="eblink-debugger"></span><h1><span class="section-number">4.12. </span>Script Debugger<a class="headerlink" href="#script-debugger" title="Permalink to this heading"></a></h1>
+<p>EBlink includes a built-in Squirrel script debugger. It is activated through
+the verbosity flag and lets you trace, step through, and inspect script
+execution from the console without an external IDE.</p>
+<section id="enabling-the-debugger">
+<h2><span class="section-number">4.12.1. </span>Enabling the debugger<a class="headerlink" href="#enabling-the-debugger" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Flag</p></th>
+<th class="head"><p>Effect</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-v7</span></code></p></td>
+<td><p>Enables the debug hook. EBlink prints each function
+call and return. <code class="docutils literal notranslate"><span class="pre">brkPt()</span></code> calls become active.
+Interactive stepping on call/return/exception events.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-v8</span></code></p></td>
+<td><p>Additionally enables line-level debug info in the
+compiled bytecode. Stepping to the next source line
+becomes available. Produces more detailed output.</p></td>
+</tr>
+</tbody>
+</table>
+<p>With <code class="docutils literal notranslate"><span class="pre">-v7</span></code> the output shows the function name and event type for each
+call/return. With <code class="docutils literal notranslate"><span class="pre">-v8</span></code> each source line is also reported.</p>
+</section>
+<section id="trace-output-format">
+<h2><span class="section-number">4.12.2. </span>Trace output format<a class="headerlink" href="#trace-output-format" title="Permalink to this heading"></a></h2>
+<p>While the debugger is active, EBlink prints a trace line for each event:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Squirrel</span> <span class="n">debug</span>          <span class="n">ebMain</span><span class="p">(</span><span class="n">c</span><span class="p">)[</span>  <span class="mi">0</span><span class="p">]</span>    <span class="p">{</span><span class="n">stm32</span><span class="o">.</span><span class="n">script</span><span class="p">}</span>
+<span class="n">Squirrel</span> <span class="n">debug</span>      <span class="n">ebFlashWrite</span><span class="p">(</span><span class="n">c</span><span class="p">)[</span>  <span class="mi">0</span><span class="p">]</span>    <span class="p">{</span><span class="n">stm32</span><span class="o">.</span><span class="n">script</span><span class="p">}</span>
+<span class="n">Squirrel</span> <span class="n">debug</span>      <span class="n">ebFlashWrite</span><span class="p">(</span><span class="n">r</span><span class="p">)[</span><span class="mi">145</span><span class="p">]</span>    <span class="p">{</span><span class="n">stm32</span><span class="o">.</span><span class="n">script</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Columns: <code class="docutils literal notranslate"><span class="pre">debug</span></code>/<code class="docutils literal notranslate"><span class="pre">trace</span></code> mode, function name (padded), event type in
+parentheses, line number in brackets, source file in braces.</p>
+<p>Event types:</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">c</span></code></p></td>
+<td><p>Function call (entering a function)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">r</span></code></p></td>
+<td><p>Function return (leaving a function)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">e</span></code></p></td>
+<td><p>Exception (a <code class="docutils literal notranslate"><span class="pre">throw</span></code> is about to fire)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">l</span></code></p></td>
+<td><p>Source line (only with <code class="docutils literal notranslate"><span class="pre">-v8</span></code>)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="script-breakpoints">
+<h2><span class="section-number">4.12.3. </span>Script breakpoints<a class="headerlink" href="#script-breakpoints" title="Permalink to this heading"></a></h2>
+<dl class="js function">
+<dt class="sig sig-object js" id="brkPt">
+<span class="sig-name descname"><span class="n"><span class="pre">brkPt</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#brkPt" title="Permalink to this definition"></a></dt>
+<dd><p>Inserts a breakpoint at the call site. Only active with <code class="docutils literal notranslate"><span class="pre">-v7</span></code> or higher;
+has no effect otherwise. When hit, EBlink prints the call stack with local
+variables and pauses for console input:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">ebFlashErase</span><span class="p">(</span><span class="n">sector</span><span class="p">,</span> <span class="n">address</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">brkPt</span><span class="p">();</span>           <span class="o">//</span> <span class="n">execution</span> <span class="n">stops</span> <span class="n">here</span> <span class="n">under</span> <span class="o">-</span><span class="n">v7</span>
+    <span class="n">flash_unlock</span><span class="p">();</span>
+    <span class="o">//</span> <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="interactive-commands">
+<h2><span class="section-number">4.12.4. </span>Interactive commands<a class="headerlink" href="#interactive-commands" title="Permalink to this heading"></a></h2>
+<p>At a breakpoint or step-stop, EBlink shows the call stack and prompts:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>== BREAKPOINT ==
+*FUNCTION [ebFlashErase()] stm32.script line [42]
+*FUNCTION [ebMain()] stm32.script line [15]
+-LOCALS:
+    [sector] INTEGER( 0 )
+    [address] INTEGER( 134217728 )
+
+Go, next Call, Return or Exception? [g,c,r,e]
+</pre></div>
+</div>
+<p>Available commands:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Key</p></th>
+<th class="head"><p>Level</p></th>
+<th class="head"><p>Action</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">g</span></code></p></td>
+<td><p>-v7</p></td>
+<td><p><strong>Go</strong>: continue until the next <code class="docutils literal notranslate"><span class="pre">brkPt()</span></code> or end</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">c</span></code></p></td>
+<td><p>-v7</p></td>
+<td><p><strong>Call</strong>: run until the next function call</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">r</span></code></p></td>
+<td><p>-v7</p></td>
+<td><p><strong>Return</strong>: run until the current function returns</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">e</span></code></p></td>
+<td><p>-v7</p></td>
+<td><p><strong>Exception</strong>: run until the next <code class="docutils literal notranslate"><span class="pre">throw</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">l</span></code></p></td>
+<td><p>-v8 only</p></td>
+<td><p><strong>Line</strong>: run until the next source line</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="call-stack-and-locals">
+<h2><span class="section-number">4.12.5. </span>Call stack and locals<a class="headerlink" href="#call-stack-and-locals" title="Permalink to this heading"></a></h2>
+<p>At every stop, EBlink prints the full call stack from the current function
+up to the top level, followed by all visible local variables with their
+types and values. Supported types: <code class="docutils literal notranslate"><span class="pre">INTEGER</span></code>, <code class="docutils literal notranslate"><span class="pre">FLOAT</span></code>, <code class="docutils literal notranslate"><span class="pre">STRING</span></code>,
+<code class="docutils literal notranslate"><span class="pre">NULL</span></code>, <code class="docutils literal notranslate"><span class="pre">TABLE</span></code>, <code class="docutils literal notranslate"><span class="pre">ARRAY</span></code>, <code class="docutils literal notranslate"><span class="pre">CLOSURE</span></code>, <code class="docutils literal notranslate"><span class="pre">INSTANCE</span></code>, <code class="docutils literal notranslate"><span class="pre">USERPOINTER</span></code>.</p>
+<p>This information is the primary tool for understanding unexpected script
+behaviour — check the locals before stepping further to confirm the values
+are what you expect.</p>
+</section>
+<section id="tips">
+<h2><span class="section-number">4.12.6. </span>Tips<a class="headerlink" href="#tips" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>Place <code class="docutils literal notranslate"><span class="pre">brkPt()</span></code> just before the operation you suspect is wrong, not at
+the top of a function, to reduce the number of steps needed.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">-v7</span></code> for function-level tracing during initial development; switch
+to <code class="docutils literal notranslate"><span class="pre">-v8</span></code> only when you need to trace individual lines.</p></li>
+<li><p>The debugger pauses the entire EBlink process — a GDB session connected
+to the same instance will time out if you leave a breakpoint open too long.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="servicesapi.html" class="btn btn-neutral float-left" title="4.11. ServicesAPI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="extensions.html" class="btn btn-neutral float-right" title="4.13. Addendum: Squirrel Extensions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2009-2026, Gerard Zagema.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

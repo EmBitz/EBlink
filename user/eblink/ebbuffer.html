@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4.7. EBbuffer &mdash; EBlink documentation 6.2 stable documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/EBlink.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=7218f4fa"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4.8. InterfAPI" href="interfapi.html" />
+    <link rel="prev" title="4.6. EBlink Interaction" href="interaction.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            EBlink documentation
+              <img src="../../_static/EBlink.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">2. Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../language.html">3. The script language</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">4. EBlink Scripting</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">4.1. Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="error_handling.html">4.2. Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">4.3. Logging &amp; Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="globals.html">4.4. Global Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">4.5. Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interaction.html">4.6. EBlink Interaction</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.7. EBbuffer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#construction">4.7.1. Construction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#memory-access">4.7.2. Memory access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#index-operator">4.7.3. Index operator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#buffer-management">4.7.4. Buffer management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#trimming">4.7.5. Trimming</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#operators">4.7.6. Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example">4.7.7. Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="interfapi.html">4.8. InterfAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deviceapi.html">4.9. DeviceAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="targetapi.html">4.10. TargetAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servicesapi.html">4.11. ServicesAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugger.html">4.12. Script Debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html">4.13. Addendum: Squirrel Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apiindex.html">4.14. API Quick Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../bookindex.html">5. Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">EBlink documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html"><span class="section-number">4. </span>EBlink Scripting</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">4.7. </span>EBbuffer</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ebbuffer">
+<span id="eblink-ebbuffer"></span><h1><span class="section-number">4.7. </span>EBbuffer<a class="headerlink" href="#ebbuffer" title="Permalink to this heading"></a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">EBbuffer</span></code> is a general-purpose binary data buffer. Unlike the other API
+objects it can be created freely by scripts. It is the standard way to pass
+blocks of data to and from hardware interface functions.</p>
+<p>An <code class="docutils literal notranslate"><span class="pre">EBbuffer</span></code> has a fixed size once allocated, a configurable access width
+(8, 16, or 32 bits) that governs how the <code class="docutils literal notranslate"><span class="pre">[]</span></code> index operator works, and an
+optional trim value for alignment padding.</p>
+<section id="construction">
+<h2><span class="section-number">4.7.1. </span>Construction<a class="headerlink" href="#construction" title="Permalink to this heading"></a></h2>
+<span class="target" id="index-0"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-name descname"><span class="n"><span class="pre">EBbuffer</span></span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">size_or_other</span></span></em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd><p>Creates an <code class="docutils literal notranslate"><span class="pre">EBbuffer</span></code>. Three forms:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">EBbuffer()</span></code> — empty, unallocated. Use <code class="docutils literal notranslate"><span class="pre">allocate()</span></code> before access,
+or pass directly to <code class="docutils literal notranslate"><span class="pre">readBuf()</span></code> which allocates internally.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EBbuffer(size)</span></code> — allocates <code class="docutils literal notranslate"><span class="pre">size</span></code> bytes, zero-initialised.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EBbuffer(other)</span></code> — copies another <code class="docutils literal notranslate"><span class="pre">EBbuffer</span></code>. Access width resets
+to 32 bits.</p></li>
+</ul>
+</dd></dl>
+
+</section>
+<section id="memory-access">
+<h2><span class="section-number">4.7.2. </span>Memory access<a class="headerlink" href="#memory-access" title="Permalink to this heading"></a></h2>
+<span class="target" id="index-1"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">EBbuffer</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">get</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns the value at byte <code class="docutils literal notranslate"><span class="pre">offset</span></code>. <code class="docutils literal notranslate"><span class="pre">width</span></code> is 8, 16, or 32 bits;
+defaults to 32. Throws a string exception if the access would exceed the
+buffer.</p>
+</dd></dl>
+
+<span class="target" id="index-2"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">EBbuffer</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">set</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd><p>Writes <code class="docutils literal notranslate"><span class="pre">value</span></code> at byte <code class="docutils literal notranslate"><span class="pre">offset</span></code>. <code class="docutils literal notranslate"><span class="pre">width</span></code> is 8, 16, or 32 bits;
+defaults to 32. Throws a string exception if the access would exceed the
+buffer.</p>
+</dd></dl>
+
+</section>
+<section id="index-operator">
+<h2><span class="section-number">4.7.3. </span>Index operator<a class="headerlink" href="#index-operator" title="Permalink to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">buf[index]</span></code> reads or writes one element using the current access width set
+by <code class="docutils literal notranslate"><span class="pre">access()</span></code>. The byte offset is <code class="docutils literal notranslate"><span class="pre">index</span> <span class="pre">*</span> <span class="pre">(accessWidth</span> <span class="pre">/</span> <span class="pre">8)</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">buf</span> <span class="o">=</span> <span class="n">EBbuffer</span><span class="p">(</span><span class="mi">64</span><span class="p">);</span>
+<span class="n">buf</span><span class="o">.</span><span class="n">access</span><span class="p">(</span><span class="mi">8</span><span class="p">);</span>       <span class="o">//</span> <span class="nb">set</span> <span class="mi">8</span><span class="o">-</span><span class="n">bit</span> <span class="n">access</span>
+<span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mh">0xDE</span><span class="p">;</span>
+<span class="n">buf</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mh">0xAD</span><span class="p">;</span>
+<span class="n">printf</span><span class="p">(</span><span class="s2">&quot;0x</span><span class="si">%02X</span><span class="s2"> 0x</span><span class="si">%02X</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">buf</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</pre></div>
+</div>
+</section>
+<section id="buffer-management">
+<h2><span class="section-number">4.7.4. </span>Buffer management<a class="headerlink" href="#buffer-management" title="Permalink to this heading"></a></h2>
+<span class="target" id="index-3"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">EBbuffer</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">allocate</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Allocates <code class="docutils literal notranslate"><span class="pre">size</span></code> bytes for an unallocated buffer. Throws if the buffer
+is already allocated or is a reference buffer. The buffer is
+zero-initialised.</p>
+</dd></dl>
+
+<span class="target" id="index-4"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">EBbuffer</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">getSize</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns the buffer size in bytes.</p>
+</dd></dl>
+
+<span class="target" id="index-5"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">EBbuffer</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">access</span></span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">width</span></span></em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd><p>Sets the access width used by the <code class="docutils literal notranslate"><span class="pre">[]</span></code> operator to <code class="docutils literal notranslate"><span class="pre">width</span></code> (8, 16, or
+32). Passing <code class="docutils literal notranslate"><span class="pre">0</span></code> queries the current width without changing it. Returns
+the previous width.</p>
+<p>Default access width is 32 bits.</p>
+</dd></dl>
+
+<span class="target" id="index-6"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">EBbuffer</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">format</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fmt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">...</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Fills the buffer with the result of a <code class="docutils literal notranslate"><span class="pre">printf</span></code>-style format operation,
+replacing any existing content. The buffer is re-allocated to fit the
+formatted string exactly. Returns the number of bytes written.</p>
+<p>Useful for building XML or text payloads to write to target memory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">buf</span> <span class="o">=</span> <span class="n">EBbuffer</span><span class="p">();</span>
+<span class="n">buf</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;BOOT=</span><span class="si">%d</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">boot_mode</span><span class="p">);</span>
+<span class="n">intrfApi</span><span class="o">.</span><span class="n">writeBuf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="mh">0x20001000</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="trimming">
+<h2><span class="section-number">4.7.5. </span>Trimming<a class="headerlink" href="#trimming" title="Permalink to this heading"></a></h2>
+<p>Trim is used with reference buffers (obtained from <code class="docutils literal notranslate"><span class="pre">readBuf</span></code>) to pad the
+logical size to an alignment boundary without allocating extra memory.</p>
+<span class="target" id="index-7"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">EBbuffer</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">trim</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">boundary</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Sets the trim so that <code class="docutils literal notranslate"><span class="pre">trimmedSize()</span></code> is rounded up to a multiple of
+<code class="docutils literal notranslate"><span class="pre">boundary</span></code> bytes. Only valid for reference buffers (those filled by
+<code class="docutils literal notranslate"><span class="pre">readBuf</span></code>). Pass <code class="docutils literal notranslate"><span class="pre">0</span></code> to clear the trim.</p>
+</dd></dl>
+
+<span class="target" id="index-8"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">EBbuffer</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">getTrim</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns the current trim padding in bytes.</p>
+</dd></dl>
+
+</section>
+<section id="operators">
+<h2><span class="section-number">4.7.6. </span>Operators<a class="headerlink" href="#operators" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">buf1</span> <span class="pre">+</span> <span class="pre">buf2</span></code></dt><dd><p>Concatenates two buffers and returns a new <code class="docutils literal notranslate"><span class="pre">EBbuffer</span></code> containing the
+data of <code class="docutils literal notranslate"><span class="pre">buf1</span></code> followed by <code class="docutils literal notranslate"><span class="pre">buf2</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">buf1</span> <span class="pre">&lt;=&gt;</span> <span class="pre">buf2</span></code></dt><dd><p>Compares the contents of two buffers byte by byte. Returns <code class="docutils literal notranslate"><span class="pre">0</span></code> if equal,
+<code class="docutils literal notranslate"><span class="pre">-1</span></code> if <code class="docutils literal notranslate"><span class="pre">buf1</span></code> is less than <code class="docutils literal notranslate"><span class="pre">buf2</span></code>, <code class="docutils literal notranslate"><span class="pre">1</span></code> if greater. Used by the
+Squirrel <code class="docutils literal notranslate"><span class="pre">==</span></code> and comparison operators.</p>
+</dd>
+</dl>
+</section>
+<section id="example">
+<h2><span class="section-number">4.7.7. </span>Example<a class="headerlink" href="#example" title="Permalink to this heading"></a></h2>
+<p>Reading a flash sector and comparing it to a file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">sector</span> <span class="o">=</span> <span class="n">EBbuffer</span><span class="p">();</span>
+<span class="n">intrfApi</span><span class="o">.</span><span class="n">readBuf</span><span class="p">(</span><span class="n">sector</span><span class="p">,</span> <span class="mh">0x08000000</span><span class="p">,</span> <span class="mi">2048</span><span class="p">);</span>
+
+<span class="n">local</span> <span class="n">expected</span> <span class="o">=</span> <span class="n">EBbuffer</span><span class="p">();</span>
+<span class="o">//</span> <span class="o">...</span> <span class="n">fill</span> <span class="n">expected</span> <span class="kn">from</span><span class="w"> </span><span class="nn">file</span> <span class="o">...</span>
+
+<span class="k">if</span><span class="p">((</span><span class="n">sector</span> <span class="o">&lt;=&gt;</span> <span class="n">expected</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;Sector matches</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+<span class="k">else</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;Sector differs</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="interaction.html" class="btn btn-neutral float-left" title="4.6. EBlink Interaction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="interfapi.html" class="btn btn-neutral float-right" title="4.8. InterfAPI" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2009-2026, Gerard Zagema.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

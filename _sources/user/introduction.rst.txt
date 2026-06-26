@@ -1,0 +1,86 @@
+.. _introduction:
+
+************
+Introduction
+************
+
+.. index::
+    single: introduction
+
+EBlink is an ARM Cortex-M debug and flash programming tool, available for
+Windows, Linux x86_64, and Raspberry Pi (32/64-bit). It connects to the
+target through a hardware debug probe and is fully driven by Squirrel scripts,
+making it easy to add support for new devices without recompiling the tool.
+
+Features
+--------
+
+**Flash programming**
+    Erases, programs, and verifies target flash from ELF, Intel HEX, or SREC
+    files. Only modified sectors are re-programmed by default. In-place byte
+    patching, memory compare, and memory dump are also supported.
+
+**GDB server**
+    Exposes a GDB remote-serial-protocol server so debuggers (arm-none-eabi-gdb,
+    IDEs) can connect for source-level debugging. Supports up to four concurrent
+    GDB connections per instance, flash caching for fast re-flash, and full
+    semihosting. Multi-core targets (e.g. STM32H7x5) are handled with a
+    separate GDB server per core.
+
+**Hotplug / non-intrusive inspection**
+    Connect to a running target without causing a reset. Read and write
+    memory, registers, and flash while the target is executing.
+
+**Script-driven target support**
+    Every device-specific action — memory map, flash erase, flash write,
+    custom reset — is implemented in a Squirrel script. Device scripts for
+    Silicon Labs, STMicro, Atmel, NXP, and Renesas targets are included.
+    Auto-detection is available via ``-S auto``.
+
+**Exception unwinding**
+    Fault stack frame unwinding with visual notification, configurable per
+    target.
+
+**Script debugging**
+    Breakpoints and variable watches in device scripts (since v6.0).
+
+**Real-time monitor (EBmon)**
+    Standalone host-side monitor for non-GDB target control and background
+    data logging (included since v6.21).
+
+**Remote debugging**
+    GDB proxy support via EBridge for debugging across NAT networks or over
+    Wi-Fi from a Raspberry Pi.
+
+Supported probes
+----------------
+
+- **STlink V2 / V3** — including clones
+- **CMSIS-DAP v1 / v2**
+
+How it works
+------------
+
+At startup EBlink:
+
+1. Opens the debug probe specified with ``-I``.
+2. Loads the target script(s) specified with ``-S``.
+3. Calls ``ebMain()`` in the script, which sets up the memory map and
+   initialises the device.
+4. Carries out the requested operation — flash programming, GDB server,
+   script execution, or a combination.
+
+This manual
+-----------
+
+:ref:`usage`
+    All command-line options, interface options, flash options, and GDB server
+    options.
+
+:ref:`thelanguage`
+    The Squirrel scripting language: syntax, types, control flow, and
+    built-in functions.
+
+:ref:`eblink_scripting`
+    The EBlink scripting API: interface, device, target and buffer objects,
+    error handling, constants, and the callback reference.

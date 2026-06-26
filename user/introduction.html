@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1. Introduction &mdash; EBlink documentation 6.2 stable documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/EBlink.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=7218f4fa"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2. Usage" href="usage.html" />
+    <link rel="prev" title="EBlink User Manual" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            EBlink documentation
+              <img src="../_static/EBlink.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#features">1.1. Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#supported-probes">1.2. Supported probes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-it-works">1.3. How it works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#this-manual">1.4. This manual</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">2. Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="language.html">3. The script language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eblink/index.html">4. EBlink Scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bookindex.html">5. Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EBlink documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">1. </span>Introduction</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="introduction">
+<span id="id1"></span><h1><span class="section-number">1. </span>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h1>
+<p id="index-0">EBlink is an ARM Cortex-M debug and flash programming tool, available for
+Windows, Linux x86_64, and Raspberry Pi (32/64-bit). It connects to the
+target through a hardware debug probe and is fully driven by Squirrel scripts,
+making it easy to add support for new devices without recompiling the tool.</p>
+<section id="features">
+<h2><span class="section-number">1.1. </span>Features<a class="headerlink" href="#features" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt><strong>Flash programming</strong></dt><dd><p>Erases, programs, and verifies target flash from ELF, Intel HEX, or SREC
+files. Only modified sectors are re-programmed by default. In-place byte
+patching, memory compare, and memory dump are also supported.</p>
+</dd>
+<dt><strong>GDB server</strong></dt><dd><p>Exposes a GDB remote-serial-protocol server so debuggers (arm-none-eabi-gdb,
+IDEs) can connect for source-level debugging. Supports up to four concurrent
+GDB connections per instance, flash caching for fast re-flash, and full
+semihosting. Multi-core targets (e.g. STM32H7x5) are handled with a
+separate GDB server per core.</p>
+</dd>
+<dt><strong>Hotplug / non-intrusive inspection</strong></dt><dd><p>Connect to a running target without causing a reset. Read and write
+memory, registers, and flash while the target is executing.</p>
+</dd>
+<dt><strong>Script-driven target support</strong></dt><dd><p>Every device-specific action — memory map, flash erase, flash write,
+custom reset — is implemented in a Squirrel script. Device scripts for
+Silicon Labs, STMicro, Atmel, NXP, and Renesas targets are included.
+Auto-detection is available via <code class="docutils literal notranslate"><span class="pre">-S</span> <span class="pre">auto</span></code>.</p>
+</dd>
+<dt><strong>Exception unwinding</strong></dt><dd><p>Fault stack frame unwinding with visual notification, configurable per
+target.</p>
+</dd>
+<dt><strong>Script debugging</strong></dt><dd><p>Breakpoints and variable watches in device scripts (since v6.0).</p>
+</dd>
+<dt><strong>Real-time monitor (EBmon)</strong></dt><dd><p>Standalone host-side monitor for non-GDB target control and background
+data logging (included since v6.21).</p>
+</dd>
+<dt><strong>Remote debugging</strong></dt><dd><p>GDB proxy support via EBridge for debugging across NAT networks or over
+Wi-Fi from a Raspberry Pi.</p>
+</dd>
+</dl>
+</section>
+<section id="supported-probes">
+<h2><span class="section-number">1.2. </span>Supported probes<a class="headerlink" href="#supported-probes" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>STlink V2 / V3</strong> — including clones</p></li>
+<li><p><strong>CMSIS-DAP v1 / v2</strong></p></li>
+</ul>
+</section>
+<section id="how-it-works">
+<h2><span class="section-number">1.3. </span>How it works<a class="headerlink" href="#how-it-works" title="Permalink to this heading"></a></h2>
+<p>At startup EBlink:</p>
+<ol class="arabic simple">
+<li><p>Opens the debug probe specified with <code class="docutils literal notranslate"><span class="pre">-I</span></code>.</p></li>
+<li><p>Loads the target script(s) specified with <code class="docutils literal notranslate"><span class="pre">-S</span></code>.</p></li>
+<li><p>Calls <code class="docutils literal notranslate"><span class="pre">ebMain()</span></code> in the script, which sets up the memory map and
+initialises the device.</p></li>
+<li><p>Carries out the requested operation — flash programming, GDB server,
+script execution, or a combination.</p></li>
+</ol>
+</section>
+<section id="this-manual">
+<h2><span class="section-number">1.4. </span>This manual<a class="headerlink" href="#this-manual" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt><a class="reference internal" href="usage.html#usage"><span class="std std-ref">Usage</span></a></dt><dd><p>All command-line options, interface options, flash options, and GDB server
+options.</p>
+</dd>
+<dt><a class="reference internal" href="language.html#thelanguage"><span class="std std-ref">The script language</span></a></dt><dd><p>The Squirrel scripting language: syntax, types, control flow, and
+built-in functions.</p>
+</dd>
+<dt><a class="reference internal" href="eblink/index.html#eblink-scripting"><span class="std std-ref">EBlink Scripting</span></a></dt><dd><p>The EBlink scripting API: interface, device, target and buffer objects,
+error handling, constants, and the callback reference.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="EBlink User Manual" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="usage.html" class="btn btn-neutral float-right" title="2. Usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2009-2026, Gerard Zagema.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

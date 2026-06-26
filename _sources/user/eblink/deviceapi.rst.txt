@@ -1,0 +1,109 @@
+.. _eblink_deviceapi:
+
+=========
+DeviceAPI
+=========
+
+``DeviceAPI`` is a class registered by EBlink that manages the device memory
+map and the flash sector cache. A new instance is created where needed::
+
+    DeviceAPI().memmap( ... )
+
+The memory map must be set in ``ebMain()``; without it EBlink cannot operate.
+
+Memory map
+----------
+
+.. index:: single: DeviceAPI; .memmap()
+
+.. js:function:: DeviceAPI.memmap(xml)
+   :noindex:
+
+   Sets the device memory map from an XML string. The XML format is the GDB
+   memory-map DTD. Must be called in ``ebMain()``. Returns ``ERROR_OK`` on
+   success or a negative error code if the XML could not be parsed.
+
+   The ``pagesize`` property inside a flash region defines the sector size
+   used for the flash cache::
+
+       DeviceAPI().memmap( @@"<?xml version=\"1.0\"?>
+           <!DOCTYPE memory-map PUBLIC \"+//IDN gnu.org//DTD GDB Memory Map V1.0//EN\"
+                                       \"http://sourceware.org/gdb/gdb-memory-map.dtd\">
+           <memory-map>
+             <memory type=\"flash\" start=\"0x08000000\" length=\"0x100000\">
+               <property name=\"pagesize\">0x800</property>
+             </memory>
+             <memory type=\"ram\" start=\"0x20000000\" length=\"0x20000\"/>
+           </memory-map>" );
+
+   Multiple flash and RAM regions can be defined. GDB uses this information
+   for breakpoints, stack unwinding, and the memory display.
+
+.. index:: single: DeviceAPI; .memmapFromFile()
+
+.. js:function:: DeviceAPI.memmapFromFile(filename)
+   :noindex:
+
+   Loads the memory map XML from a file instead of an inline string. Returns
+   ``ERROR_OK`` on success or ``-1`` on failure (file not found, read error,
+   or XML parse error).
+
+Flash management
+----------------
+
+.. index:: single: DeviceAPI; .isChipErase()
+
+.. js:function:: DeviceAPI.isChipErase()
+   :noindex:
+
+   Returns ``true`` if a full chip erase was requested (e.g. EBlink
+   ``-F erase`` option). Use in ``ebFlashStart()`` to select the erase
+   strategy::
+
+       function ebFlashStart()
+       {
+           if(DeviceAPI().isChipErase())
+               flash_mass_erase();
+       }
+
+.. index:: single: DeviceAPI; .sectorCount()
+
+.. js:function:: DeviceAPI.sectorCount()
+   :noindex:
+
+   Returns the total number of flash sectors defined in the memory map.
+
+.. index:: single: DeviceAPI; .setFlashEraseValue()
+
+.. js:function:: DeviceAPI.setFlashEraseValue(value)
+   :noindex:
+
+   Sets the byte value that EBlink considers an "erased" cell. Default is
+   ``0xFF`` (standard NOR flash). Change this for devices with a different
+   erase value (e.g. ``0x00``).
+
+.. index:: single: DeviceAPI; .setFlashDontTrim()
+
+.. js:function:: DeviceAPI.setFlashDontTrim(value)
+   :noindex:
+
+   When ``value`` is ``true``, disables the automatic trimming of the flash
+   write buffer to the erased value. By default EBlink strips trailing erased
+   bytes from the end of each sector before calling ``ebFlashWrite()`` to
+   avoid unnecessary writes.
+
+.. index:: single: DeviceAPI; .modifyFlash()
+
+.. js:function:: DeviceAPI.modifyFlash(addr, buffer)
+   :noindex:
+
+   Writes ``buffer`` directly into the EBlink flash sector cache at address
+   ``addr``, without touching the target hardware. EBlink will include these
+   modified sectors in the next flash programming cycle. Returns ``ERROR_OK``
+   or a negative error code.
+
+   Use this to patch data in flash before the normal write cycle::
+
+       local patch = EBbuffer(4);
+       patch.set(0, 0xDEADBEEF);
+       DeviceAPI().modifyFlash(0x080FFFFC, patch);

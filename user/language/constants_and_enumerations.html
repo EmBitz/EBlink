@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3.11. Constants &amp; Enumerations &mdash; EBlink documentation 6.2 stable documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/EBlink.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=7218f4fa"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3.12. Threads" href="threads.html" />
+    <link rel="prev" title="3.10. Generators" href="generators.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            EBlink documentation
+              <img src="../../_static/EBlink.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">2. Usage</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../language.html">3. The script language</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="lexical_structure.html">3.1. Lexical Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datatypes.html">3.2. Values and Data types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="execution_context.html">3.3. Execution Context</a></li>
+<li class="toctree-l2"><a class="reference internal" href="statements.html">3.4. Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expressions.html">3.5. Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tables.html">3.6. Tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="arrays.html">3.7. Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html">3.8. Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classes.html">3.9. Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generators.html">3.10. Generators</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.11. Constants &amp; Enumerations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#constants">3.11.1. Constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#enumerations">3.11.2. Enumerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#implementation-notes">3.11.3. Implementation notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="threads.html">3.12. Threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weak_references.html">3.13. Weak References</a></li>
+<li class="toctree-l2"><a class="reference internal" href="delegation.html">3.14. Delegation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metamethods.html">3.15. Metamethods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="builtin_functions.html">3.16. Built-in Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../eblink/index.html">4. EBlink Scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bookindex.html">5. Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">EBlink documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../language.html"><span class="section-number">3. </span>The script language</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">3.11. </span>Constants &amp; Enumerations</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="constants-enumerations">
+<span id="constants-and-enumerations"></span><h1><span class="section-number">3.11. </span>Constants &amp; Enumerations<a class="headerlink" href="#constants-enumerations" title="Permalink to this heading"></a></h1>
+<p id="index-0">Squirrel allows to bind constant values to an identifier that will be evaluated compile-time.
+This is achieved though constants and Enumerations.</p>
+<section id="constants">
+<h2><span class="section-number">3.11.1. </span>Constants<a class="headerlink" href="#constants" title="Permalink to this heading"></a></h2>
+<p id="index-1">Constants bind a specific value to an identifier. Constants are similar to
+global values, except that they are evaluated compile time and their value cannot be changed.</p>
+<p>constants values can only be integers, floats or string literals. No expression are allowed.
+are declared with the following syntax.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">foobar</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+<span class="n">const</span> <span class="n">floatbar</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">;</span>
+<span class="n">const</span> <span class="n">stringbar</span> <span class="o">=</span> <span class="s2">&quot;I&#39;m a constant string&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>constants are always globally scoped, from the moment they are declared, any following code
+can reference them.
+Constants will shadow any global slot with the same name( the global slot will remain visible by using the <code class="docutils literal notranslate"><span class="pre">::</span></code> syntax).:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">x</span> <span class="o">=</span> <span class="n">foobar</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="enumerations">
+<h2><span class="section-number">3.11.2. </span>Enumerations<a class="headerlink" href="#enumerations" title="Permalink to this heading"></a></h2>
+<p id="index-2">As Constants, Enumerations bind a specific value to a name. Enumerations are also evaluated at compile time
+and their value cannot be changed.</p>
+<p>An enum declaration introduces a new enumeration into the program.
+Enumeration values can only be integers, floats or string literals. No expression are allowed.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enum</span> <span class="n">Stuff</span> <span class="p">{</span>
+  <span class="n">first</span><span class="p">,</span> <span class="o">//</span><span class="n">this</span> <span class="n">will</span> <span class="n">be</span> <span class="mi">0</span>
+  <span class="n">second</span><span class="p">,</span> <span class="o">//</span><span class="n">this</span> <span class="n">will</span> <span class="n">be</span> <span class="mi">1</span>
+  <span class="n">third</span> <span class="o">//</span><span class="n">this</span> <span class="n">will</span> <span class="n">be</span> <span class="mi">2</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enum</span> <span class="n">Stuff</span> <span class="p">{</span>
+  <span class="n">first</span> <span class="o">=</span> <span class="mi">10</span>
+  <span class="n">second</span> <span class="o">=</span> <span class="s2">&quot;string&quot;</span>
+  <span class="n">third</span> <span class="o">=</span> <span class="mf">1.2</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>An enum value is accessed in a manner that’s similar to accessing a static class member.
+The name of the member must be qualified with the name of the enumeration, for example <code class="docutils literal notranslate"><span class="pre">Stuff.second</span></code>
+Enumerations will shadow any global slot with the same name( the global slot will remain visible by using the <code class="docutils literal notranslate"><span class="pre">::</span></code> syntax).:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">x</span> <span class="o">=</span> <span class="n">Stuff</span><span class="o">.</span><span class="n">first</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="implementation-notes">
+<h2><span class="section-number">3.11.3. </span>Implementation notes<a class="headerlink" href="#implementation-notes" title="Permalink to this heading"></a></h2>
+<p>Enumerations and Constants are a compile-time feature. Only integers, string and floats can be declared as const/enum;
+No expressions are allowed(because they would have to be evaluated compile time).
+When a const or an enum is declared, it is added compile time to the <code class="docutils literal notranslate"><span class="pre">consttable</span></code>. This table is stored in the VM shared state
+and is shared by the VM and all its threads.
+The <code class="docutils literal notranslate"><span class="pre">consttable</span></code> is a regular squirrel table; In the same way as the <code class="docutils literal notranslate"><span class="pre">roottable</span></code>
+it can be modified runtime.
+You can access the <code class="docutils literal notranslate"><span class="pre">consttable</span></code> through the built-in function <code class="docutils literal notranslate"><span class="pre">getconsttable()</span></code>
+and also change it through the built-in function <code class="docutils literal notranslate"><span class="pre">setconsttable()</span></code></p>
+<p>here some example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">creates</span> <span class="n">a</span> <span class="n">constant</span>
+<span class="n">getconsttable</span><span class="p">()[</span><span class="s2">&quot;something&quot;</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="mi">10</span><span class="s2">&quot;</span>
+<span class="o">//</span><span class="n">creates</span> <span class="n">an</span> <span class="n">enumeration</span>
+<span class="n">getconsttable</span><span class="p">()[</span><span class="s2">&quot;somethingelse&quot;</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="s2">&quot;20&quot;</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="s2">&quot;200&quot;</span><span class="p">};</span>
+<span class="o">//</span><span class="n">deletes</span> <span class="n">the</span> <span class="n">constant</span>
+<span class="n">delete</span> <span class="n">getconsttable</span><span class="p">()[</span><span class="s2">&quot;something&quot;</span><span class="p">]</span>
+<span class="o">//</span><span class="n">deletes</span> <span class="n">the</span> <span class="n">enumeration</span>
+<span class="n">delete</span> <span class="n">getconsttable</span><span class="p">()[</span><span class="s2">&quot;somethingelse&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>This system allows to procedurally declare constants and enumerations, it is also possible to assign any squirrel type
+to a constant/enumeration(function,classes etc…). However this will make serialization of a code chunk impossible.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="generators.html" class="btn btn-neutral float-left" title="3.10. Generators" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="threads.html" class="btn btn-neutral float-right" title="3.12. Threads" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2009-2026, Gerard Zagema.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

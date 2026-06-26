@@ -1,0 +1,137 @@
+.. _eblink_error_handling:
+
+==============
+Error Handling
+==============
+
+EBlink uses Squirrel exceptions for all error signalling. Understanding the
+convention is essential because every API call can throw.
+
+Exception types
+---------------
+
+API methods throw one of two exception types:
+
+**Integer exception** — a negative ``ERROR_xxx`` constant. Thrown by hardware
+operations when the probe reports an error (target lost, flash failure, etc.)::
+
+    try {
+        local value = intrfApi.read(0x20000000);
+    }
+    catch(e) {
+        if(isInteger(e))
+            errorf("Hardware error %d: %s\n", e, errorToStr(e));
+    }
+
+**String exception** — a human-readable message. Thrown for usage errors:
+wrong argument type, buffer overflow, NULL instance, etc.::
+
+    try {
+        local buf = EBbuffer(64);
+        buf.get(200);          // offset beyond buffer
+    }
+    catch(e) {
+        if(isString(e))
+            errorf("Script error: %s\n", e);
+    }
+
+Return values
+-------------
+
+Functions that succeed return ``ERROR_OK`` (0) or a positive value (e.g. byte
+count). A negative return value is always an ``ERROR_xxx`` code. The convention
+is that you either throw on failure or return the code — never both::
+
+    function ebFlashWrite(sector, address, buffer)
+    {
+        try {
+            intrfApi.writeBuf(buffer, address);
+        }
+        catch(e) {
+            if(isString(e))  { errorf(e); return ERROR_NOTIFIED; }
+            if(isInteger(e)) { return e; }
+        }
+        return ERROR_OK;
+    }
+
+Propagating errors
+------------------
+
+Use ``ERROR_NOTIFIED`` (-1) when you have already printed an error message and
+want EBlink to abort without printing a second one::
+
+    errorf("Flash unlock failed at 0x%08X\n", addr);
+    return ERROR_NOTIFIED;
+
+For errors the script did not handle, re-throw so EBlink can report them::
+
+    catch(e) {
+        if(catchString(e)) return ERROR_NOTIFIED;  // string: already printed
+        throw e;                                   // integer: let EBlink handle
+    }
+
+Helper functions
+----------------
+
+.. js:function:: catchString(value [, throwValue])
+
+   If ``value`` is a string exception, prints it as an error and returns
+   ``true``. If ``throwValue`` is supplied and ``value`` is a string, throws
+   ``throwValue`` after printing. Returns ``false`` if ``value`` is not a
+   string.
+
+   Typical use in a catch block::
+
+       catch(e) {
+           if(catchString(e)) return ERROR_NOTIFIED;
+           throw e;
+       }
+
+.. js:function:: catchThrowStr(value)
+
+   If ``value`` is a string, re-throws it as a string exception. Has no effect
+   when ``value`` is not a string. Useful to propagate string errors up through
+   nested try/catch blocks.
+
+.. js:function:: errorToStr(code)
+
+   Returns a short description string for an ``ERROR_xxx`` integer code.
+   Returns an empty string for unknown codes.
+
+   Example::
+
+       errorf("Error %d: %s\n", e, errorToStr(e));
+
+User-defined error codes
+------------------------
+
+``ERROR_USER`` (``-1000``) is the boundary reserved for script errors. All
+built-in ``ERROR_xxx`` codes are between ``-1`` and ``-999``. Scripts must
+define their own codes **below** ``ERROR_USER`` to avoid collisions::
+
+    const FLASH_UNLOCK_FAIL  = ERROR_USER - 1;   // -1001
+    const FLASH_TIMEOUT      = ERROR_USER - 2;   // -1002
+    const FLASH_VERIFY_FAIL  = ERROR_USER - 3;   // -1003
+
+These constants behave exactly like built-in error codes — they can be thrown,
+returned, or passed to ``errorToStr()``. Because ``errorToStr()`` does not know
+about script-defined codes it returns an empty string for them; print your own
+message before returning or throwing::
+
+    function unlockFlash()
+    {
+        if(intrfApi.read(FLASH_CR) & FLASH_LOCKED) {
+            intrfApi.write(FLASH_KEYR, KEY1);
+            intrfApi.write(FLASH_KEYR, KEY2);
+            if(intrfApi.read(FLASH_CR) & FLASH_LOCKED) {
+                errorf("Flash unlock failed\n");
+                return FLASH_UNLOCK_FAIL;
+            }
+        }
+        return ERROR_OK;
+    }
+
+.. note::
+
+   Never define script error codes between ``-1`` and ``-999`` — that range
+   belongs to EBlink built-ins. Always subtract from ``ERROR_USER``.

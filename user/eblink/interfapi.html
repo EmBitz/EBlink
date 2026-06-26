@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4.8. InterfAPI &mdash; EBlink documentation 6.2 stable documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/EBlink.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=7218f4fa"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4.9. DeviceAPI" href="deviceapi.html" />
+    <link rel="prev" title="4.7. EBbuffer" href="ebbuffer.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            EBlink documentation
+              <img src="../../_static/EBlink.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">2. Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../language.html">3. The script language</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">4. EBlink Scripting</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">4.1. Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="error_handling.html">4.2. Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">4.3. Logging &amp; Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="globals.html">4.4. Global Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">4.5. Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interaction.html">4.6. EBlink Interaction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ebbuffer.html">4.7. EBbuffer</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.8. InterfAPI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#probe-information">4.8.1. Probe information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dap-access">4.8.2. DAP access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#memory-read">4.8.3. Memory read</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#memory-write">4.8.4. Memory write</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#file-loading">4.8.5. File loading</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deviceapi.html">4.9. DeviceAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="targetapi.html">4.10. TargetAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servicesapi.html">4.11. ServicesAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugger.html">4.12. Script Debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html">4.13. Addendum: Squirrel Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apiindex.html">4.14. API Quick Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../bookindex.html">5. Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">EBlink documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html"><span class="section-number">4. </span>EBlink Scripting</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">4.8. </span>InterfAPI</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="interfapi">
+<span id="eblink-interfapi"></span><h1><span class="section-number">4.8. </span>InterfAPI<a class="headerlink" href="#interfapi" title="Permalink to this heading"></a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">InterfAPI</span></code> is a class registered by EBlink that represents the physical
+debug probe (ST-Link, CMSIS-DAP, etc.). Scripts instantiate it once
+at global scope and share the instance across all included files:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">intrfApi</span> <span class="o">&lt;-</span> <span class="n">InterfAPI</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>All methods that communicate with hardware throw an integer <code class="docutils literal notranslate"><span class="pre">ERROR_xxx</span></code>
+exception on failure.</p>
+<section id="probe-information">
+<h2><span class="section-number">4.8.1. </span>Probe information<a class="headerlink" href="#probe-information" title="Permalink to this heading"></a></h2>
+<span class="target" id="index-0"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">InterfAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">getName</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns the interface name string (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;stlink&quot;</span></code>).</p>
+</dd></dl>
+
+<span class="target" id="index-1"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">InterfAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">getTapId</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns the JTAG TAP ID / SWD target ID as a 32-bit integer. Returns
+<code class="docutils literal notranslate"><span class="pre">0</span></code> if the read fails.</p>
+</dd></dl>
+
+<span class="target" id="index-2"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">InterfAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">getSpeed</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns the current probe communication speed in KHz.</p>
+</dd></dl>
+
+<span class="target" id="index-3"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">InterfAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">setSpeed</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">speed</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Sets the probe speed to <code class="docutils literal notranslate"><span class="pre">speed</span></code> KHz. Throws on error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">intrfApi</span><span class="o">.</span><span class="n">setSpeed</span><span class="p">(</span><span class="mi">4000</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<span class="target" id="index-4"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">InterfAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">targetVoltage</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns the measured target VCC voltage as a float (volts).</p>
+</dd></dl>
+
+<span class="target" id="index-5"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">InterfAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">resetCtrl</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Asserts (<code class="docutils literal notranslate"><span class="pre">state</span> <span class="pre">=</span> <span class="pre">true</span></code>) or deasserts (<code class="docutils literal notranslate"><span class="pre">state</span> <span class="pre">=</span> <span class="pre">false</span></code>) the hardware
+nRESET line. Throws on error.</p>
+</dd></dl>
+
+</section>
+<section id="dap-access">
+<h2><span class="section-number">4.8.2. </span>DAP access<a class="headerlink" href="#dap-access" title="Permalink to this heading"></a></h2>
+<p>These functions provide direct access to the ARM Debug Access Port (DAP)
+registers, bypassing the normal memory interface. Useful for reading the
+IDCODE register or configuring AP/DP registers during device identification.</p>
+<span class="target" id="index-6"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">InterfAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">setDapAp</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ap</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Selects the active Access Port (0–127). Returns the previously selected
+AP number. Throws on error.</p>
+</dd></dl>
+
+<span class="target" id="index-7"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">InterfAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">getDapAp</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns the currently selected Access Port number.</p>
+</dd></dl>
+
+<span class="target" id="index-8"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">InterfAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">readDap</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Reads a 32-bit value from DAP register <code class="docutils literal notranslate"><span class="pre">addr</span></code> on access port <code class="docutils literal notranslate"><span class="pre">ap</span></code>.
+Throws on error.</p>
+</dd></dl>
+
+<span class="target" id="index-9"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">InterfAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">writeDap</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Writes a 32-bit <code class="docutils literal notranslate"><span class="pre">value</span></code> to DAP register <code class="docutils literal notranslate"><span class="pre">addr</span></code> on access port <code class="docutils literal notranslate"><span class="pre">ap</span></code>.
+Throws on error.</p>
+</dd></dl>
+
+</section>
+<section id="memory-read">
+<h2><span class="section-number">4.8.3. </span>Memory read<a class="headerlink" href="#memory-read" title="Permalink to this heading"></a></h2>
+<span class="target" id="index-10"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">InterfAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">read</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addr</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd><p>Reads a single value from target address <code class="docutils literal notranslate"><span class="pre">addr</span></code>. <code class="docutils literal notranslate"><span class="pre">width</span></code> is 8, 16,
+or 32 bits. When omitted (or <code class="docutils literal notranslate"><span class="pre">-1</span></code>), uses the probe’s native 32-bit
+debug access path. Returns the value as an integer. Throws on error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">cpuid</span> <span class="o">=</span> <span class="n">intrfApi</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mh">0xE000ED00</span><span class="p">);</span>
+<span class="n">printf</span><span class="p">(</span><span class="s2">&quot;CPUID: 0x</span><span class="si">%08X</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">cpuid</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<span class="target" id="index-11"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">InterfAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">readBuf</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buffer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd><p>Reads <code class="docutils literal notranslate"><span class="pre">length</span></code> bytes from target address <code class="docutils literal notranslate"><span class="pre">addr</span></code> into <code class="docutils literal notranslate"><span class="pre">buffer</span></code>
+(an <code class="xref js js-class docutils literal notranslate"><span class="pre">EBbuffer()</span></code>). The buffer is (re-)allocated to <code class="docutils literal notranslate"><span class="pre">length</span></code>
+bytes internally — no prior allocation is needed. <code class="docutils literal notranslate"><span class="pre">width</span></code> controls bus
+transfer width (8, 16, or 32); omit or pass <code class="docutils literal notranslate"><span class="pre">-1</span></code> for the default.
+Returns <code class="docutils literal notranslate"><span class="pre">length</span></code> on success. Throws on error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="n">buf</span> <span class="o">=</span> <span class="n">EBbuffer</span><span class="p">();</span>
+<span class="n">intrfApi</span><span class="o">.</span><span class="n">readBuf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="mh">0x08000000</span><span class="p">,</span> <span class="mi">1024</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="memory-write">
+<h2><span class="section-number">4.8.4. </span>Memory write<a class="headerlink" href="#memory-write" title="Permalink to this heading"></a></h2>
+<span class="target" id="index-12"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">InterfAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">write</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd><p>Writes a single <code class="docutils literal notranslate"><span class="pre">value</span></code> to target address <code class="docutils literal notranslate"><span class="pre">addr</span></code>. <code class="docutils literal notranslate"><span class="pre">width</span></code> is 8, 16,
+or 32 bits; defaults to 32-bit debug access when omitted. Throws on error.</p>
+</dd></dl>
+
+<span class="target" id="index-13"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">InterfAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">writeBuf</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buffer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd><p>Writes the contents of <code class="docutils literal notranslate"><span class="pre">buffer</span></code> to target address <code class="docutils literal notranslate"><span class="pre">addr</span></code>.</p>
+<p>Optional parameters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">width</span></code> — bus transfer width: 8, 16, or 32. Omit or <code class="docutils literal notranslate"><span class="pre">-1</span></code> for default.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">offset</span></code> — byte offset into <code class="docutils literal notranslate"><span class="pre">buffer</span></code> to start from (must be paired with <code class="docutils literal notranslate"><span class="pre">length</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">length</span></code> — number of bytes to write (required when <code class="docutils literal notranslate"><span class="pre">offset</span></code> is given).</p></li>
+</ul>
+<p>Throws on error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Write</span> <span class="n">entire</span> <span class="n">buffer</span>
+<span class="n">intrfApi</span><span class="o">.</span><span class="n">writeBuf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="mh">0x08000000</span><span class="p">);</span>
+
+<span class="o">//</span> <span class="n">Write</span> <span class="mi">256</span> <span class="nb">bytes</span> <span class="n">starting</span> <span class="n">at</span> <span class="n">offset</span> <span class="mi">512</span>
+<span class="n">intrfApi</span><span class="o">.</span><span class="n">writeBuf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="mh">0x08001000</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">256</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="file-loading">
+<h2><span class="section-number">4.8.5. </span>File loading<a class="headerlink" href="#file-loading" title="Permalink to this heading"></a></h2>
+<span class="target" id="index-14"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">InterfAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">loadBin</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Reads a binary file from disk and writes it to target memory starting at
+<code class="docutils literal notranslate"><span class="pre">addr</span></code>. EBlink searches the configured script paths for the file.
+Returns the number of bytes written. Throws an integer exception (via
+<code class="docutils literal notranslate"><span class="pre">ERROR_NOTIFIED</span></code>) if the file cannot be opened.</p>
+</dd></dl>
+
+<span class="target" id="index-15"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">InterfAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">loadString</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">len</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Writes the raw bytes of <code class="docutils literal notranslate"><span class="pre">str</span></code> (up to <code class="docutils literal notranslate"><span class="pre">len</span></code> bytes) to target address
+<code class="docutils literal notranslate"><span class="pre">addr</span></code>. Returns <code class="docutils literal notranslate"><span class="pre">len</span></code>. Throws on hardware error. Useful for writing
+null-terminated strings or packed data to target RAM:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">intrfApi</span><span class="o">.</span><span class="n">loadString</span><span class="p">(</span><span class="mh">0x20000000</span><span class="p">,</span> <span class="s2">&quot;BOOT&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ebbuffer.html" class="btn btn-neutral float-left" title="4.7. EBbuffer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="deviceapi.html" class="btn btn-neutral float-right" title="4.9. DeviceAPI" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2009-2026, Gerard Zagema.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

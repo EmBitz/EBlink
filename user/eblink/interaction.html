@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4.6. EBlink Interaction &mdash; EBlink documentation 6.2 stable documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/EBlink.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=7218f4fa"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4.7. EBbuffer" href="ebbuffer.html" />
+    <link rel="prev" title="4.5. Constants" href="constants.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            EBlink documentation
+              <img src="../../_static/EBlink.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">2. Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../language.html">3. The script language</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">4. EBlink Scripting</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">4.1. Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="error_handling.html">4.2. Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">4.3. Logging &amp; Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="globals.html">4.4. Global Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">4.5. Constants</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.6. EBlink Interaction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">4.6.1. Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#call-order">4.6.2. Call order</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reference">4.6.3. Reference</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ebMain"><code class="docutils literal notranslate"><span class="pre">ebMain()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ebFlashStart"><code class="docutils literal notranslate"><span class="pre">ebFlashStart()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ebFlashErase"><code class="docutils literal notranslate"><span class="pre">ebFlashErase()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ebFlashWrite"><code class="docutils literal notranslate"><span class="pre">ebFlashWrite()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ebFlashDone"><code class="docutils literal notranslate"><span class="pre">ebFlashDone()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ebFlashEraseChip"><code class="docutils literal notranslate"><span class="pre">ebFlashEraseChip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ebResetUser"><code class="docutils literal notranslate"><span class="pre">ebResetUser()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ebResetPost"><code class="docutils literal notranslate"><span class="pre">ebResetPost()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ebServicesSetup"><code class="docutils literal notranslate"><span class="pre">ebServicesSetup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ebGDBqRcmd"><code class="docutils literal notranslate"><span class="pre">ebGDBqRcmd()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ebbuffer.html">4.7. EBbuffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interfapi.html">4.8. InterfAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deviceapi.html">4.9. DeviceAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="targetapi.html">4.10. TargetAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servicesapi.html">4.11. ServicesAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugger.html">4.12. Script Debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html">4.13. Addendum: Squirrel Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apiindex.html">4.14. API Quick Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../bookindex.html">5. Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">EBlink documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html"><span class="section-number">4. </span>EBlink Scripting</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">4.6. </span>EBlink Interaction</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="eblink-interaction">
+<span id="id1"></span><h1><span class="section-number">4.6. </span>EBlink Interaction<a class="headerlink" href="#eblink-interaction" title="Permalink to this heading"></a></h1>
+<p>EBlink calls specific functions in the script at defined points in its
+operation. Functions not defined in the script are silently skipped, except
+where marked mandatory.</p>
+<section id="overview">
+<h2><span class="section-number">4.6.1. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Required</p></th>
+<th class="head"><p>Called when</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ebMain()</span></code></p></td>
+<td><p>mandatory</p></td>
+<td><p>All scripts loaded, CLI defines set</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ebFlashStart()</span></code></p></td>
+<td><p>optional</p></td>
+<td><p>Flash operation is about to begin</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ebFlashErase(sector_nr,</span> <span class="pre">sector_addr)</span></code></p></td>
+<td><p>optional</p></td>
+<td><p>A sector must be erased before writing</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ebFlashWrite(sector_nr,</span> <span class="pre">addr,</span> <span class="pre">buf)</span></code></p></td>
+<td><p>mandatory</p></td>
+<td><p>A sector must be written</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ebFlashDone()</span></code></p></td>
+<td><p>optional</p></td>
+<td><p>All flash sectors processed</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ebFlashEraseChip()</span></code></p></td>
+<td><p>optional</p></td>
+<td><p>Full chip erase requested (<code class="docutils literal notranslate"><span class="pre">-F</span> <span class="pre">erase</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ebResetUser()</span></code></p></td>
+<td><p>optional*</p></td>
+<td><p>A <code class="docutils literal notranslate"><span class="pre">USER_RESET</span></code> is requested</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ebResetPost(reset_type)</span></code></p></td>
+<td><p>optional</p></td>
+<td><p>After every reset, regardless of type</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ebServicesSetup()</span></code></p></td>
+<td><p>optional</p></td>
+<td><p>EBlink service initialisation</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ebGDBqRcmd(cmd,</span> <span class="pre">length,</span> <span class="pre">buffer)</span></code></p></td>
+<td><p>optional</p></td>
+<td><p>GDB <code class="docutils literal notranslate"><span class="pre">monitor</span></code> command received</p></td>
+</tr>
+</tbody>
+</table>
+<p>* Mandatory when the script uses <code class="docutils literal notranslate"><span class="pre">USER_RESET</span></code> as its reset strategy.</p>
+</section>
+<section id="call-order">
+<h2><span class="section-number">4.6.2. </span>Call order<a class="headerlink" href="#call-order" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Script</span> <span class="n">loaded</span>
+     <span class="o">|</span>
+     <span class="n">v</span>
+<span class="n">ebMain</span><span class="p">()</span>                   <span class="o">&lt;-</span> <span class="n">mandatory</span><span class="p">:</span> <span class="nb">set</span> <span class="n">memmap</span><span class="p">,</span> <span class="n">initialise</span> <span class="n">device</span>
+     <span class="o">|</span>
+     <span class="o">+---</span> <span class="n">flash</span> <span class="n">operation</span> <span class="n">requested</span>
+     <span class="o">|</span>         <span class="o">|</span>
+     <span class="o">|</span>         <span class="n">v</span>
+     <span class="o">|</span>    <span class="n">ebFlashStart</span><span class="p">()</span>          <span class="o">&lt;-</span> <span class="n">optional</span><span class="p">:</span> <span class="n">prepare</span> <span class="n">hardware</span> <span class="k">for</span> <span class="n">flash</span>
+     <span class="o">|</span>         <span class="o">|</span>
+     <span class="o">|</span>    <span class="o">+----+------------------------------------------+</span>
+     <span class="o">|</span>    <span class="o">|</span>  <span class="k">for</span> <span class="n">each</span> <span class="n">modified</span> <span class="n">sector</span><span class="p">:</span>                     <span class="o">|</span>
+     <span class="o">|</span>    <span class="o">|</span>    <span class="n">ebFlashErase</span><span class="p">(</span><span class="n">nr</span><span class="p">,</span> <span class="n">addr</span><span class="p">)</span>    <span class="o">&lt;-</span> <span class="n">optional</span>       <span class="o">|</span>
+     <span class="o">|</span>    <span class="o">|</span>    <span class="n">ebFlashWrite</span><span class="p">(</span><span class="n">nr</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">buf</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">mandatory</span>    <span class="o">|</span>
+     <span class="o">|</span>    <span class="o">+-----------------------------------------------+</span>
+     <span class="o">|</span>         <span class="o">|</span>
+     <span class="o">|</span>    <span class="n">ebFlashDone</span><span class="p">()</span>           <span class="o">&lt;-</span> <span class="n">optional</span><span class="p">:</span> <span class="n">clean</span> <span class="n">up</span> <span class="n">after</span> <span class="n">flash</span>
+     <span class="o">|</span>
+     <span class="o">+---</span> <span class="n">chip</span> <span class="n">erase</span> <span class="n">requested</span>
+     <span class="o">|</span>         <span class="o">|</span>
+     <span class="o">|</span>    <span class="n">ebFlashEraseChip</span><span class="p">()</span>      <span class="o">&lt;-</span> <span class="n">optional</span> <span class="p">(</span><span class="n">falls</span> <span class="n">back</span> <span class="n">to</span> <span class="n">sector</span> <span class="n">loop</span><span class="p">)</span>
+     <span class="o">|</span>
+     <span class="o">+---</span> <span class="n">reset</span> <span class="n">requested</span>
+               <span class="o">|</span>
+          <span class="n">ebResetUser</span><span class="p">()</span>           <span class="o">&lt;-</span> <span class="n">mandatory</span> <span class="n">when</span> <span class="n">USER_RESET</span> <span class="nb">type</span> <span class="n">used</span>
+          <span class="n">ebResetPost</span><span class="p">(</span><span class="nb">type</span><span class="p">)</span>       <span class="o">&lt;-</span> <span class="n">optional</span><span class="p">:</span> <span class="n">called</span> <span class="n">after</span> <span class="n">every</span> <span class="n">reset</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ebServicesSetup()</span></code> is called once during service initialisation, independent
+of the flash or reset flow. <code class="docutils literal notranslate"><span class="pre">ebGDBqRcmd()</span></code> is called on every incoming GDB
+monitor command, independent of the other flows.</p>
+</section>
+<section id="reference">
+<h2><span class="section-number">4.6.3. </span>Reference<a class="headerlink" href="#reference" title="Permalink to this heading"></a></h2>
+<dl class="js function">
+<dt class="sig sig-object js" id="ebMain">
+<span class="sig-name descname"><span class="n"><span class="pre">ebMain</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ebMain" title="Permalink to this definition"></a></dt>
+<dd><p><span class="mandatory">mandatory</span></p>
+<ul class="simple">
+<li><p>Called once after all scripts are loaded and all <code class="docutils literal notranslate"><span class="pre">-D</span></code> defines are set.</p></li>
+<li><p>Must call <code class="docutils literal notranslate"><span class="pre">DeviceAPI().memmap()</span></code> — EBlink aborts if no memory map is set.</p></li>
+<li><p>Typical use: detect device, set interface speed, configure flash parameters.</p></li>
+</ul>
+<p>Returns: nothing required.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">intrfApi</span>  <span class="o">&lt;-</span> <span class="n">InterfAPI</span><span class="p">()</span>
+<span class="n">targetApi</span> <span class="o">&lt;-</span> <span class="n">TargetAPI</span><span class="p">()</span>
+
+<span class="n">function</span> <span class="n">ebMain</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">intrfApi</span><span class="o">.</span><span class="n">setSpeed</span><span class="p">(</span><span class="mi">4000</span><span class="p">);</span>
+
+    <span class="n">DeviceAPI</span><span class="p">()</span><span class="o">.</span><span class="n">memmap</span><span class="p">(</span> <span class="o">@@</span><span class="s2">&quot;&lt;?xml version=</span><span class="se">\&quot;</span><span class="s2">1.0</span><span class="se">\&quot;</span><span class="s2">?&gt;</span>
+<span class="o">&lt;</span><span class="n">memory</span><span class="o">-</span><span class="nb">map</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">memory</span> <span class="nb">type</span><span class="o">=</span>\<span class="s2">&quot;flash</span><span class="se">\&quot;</span><span class="s2"> start=</span><span class="se">\&quot;</span><span class="s2">0x08000000</span><span class="se">\&quot;</span><span class="s2"> length=</span><span class="se">\&quot;</span><span class="s2">0x80000</span><span class="se">\&quot;</span><span class="s2">&gt;</span>
+    <span class="o">&lt;</span><span class="nb">property</span> <span class="n">name</span><span class="o">=</span>\<span class="s2">&quot;pagesize</span><span class="se">\&quot;</span><span class="s2">&gt;0x800&lt;/property&gt;</span>
+  <span class="o">&lt;/</span><span class="n">memory</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">memory</span> <span class="nb">type</span><span class="o">=</span>\<span class="s2">&quot;ram</span><span class="se">\&quot;</span><span class="s2"> start=</span><span class="se">\&quot;</span><span class="s2">0x20000000</span><span class="se">\&quot;</span><span class="s2"> length=</span><span class="se">\&quot;</span><span class="s2">0x20000</span><span class="se">\&quot;</span><span class="s2">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">memory</span><span class="o">-</span><span class="nb">map</span><span class="o">&gt;</span><span class="s2">&quot; );</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="ebFlashStart">
+<span class="sig-name descname"><span class="n"><span class="pre">ebFlashStart</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ebFlashStart" title="Permalink to this definition"></a></dt>
+<dd><p><span class="optional">optional</span></p>
+<ul class="simple">
+<li><p>Called once before the first sector is touched.</p></li>
+<li><p>Typical use: unlock flash, reset target to known state, set interface speed.</p></li>
+</ul>
+<p>Returns: <code class="docutils literal notranslate"><span class="pre">ERROR_OK</span></code> or a negative error code.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="ebFlashErase">
+<span class="sig-name descname"><span class="n"><span class="pre">ebFlashErase</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sector_nr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sector_addr</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ebFlashErase" title="Permalink to this definition"></a></dt>
+<dd><p><span class="optional">optional</span></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sector_nr</span></code> — zero-based sector index from the memory map.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sector_addr</span></code> — start address of the sector.</p></li>
+<li><p>If not defined, EBlink performs no explicit sector erase.</p></li>
+</ul>
+<p>Returns: <code class="docutils literal notranslate"><span class="pre">ERROR_OK</span></code> or a negative error code.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="ebFlashWrite">
+<span class="sig-name descname"><span class="n"><span class="pre">ebFlashWrite</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sector_nr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sector_addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ebFlashWrite" title="Permalink to this definition"></a></dt>
+<dd><p><span class="mandatory">mandatory when flashing</span></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sector_nr</span></code> — zero-based sector index from the memory map.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sector_addr</span></code> — start address of the sector in target memory.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">buffer</span></code> — <a class="reference internal" href="ebbuffer.html#eblink-ebbuffer"><span class="std std-ref">EBbuffer</span></a> containing the sector data,
+trimmed to the last non-erased byte.</p></li>
+<li><p>Called for every sector that needs to be written, after erasure.</p></li>
+</ul>
+<p>Returns: <code class="docutils literal notranslate"><span class="pre">ERROR_OK</span></code> or a negative error code.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">ebFlashWrite</span><span class="p">(</span><span class="n">sector</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">buffer</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+        <span class="n">intrfApi</span><span class="o">.</span><span class="n">writeBuf</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">address</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">catch</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">catchString</span><span class="p">(</span><span class="n">e</span><span class="p">))</span> <span class="k">return</span> <span class="n">ERROR_NOTIFIED</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">e</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">ERROR_OK</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="ebFlashDone">
+<span class="sig-name descname"><span class="n"><span class="pre">ebFlashDone</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ebFlashDone" title="Permalink to this definition"></a></dt>
+<dd><p><span class="optional">optional</span></p>
+<ul class="simple">
+<li><p>Called once after all sectors have been processed, success or failure.</p></li>
+<li><p>Typical use: re-lock flash, reset the device.</p></li>
+</ul>
+<p>Returns: <code class="docutils literal notranslate"><span class="pre">ERROR_OK</span></code> or a negative error code.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="ebFlashEraseChip">
+<span class="sig-name descname"><span class="n"><span class="pre">ebFlashEraseChip</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ebFlashEraseChip" title="Permalink to this definition"></a></dt>
+<dd><p><span class="optional">optional</span></p>
+<ul class="simple">
+<li><p>Called when a full chip erase is requested (<code class="docutils literal notranslate"><span class="pre">-F</span> <span class="pre">erase</span></code> option).</p></li>
+<li><p>Runs standalone — <code class="docutils literal notranslate"><span class="pre">ebFlashStart</span></code> and <code class="docutils literal notranslate"><span class="pre">ebFlashDone</span></code> are <strong>not</strong> called
+around it.</p></li>
+<li><p>If not defined, EBlink falls back to calling <code class="docutils literal notranslate"><span class="pre">ebFlashStart</span></code>,
+<code class="docutils literal notranslate"><span class="pre">ebFlashErase</span></code> for every sector, and <code class="docutils literal notranslate"><span class="pre">ebFlashDone</span></code>.</p></li>
+</ul>
+<p>Returns: <code class="docutils literal notranslate"><span class="pre">ERROR_OK</span></code> or a negative error code.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="ebResetUser">
+<span class="sig-name descname"><span class="n"><span class="pre">ebResetUser</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ebResetUser" title="Permalink to this definition"></a></dt>
+<dd><p><span class="mandatory">mandatory when USER_RESET type is used</span></p>
+<ul class="simple">
+<li><p>Implement a custom reset sequence — for example via a peripheral register
+when the nRESET pin is not available.</p></li>
+</ul>
+<p>Returns: nothing required.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">ebResetUser</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">intrfApi</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="mh">0xE000ED0C</span><span class="p">,</span> <span class="mh">0x05FA0004</span><span class="p">);</span>  <span class="o">//</span> <span class="n">SYSRESETREQ</span> <span class="n">via</span> <span class="n">AIRCR</span>
+    <span class="n">Sleep</span><span class="p">(</span><span class="mi">50</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="ebResetPost">
+<span class="sig-name descname"><span class="n"><span class="pre">ebResetPost</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reset_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ebResetPost" title="Permalink to this definition"></a></dt>
+<dd><p><span class="optional">optional</span></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">reset_type</span></code> — one of the <code class="docutils literal notranslate"><span class="pre">xxx_RESET</span></code> constants
+(see <a class="reference internal" href="constants.html#eblink-constants"><span class="std std-ref">Constants</span></a>).</p></li>
+<li><p>Called after every reset, regardless of type.</p></li>
+<li><p>Typical use: set stack pointer and PC from the vector table, wait for
+the device to come out of reset.</p></li>
+</ul>
+<p>Returns: <code class="docutils literal notranslate"><span class="pre">ERROR_OK</span></code> or a negative error code.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">ebResetPost</span><span class="p">(</span><span class="nb">type</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="nb">type</span> <span class="o">!=</span> <span class="n">USER_RESET</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">targetApi</span><span class="o">.</span><span class="n">writeReg</span><span class="p">(</span><span class="s2">&quot;SP&quot;</span><span class="p">,</span> <span class="n">intrfApi</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mh">0x08000000</span><span class="p">));</span>
+        <span class="n">targetApi</span><span class="o">.</span><span class="n">writeReg</span><span class="p">(</span><span class="s2">&quot;PC&quot;</span><span class="p">,</span> <span class="n">intrfApi</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mh">0x08000004</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">ERROR_OK</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="ebServicesSetup">
+<span class="sig-name descname"><span class="n"><span class="pre">ebServicesSetup</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ebServicesSetup" title="Permalink to this definition"></a></dt>
+<dd><p><span class="optional">optional</span></p>
+<ul class="simple">
+<li><p>Called during EBlink service initialisation.</p></li>
+<li><p>If not defined, EBlink starts services as specified on the CLI.</p></li>
+<li><p>As soon as one <code class="docutils literal notranslate"><span class="pre">ServicesAPI().addService()</span></code> call is made, EBlink no
+longer starts any services automatically — the script is responsible
+for starting all services.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">cliSwitch(&quot;-G&quot;)</span></code> to retrieve the CLI GDB option and pass it to
+<code class="docutils literal notranslate"><span class="pre">addService()</span></code> if needed.</p></li>
+</ul>
+<p>Returns: <code class="docutils literal notranslate"><span class="pre">ERROR_OK</span></code> or a negative error code.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="ebGDBqRcmd">
+<span class="sig-name descname"><span class="n"><span class="pre">ebGDBqRcmd</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ebGDBqRcmd" title="Permalink to this definition"></a></dt>
+<dd><p><span class="optional">optional</span></p>
+<ul class="simple">
+<li><p>Called when a GDB <code class="docutils literal notranslate"><span class="pre">monitor</span></code> command arrives, before EBlink’s own
+built-in monitor handling.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cmd</span></code> — the monitor command string.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">length</span></code> — length of the command string in bytes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">buffer</span></code> — an <a class="reference internal" href="ebbuffer.html#eblink-ebbuffer"><span class="std std-ref">EBbuffer</span></a> the script fills with
+the response text to send back to GDB.</p></li>
+<li><p>If the script handles the command: fill <code class="docutils literal notranslate"><span class="pre">buffer</span></code> and return <code class="docutils literal notranslate"><span class="pre">ERROR_OK</span></code>.
+EBlink sends the buffer contents back to GDB and skips built-in handling.</p></li>
+<li><p>If the script does not handle the command: return a negative error code
+or leave <code class="docutils literal notranslate"><span class="pre">buffer</span></code> empty. EBlink then falls through to its own monitor
+command dispatcher.</p></li>
+</ul>
+<p>Returns: <code class="docutils literal notranslate"><span class="pre">ERROR_OK</span></code> (command handled) or a negative error code (pass through).</p>
+<p>The two examples below show the same <code class="docutils literal notranslate"><span class="pre">ReadMemAP</span></code> command implemented with
+two different parsing strategies.</p>
+<p><strong>Parsing with</strong> <code class="docutils literal notranslate"><span class="pre">amregex</span></code> — a single regex captures all arguments at once:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>function ebGDBqRcmd(packet, length, ebBuffer)
+{
+    try {
+        local matches = []
+        // ReadMemAP &lt;APBaseAddr&gt; &lt;Addr&gt; &lt;NumItems&gt; &lt;Flags&gt;
+        if(amregex(matches, packet,
+            @&quot;ReadMemAP\s+(0x[0-9a-fA-F]+|[0-9]+)\s+(0x[0-9a-fA-F]+|[0-9]+)&quot; +
+            @&quot;\s+(0x[0-9a-fA-F]+|[0-9]+)\s+(0x[0-9a-fA-F]+|[0-9]+)&quot;) &gt; 0)
+        {
+            local APbase  = strToNumber(matches[1])
+            local addr    = strToNumber(matches[2])
+            local num     = strToNumber(matches[3])
+            local flags   = strToNumber(matches[4])
+
+            local byteLen = (flags == 0 ? 4 : flags)
+            local width   = (flags == 0 ? -1 : byteLen * 8)
+            local fspec   = format(&quot;0x%%0%dX&quot;, byteLen * 2)
+
+            local eb = EBbuffer()
+            InterfAPI().readBuf(eb, addr, num * byteLen, width)
+            if(width &gt; 0) eb.access(width)
+
+            local outStr = &quot;O.K.:&quot;
+            for(local i = 0; i &lt; num; i++) {
+                outStr += format(fspec, eb[i])
+                if(i &lt; num - 1) outStr += &quot;,&quot;
+            }
+            ebBuffer.format(outStr + &quot;\n&quot;)
+        }
+        return ERROR_OK
+    }
+    catch(e) {
+        if(catchString(e)) return ERROR_NOTIFIED
+        return ERROR_NOTIFIED
+    }
+}
+</pre></div>
+</div>
+<p><strong>Parsing with</strong> <code class="docutils literal notranslate"><span class="pre">astrsep</span></code> — tokenises on spaces, then checks token by name:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>function ebGDBqRcmd(packet, length, ebBuffer)
+{
+    try {
+        local tokens = []
+        astrsep(tokens, packet, &quot; &quot;)
+
+        // ReadMemAP &lt;APBaseAddr&gt; &lt;Addr&gt; &lt;NumItems&gt; &lt;Flags&gt;
+        if(tokens[0] == &quot;ReadMemAP&quot;) {
+            if(tokens.len() &lt; 5) return ERROR_OK
+
+            local APbase  = strToNumber(tokens[1])
+            local addr    = strToNumber(tokens[2])
+            local num     = strToNumber(tokens[3])
+            local flags   = strToNumber(tokens[4])
+
+            local byteLen = (flags == 0 ? 4 : flags)
+            local width   = (flags == 0 ? -1 : byteLen * 8)
+            local fspec   = format(&quot;0x%%0%dX&quot;, byteLen * 2)
+
+            local eb = EBbuffer()
+            InterfAPI().readBuf(eb, addr, num * byteLen, width)
+            if(width &gt; 0) eb.access(width)
+
+            local outStr = &quot;O.K.:&quot;
+            for(local i = 0; i &lt; num; i++) {
+                outStr += format(fspec, eb[i])
+                if(i &lt; num - 1) outStr += &quot;,&quot;
+            }
+            ebBuffer.format(outStr + &quot;\n&quot;)
+        }
+        return ERROR_OK
+    }
+    catch(e) {
+        if(catchString(e)) return ERROR_NOTIFIED
+        return ERROR_NOTIFIED
+    }
+}
+</pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">amregex</span></code> when the command syntax is complex or needs strict validation.
+Use <code class="docutils literal notranslate"><span class="pre">astrsep</span></code> when the command is simple whitespace-delimited tokens.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="constants.html" class="btn btn-neutral float-left" title="4.5. Constants" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ebbuffer.html" class="btn btn-neutral float-right" title="4.7. EBbuffer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2009-2026, Gerard Zagema.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

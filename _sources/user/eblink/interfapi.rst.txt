@@ -1,0 +1,186 @@
+.. _eblink_interfapi:
+
+=========
+InterfAPI
+=========
+
+``InterfAPI`` is a class registered by EBlink that represents the physical
+debug probe (ST-Link, CMSIS-DAP, etc.). Scripts instantiate it once
+at global scope and share the instance across all included files::
+
+    intrfApi <- InterfAPI()
+
+All methods that communicate with hardware throw an integer ``ERROR_xxx``
+exception on failure.
+
+Probe information
+-----------------
+
+.. index:: single: InterfAPI; .getName()
+
+.. js:function:: InterfAPI.getName()
+   :noindex:
+
+   Returns the interface name string (e.g. ``"stlink"``).
+
+.. index:: single: InterfAPI; .getTapId()
+
+.. js:function:: InterfAPI.getTapId()
+   :noindex:
+
+   Returns the JTAG TAP ID / SWD target ID as a 32-bit integer. Returns
+   ``0`` if the read fails.
+
+.. index:: single: InterfAPI; .getSpeed()
+
+.. js:function:: InterfAPI.getSpeed()
+   :noindex:
+
+   Returns the current probe communication speed in KHz.
+
+.. index:: single: InterfAPI; .setSpeed()
+
+.. js:function:: InterfAPI.setSpeed(speed)
+   :noindex:
+
+   Sets the probe speed to ``speed`` KHz. Throws on error::
+
+       intrfApi.setSpeed(4000);
+
+.. index:: single: InterfAPI; .targetVoltage()
+
+.. js:function:: InterfAPI.targetVoltage()
+   :noindex:
+
+   Returns the measured target VCC voltage as a float (volts).
+
+.. index:: single: InterfAPI; .resetCtrl()
+
+.. js:function:: InterfAPI.resetCtrl(state)
+   :noindex:
+
+   Asserts (``state = true``) or deasserts (``state = false``) the hardware
+   nRESET line. Throws on error.
+
+DAP access
+----------
+
+These functions provide direct access to the ARM Debug Access Port (DAP)
+registers, bypassing the normal memory interface. Useful for reading the
+IDCODE register or configuring AP/DP registers during device identification.
+
+.. index:: single: InterfAPI; .setDapAp()
+
+.. js:function:: InterfAPI.setDapAp(ap)
+   :noindex:
+
+   Selects the active Access Port (0–127). Returns the previously selected
+   AP number. Throws on error.
+
+.. index:: single: InterfAPI; .getDapAp()
+
+.. js:function:: InterfAPI.getDapAp()
+   :noindex:
+
+   Returns the currently selected Access Port number.
+
+.. index:: single: InterfAPI; .readDap()
+
+.. js:function:: InterfAPI.readDap(ap, addr)
+   :noindex:
+
+   Reads a 32-bit value from DAP register ``addr`` on access port ``ap``.
+   Throws on error.
+
+.. index:: single: InterfAPI; .writeDap()
+
+.. js:function:: InterfAPI.writeDap(ap, addr, value)
+   :noindex:
+
+   Writes a 32-bit ``value`` to DAP register ``addr`` on access port ``ap``.
+   Throws on error.
+
+Memory read
+-----------
+
+.. index:: single: InterfAPI; .read()
+
+.. js:function:: InterfAPI.read(addr [, width])
+   :noindex:
+
+   Reads a single value from target address ``addr``. ``width`` is 8, 16,
+   or 32 bits. When omitted (or ``-1``), uses the probe's native 32-bit
+   debug access path. Returns the value as an integer. Throws on error::
+
+       local cpuid = intrfApi.read(0xE000ED00);
+       printf("CPUID: 0x%08X\n", cpuid);
+
+.. index:: single: InterfAPI; .readBuf()
+
+.. js:function:: InterfAPI.readBuf(buffer, addr, length [, width])
+   :noindex:
+
+   Reads ``length`` bytes from target address ``addr`` into ``buffer``
+   (an :js:class:`EBbuffer`). The buffer is (re-)allocated to ``length``
+   bytes internally — no prior allocation is needed. ``width`` controls bus
+   transfer width (8, 16, or 32); omit or pass ``-1`` for the default.
+   Returns ``length`` on success. Throws on error::
+
+       local buf = EBbuffer();
+       intrfApi.readBuf(buf, 0x08000000, 1024);
+
+Memory write
+------------
+
+.. index:: single: InterfAPI; .write()
+
+.. js:function:: InterfAPI.write(addr, value [, width])
+   :noindex:
+
+   Writes a single ``value`` to target address ``addr``. ``width`` is 8, 16,
+   or 32 bits; defaults to 32-bit debug access when omitted. Throws on error.
+
+.. index:: single: InterfAPI; .writeBuf()
+
+.. js:function:: InterfAPI.writeBuf(buffer, addr [, width [, offset, length]])
+   :noindex:
+
+   Writes the contents of ``buffer`` to target address ``addr``.
+
+   Optional parameters:
+
+   - ``width`` — bus transfer width: 8, 16, or 32. Omit or ``-1`` for default.
+   - ``offset`` — byte offset into ``buffer`` to start from (must be paired with ``length``).
+   - ``length`` — number of bytes to write (required when ``offset`` is given).
+
+   Throws on error::
+
+       // Write entire buffer
+       intrfApi.writeBuf(buf, 0x08000000);
+
+       // Write 256 bytes starting at offset 512
+       intrfApi.writeBuf(buf, 0x08001000, -1, 512, 256);
+
+File loading
+------------
+
+.. index:: single: InterfAPI; .loadBin()
+
+.. js:function:: InterfAPI.loadBin(filename, addr)
+   :noindex:
+
+   Reads a binary file from disk and writes it to target memory starting at
+   ``addr``. EBlink searches the configured script paths for the file.
+   Returns the number of bytes written. Throws an integer exception (via
+   ``ERROR_NOTIFIED``) if the file cannot be opened.
+
+.. index:: single: InterfAPI; .loadString()
+
+.. js:function:: InterfAPI.loadString(addr, str, len)
+   :noindex:
+
+   Writes the raw bytes of ``str`` (up to ``len`` bytes) to target address
+   ``addr``. Returns ``len``. Throws on hardware error. Useful for writing
+   null-terminated strings or packed data to target RAM::
+
+       intrfApi.loadString(0x20000000, "BOOT", 4);

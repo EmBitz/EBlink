@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4.14. API Quick Reference &mdash; EBlink documentation 6.2 stable documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/EBlink.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=7218f4fa"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="5. Index" href="../bookindex.html" />
+    <link rel="prev" title="4.13. Addendum: Squirrel Extensions" href="extensions.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            EBlink documentation
+              <img src="../../_static/EBlink.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">2. Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../language.html">3. The script language</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">4. EBlink Scripting</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">4.1. Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="error_handling.html">4.2. Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">4.3. Logging &amp; Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="globals.html">4.4. Global Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">4.5. Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interaction.html">4.6. EBlink Interaction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ebbuffer.html">4.7. EBbuffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interfapi.html">4.8. InterfAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deviceapi.html">4.9. DeviceAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="targetapi.html">4.10. TargetAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="servicesapi.html">4.11. ServicesAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugger.html">4.12. Script Debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html">4.13. Addendum: Squirrel Extensions</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.14. API Quick Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../bookindex.html">5. Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">EBlink documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html"><span class="section-number">4. </span>EBlink Scripting</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">4.14. </span>API Quick Reference</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="api-quick-reference">
+<span id="eblink-apiindex"></span><h1><span class="section-number">4.14. </span>API Quick Reference<a class="headerlink" href="#api-quick-reference" title="Permalink to this heading"></a></h1>
+<p class="rubric"><a class="reference internal" href="deviceapi.html#eblink-deviceapi"><span class="std std-ref">DeviceAPI</span></a></p>
+<ul class="simple">
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">isChipErase()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">memmap()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">memmapFromFile()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">modifyFlash()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">sectorCount()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">setFlashDontTrim()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">setFlashEraseValue()</span></code></p></li>
+</ul>
+<p class="rubric"><a class="reference internal" href="ebbuffer.html#eblink-ebbuffer"><span class="std std-ref">EBbuffer</span></a></p>
+<ul class="simple">
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">EBbuffer()</span></code> (constructor)</p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">access()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">allocate()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">format()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">get()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">getSize()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">getTrim()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">set()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">trim()</span></code></p></li>
+</ul>
+<p class="rubric"><a class="reference internal" href="interfapi.html#eblink-interfapi"><span class="std std-ref">InterfAPI</span></a></p>
+<ul class="simple">
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">getDapAp()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">getName()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">getSpeed()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">getTapId()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">loadBin()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">loadString()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">read()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">readBuf()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">readDap()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">resetCtrl()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">setDapAp()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">setSpeed()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">targetVoltage()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">write()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">writeBuf()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">writeDap()</span></code></p></li>
+</ul>
+<p class="rubric"><a class="reference internal" href="servicesapi.html#eblink-servicesapi"><span class="std std-ref">ServicesAPI</span></a></p>
+<ul class="simple">
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">addService()</span></code></p></li>
+</ul>
+<p class="rubric"><a class="reference internal" href="targetapi.html#eblink-targetapi"><span class="std std-ref">TargetAPI</span></a></p>
+<ul class="simple">
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">execute()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">getCpuName()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">getName()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">getState()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">halt()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">poll()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">readReg()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">reset()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">resume()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">writeReg()</span></code></p></li>
+</ul>
+<p class="rubric"><a class="reference internal" href="error_handling.html#eblink-error-handling"><span class="std std-ref">Error handling</span></a></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="error_handling.html#catchString" title="catchString"><code class="xref js js-func docutils literal notranslate"><span class="pre">catchString()</span></code></a></p></li>
+<li><p><a class="reference internal" href="error_handling.html#catchThrowStr" title="catchThrowStr"><code class="xref js js-func docutils literal notranslate"><span class="pre">catchThrowStr()</span></code></a></p></li>
+<li><p><a class="reference internal" href="error_handling.html#errorToStr" title="errorToStr"><code class="xref js js-func docutils literal notranslate"><span class="pre">errorToStr()</span></code></a></p></li>
+</ul>
+<p class="rubric"><a class="reference internal" href="globals.html#eblink-globals"><span class="std std-ref">Global functions</span></a></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="globals.html#amregex" title="amregex"><code class="xref js js-func docutils literal notranslate"><span class="pre">amregex()</span></code></a></p></li>
+<li><p><a class="reference internal" href="globals.html#AnimateCursor" title="AnimateCursor"><code class="xref js js-func docutils literal notranslate"><span class="pre">AnimateCursor()</span></code></a></p></li>
+<li><p><a class="reference internal" href="globals.html#AnimateDone" title="AnimateDone"><code class="xref js js-func docutils literal notranslate"><span class="pre">AnimateDone()</span></code></a></p></li>
+<li><p><a class="reference internal" href="globals.html#astrsep" title="astrsep"><code class="xref js js-func docutils literal notranslate"><span class="pre">astrsep()</span></code></a></p></li>
+<li><p><a class="reference internal" href="globals.html#cliSwitch" title="cliSwitch"><code class="xref js js-func docutils literal notranslate"><span class="pre">cliSwitch()</span></code></a></p></li>
+<li><p><a class="reference internal" href="globals.html#FL_MAX" title="FL_MAX"><code class="xref js js-func docutils literal notranslate"><span class="pre">FL_MAX()</span></code></a></p></li>
+<li><p><a class="reference internal" href="globals.html#FL_MIN" title="FL_MIN"><code class="xref js js-func docutils literal notranslate"><span class="pre">FL_MIN()</span></code></a></p></li>
+<li><p><a class="reference internal" href="globals.html#Float2Integer" title="Float2Integer"><code class="xref js js-func docutils literal notranslate"><span class="pre">Float2Integer()</span></code></a></p></li>
+<li><p><a class="reference internal" href="globals.html#GetTickCount" title="GetTickCount"><code class="xref js js-func docutils literal notranslate"><span class="pre">GetTickCount()</span></code></a></p></li>
+<li><p><a class="reference internal" href="globals.html#IN_MAX" title="IN_MAX"><code class="xref js js-func docutils literal notranslate"><span class="pre">IN_MAX()</span></code></a></p></li>
+<li><p><a class="reference internal" href="globals.html#IN_MIN" title="IN_MIN"><code class="xref js js-func docutils literal notranslate"><span class="pre">IN_MIN()</span></code></a></p></li>
+<li><p><a class="reference internal" href="globals.html#include" title="include"><code class="xref js js-func docutils literal notranslate"><span class="pre">include()</span></code></a></p></li>
+<li><p><a class="reference internal" href="globals.html#Integer2Float" title="Integer2Float"><code class="xref js js-func docutils literal notranslate"><span class="pre">Integer2Float()</span></code></a></p></li>
+<li><p><a class="reference internal" href="globals.html#isInteger" title="isInteger"><code class="xref js js-func docutils literal notranslate"><span class="pre">isInteger()</span></code></a></p></li>
+<li><p><a class="reference internal" href="globals.html#isnull" title="isnull"><code class="xref js js-func docutils literal notranslate"><span class="pre">isnull()</span></code></a></p></li>
+<li><p><a class="reference internal" href="globals.html#isScriptObject" title="isScriptObject"><code class="xref js js-func docutils literal notranslate"><span class="pre">isScriptObject()</span></code></a></p></li>
+<li><p><a class="reference internal" href="globals.html#isString" title="isString"><code class="xref js js-func docutils literal notranslate"><span class="pre">isString()</span></code></a></p></li>
+<li><p><a class="reference internal" href="globals.html#require" title="require"><code class="xref js js-func docutils literal notranslate"><span class="pre">require()</span></code></a></p></li>
+<li><p><a class="reference internal" href="globals.html#Sleep" title="Sleep"><code class="xref js js-func docutils literal notranslate"><span class="pre">Sleep()</span></code></a></p></li>
+<li><p><a class="reference internal" href="globals.html#strToNumber" title="strToNumber"><code class="xref js js-func docutils literal notranslate"><span class="pre">strToNumber()</span></code></a></p></li>
+<li><p><a class="reference internal" href="globals.html#UN_MAX" title="UN_MAX"><code class="xref js js-func docutils literal notranslate"><span class="pre">UN_MAX()</span></code></a></p></li>
+<li><p><a class="reference internal" href="globals.html#UN_MIN" title="UN_MIN"><code class="xref js js-func docutils literal notranslate"><span class="pre">UN_MIN()</span></code></a></p></li>
+</ul>
+<p class="rubric"><a class="reference internal" href="logging.html#eblink-logging"><span class="std std-ref">Logging</span></a></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">debugf(fmt,</span> <span class="pre">...)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">errorf(fmt,</span> <span class="pre">...)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">noticef(fmt,</span> <span class="pre">...)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">printf(fmt,</span> <span class="pre">...)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tracef(fmt,</span> <span class="pre">...)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">userf(fmt,</span> <span class="pre">...)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">warnf(fmt,</span> <span class="pre">...)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">yesNof(default,</span> <span class="pre">fmt,</span> <span class="pre">...)</span></code></p></li>
+</ul>
+<p class="rubric"><a class="reference internal" href="debugger.html#eblink-debugger"><span class="std std-ref">Debugger</span></a></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="debugger.html#brkPt" title="brkPt"><code class="xref js js-func docutils literal notranslate"><span class="pre">brkPt()</span></code></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="extensions.html" class="btn btn-neutral float-left" title="4.13. Addendum: Squirrel Extensions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../bookindex.html" class="btn btn-neutral float-right" title="5. Index" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2009-2026, Gerard Zagema.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
