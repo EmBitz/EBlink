@@ -23,7 +23,7 @@ Memory map
    memory-map DTD. Must be called in ``ebMain()``. Returns ``ERROR_OK`` on
    success or a negative error code if the XML could not be parsed.
 
-   The ``pagesize`` property inside a flash region defines the sector size
+   The ``blocksize`` property inside a flash region defines the sector size
    used for the flash cache::
 
        DeviceAPI().memmap( @@"<?xml version=\"1.0\"?>
@@ -31,7 +31,7 @@ Memory map
                                        \"http://sourceware.org/gdb/gdb-memory-map.dtd\">
            <memory-map>
              <memory type=\"flash\" start=\"0x08000000\" length=\"0x100000\">
-               <property name=\"pagesize\">0x800</property>
+               <property name=\"blocksize\">0x800</property>
              </memory>
              <memory type=\"ram\" start=\"0x20000000\" length=\"0x20000\"/>
            </memory-map>" );
@@ -48,6 +48,106 @@ Memory map
    ``ERROR_OK`` on success or ``-1`` on failure (file not found, read error,
    or XML parse error).
 
+Memory map XML format
+---------------------
+
+EBlink uses the standard GDB memory-map XML format, extended with
+EBlink-specific attributes and properties for flash sector management.
+
+The GDB memory-map format is defined by the DTD at
+``http://sourceware.org/gdb/gdb-memory-map.dtd``. Full documentation of
+the standard format can be found in the GDB manual under
+*Memory Map Format* (``https://sourceware.org/gdb/current/onlinedocs/gdb/Memory-Map-Format.html``).
+
+**Flash memory attribute**
+
+``evalue`` (optional)
+   The byte value that represents an erased flash cell. Default is ``0xFF``.
+   Set this for devices where the erased state differs::
+
+       <memory type="flash" start="0x08000000" length="0x80000" evalue="0x00">
+
+**Flash property elements**
+
+``blocksize`` (mandatory)
+   Size of one flash sector in bytes. Accepts decimal or hexadecimal::
+
+       <property name="blocksize">0x800</property>
+
+``secstart`` (optional)
+   Sets the sector number for the first sector of this region. EBlink
+   automatically counts up from this number for each subsequent sector.
+   The counter carries over to the next flash region if ``secstart`` is
+   not set there. Default is ``0``::
+
+       <property name="secstart">8</property>
+
+``sectype`` (optional)
+   Shorthand to set the cache and read behaviour for this region.
+   Two independent flags control what EBlink does:
+
+   - **cache_mcu** — read the MCU flash into the sector cache so EBlink
+     can detect changes and avoid unnecessary writes.
+   - **read_mcu** — serve GDB memory reads directly from the MCU instead
+     of from the cache.
+
+   .. tabularcolumns:: p{2.5cm}p{1.8cm}p{1.8cm}p{4.5cm}p{3.2cm}
+
+   .. list-table::
+      :header-rows: 1
+      :widths: 16 12 11 30 31
+
+      * - Value
+        - cache_mcu
+        - read_mcu
+        - Flash operations
+        - GDB reads
+      * - *(default)*
+        - on
+        - off
+        - MCU content is read into cache; only changed sectors are written.
+        - Served from cache.
+      * - ``virtual``
+        - off
+        - off
+        - Cache is treated as empty without reading the MCU; sector is
+          always considered erased.
+        - Served from cache (erased value).
+      * - ``nocache``
+        - off
+        - on
+        - Cache is treated as empty without reading the MCU; sector is
+          always written.
+        - Read directly from MCU.
+      * - ``read_through``
+        - on
+        - on
+        - MCU content is read into cache; only changed sectors are written.
+        - Read directly from MCU.
+      * - ``ebskip``
+        - —
+        - —
+        - Sector is completely excluded from all flash operations.
+        - Not accessible through EBlink.
+
+   ::
+
+       <property name="sectype">nocache</property>
+
+``cache_mcu`` (optional)
+   Sets or clears the cache_mcu flag individually. Use ``disabled`` to clear
+   it, any other value to set it. This is the same flag that ``sectype``
+   controls as part of its shorthand combinations::
+
+       <property name="cache_mcu">disabled</property>
+
+``read_mcu`` (optional)
+   Sets or clears the read_mcu flag individually. Use ``disabled`` to clear
+   it, any other value to set it. This is the same flag that ``sectype``
+   controls as part of its shorthand combinations::
+
+       <property name="read_mcu">disabled</property>
+
 Flash management
 ----------------
 
@@ -56,15 +156,10 @@ Flash management
 .. js:function:: DeviceAPI.isChipErase()
    :noindex:
 
-   Returns ``true`` if a full chip erase was requested (e.g. EBlink
-   ``-F erase`` option). Use in ``ebFlashStart()`` to select the erase
-   strategy::
-
-       function ebFlashStart()
-       {
-           if(DeviceAPI().isChipErase())
-               flash_mass_erase();
-       }
+   Returns ``true`` if a mass erase is active. Used in ``ebFlashErase()`` when
+   no ``ebFlashEraseChip`` is defined — EBlink then falls back to sector-by-sector
+   erase and this function allows the script to detect whether that erase was
+   triggered by a chip erase request or a normal sector erase.
 
 .. index:: single: DeviceAPI; .sectorCount()
 

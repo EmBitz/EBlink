@@ -63,7 +63,8 @@
 <li class="toctree-l2"><a class="reference internal" href="interfapi.html">4.8. InterfAPI</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">4.9. DeviceAPI</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#memory-map">4.9.1. Memory map</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#flash-management">4.9.2. Flash management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#memory-map-xml-format">4.9.2. Memory map XML format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#flash-management">4.9.3. Flash management</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="targetapi.html">4.10. TargetAPI</a></li>
@@ -116,14 +117,14 @@ map and the flash sector cache. A new instance is created where needed:</p>
 <dd><p>Sets the device memory map from an XML string. The XML format is the GDB
 memory-map DTD. Must be called in <code class="docutils literal notranslate"><span class="pre">ebMain()</span></code>. Returns <code class="docutils literal notranslate"><span class="pre">ERROR_OK</span></code> on
 success or a negative error code if the XML could not be parsed.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">pagesize</span></code> property inside a flash region defines the sector size
+<p>The <code class="docutils literal notranslate"><span class="pre">blocksize</span></code> property inside a flash region defines the sector size
 used for the flash cache:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>DeviceAPI().memmap( @@&quot;&lt;?xml version=\&quot;1.0\&quot;?&gt;
     &lt;!DOCTYPE memory-map PUBLIC \&quot;+//IDN gnu.org//DTD GDB Memory Map V1.0//EN\&quot;
                                 \&quot;http://sourceware.org/gdb/gdb-memory-map.dtd\&quot;&gt;
     &lt;memory-map&gt;
       &lt;memory type=\&quot;flash\&quot; start=\&quot;0x08000000\&quot; length=\&quot;0x100000\&quot;&gt;
-        &lt;property name=\&quot;pagesize\&quot;&gt;0x800&lt;/property&gt;
+        &lt;property name=\&quot;blocksize\&quot;&gt;0x800&lt;/property&gt;
       &lt;/memory&gt;
       &lt;memory type=\&quot;ram\&quot; start=\&quot;0x20000000\&quot; length=\&quot;0x20000\&quot;/&gt;
     &lt;/memory-map&gt;&quot; );
@@ -142,21 +143,126 @@ or XML parse error).</p>
 </dd></dl>
 
 </section>
+<section id="memory-map-xml-format">
+<h2><span class="section-number">4.9.2. </span>Memory map XML format<a class="headerlink" href="#memory-map-xml-format" title="Permalink to this heading"></a></h2>
+<p>EBlink uses the standard GDB memory-map XML format, extended with
+EBlink-specific attributes and properties for flash sector management.</p>
+<p>The GDB memory-map format is defined by the DTD at
+<code class="docutils literal notranslate"><span class="pre">http://sourceware.org/gdb/gdb-memory-map.dtd</span></code>. Full documentation of
+the standard format can be found in the GDB manual under
+<em>Memory Map Format</em> (<code class="docutils literal notranslate"><span class="pre">https://sourceware.org/gdb/current/onlinedocs/gdb/Memory-Map-Format.html</span></code>).</p>
+<p><strong>Flash memory attribute</strong></p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">evalue</span></code> (optional)</dt><dd><p>The byte value that represents an erased flash cell. Default is <code class="docutils literal notranslate"><span class="pre">0xFF</span></code>.
+Set this for devices where the erased state differs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">memory</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;flash&quot;</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;0x08000000&quot;</span> <span class="n">length</span><span class="o">=</span><span class="s2">&quot;0x80000&quot;</span> <span class="n">evalue</span><span class="o">=</span><span class="s2">&quot;0x00&quot;</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<p><strong>Flash property elements</strong></p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">blocksize</span></code> (mandatory)</dt><dd><p>Size of one flash sector in bytes. Accepts decimal or hexadecimal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nb">property</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;blocksize&quot;</span><span class="o">&gt;</span><span class="mh">0x800</span><span class="o">&lt;/</span><span class="nb">property</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">secstart</span></code> (optional)</dt><dd><p>Sets the sector number for the first sector of this region. EBlink
+automatically counts up from this number for each subsequent sector.
+The counter carries over to the next flash region if <code class="docutils literal notranslate"><span class="pre">secstart</span></code> is
+not set there. Default is <code class="docutils literal notranslate"><span class="pre">0</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nb">property</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;secstart&quot;</span><span class="o">&gt;</span><span class="mi">8</span><span class="o">&lt;/</span><span class="nb">property</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">sectype</span></code> (optional)</dt><dd><p>Shorthand to set the cache and read behaviour for this region.
+Two independent flags control what EBlink does:</p>
+<ul class="simple">
+<li><p><strong>cache_mcu</strong> — read the MCU flash into the sector cache so EBlink
+can detect changes and avoid unnecessary writes.</p></li>
+<li><p><strong>read_mcu</strong> — serve GDB memory reads directly from the MCU instead
+of from the cache.</p></li>
+</ul>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 12%" />
+<col style="width: 11%" />
+<col style="width: 30%" />
+<col style="width: 31%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Value</p></th>
+<th class="head"><p>cache_mcu</p></th>
+<th class="head"><p>read_mcu</p></th>
+<th class="head"><p>Flash operations</p></th>
+<th class="head"><p>GDB reads</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>(default)</em></p></td>
+<td><p>on</p></td>
+<td><p>off</p></td>
+<td><p>MCU content is read into cache; only changed sectors are written.</p></td>
+<td><p>Served from cache.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">virtual</span></code></p></td>
+<td><p>off</p></td>
+<td><p>off</p></td>
+<td><p>Cache is treated as empty without reading the MCU; sector is
+always considered erased.</p></td>
+<td><p>Served from cache (erased value).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">nocache</span></code></p></td>
+<td><p>off</p></td>
+<td><p>on</p></td>
+<td><p>Cache is treated as empty without reading the MCU; sector is
+always written.</p></td>
+<td><p>Read directly from MCU.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">read_through</span></code></p></td>
+<td><p>on</p></td>
+<td><p>on</p></td>
+<td><p>MCU content is read into cache; only changed sectors are written.</p></td>
+<td><p>Read directly from MCU.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ebskip</span></code></p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>Sector is completely excluded from all flash operations.</p></td>
+<td><p>Not accessible through EBlink.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nb">property</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;sectype&quot;</span><span class="o">&gt;</span><span class="n">nocache</span><span class="o">&lt;/</span><span class="nb">property</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cache_mcu</span></code> (optional)</dt><dd><p>Sets or clears the cache_mcu flag individually. Use <code class="docutils literal notranslate"><span class="pre">disabled</span></code> to clear
+it, any other value to set it. This is the same flag that <code class="docutils literal notranslate"><span class="pre">sectype</span></code>
+controls as part of its shorthand combinations:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nb">property</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;cache_mcu&quot;</span><span class="o">&gt;</span><span class="n">disabled</span><span class="o">&lt;/</span><span class="nb">property</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">read_mcu</span></code> (optional)</dt><dd><p>Sets or clears the read_mcu flag individually. Use <code class="docutils literal notranslate"><span class="pre">disabled</span></code> to clear
+it, any other value to set it. This is the same flag that <code class="docutils literal notranslate"><span class="pre">sectype</span></code>
+controls as part of its shorthand combinations:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nb">property</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;read_mcu&quot;</span><span class="o">&gt;</span><span class="n">disabled</span><span class="o">&lt;/</span><span class="nb">property</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</section>
 <section id="flash-management">
-<h2><span class="section-number">4.9.2. </span>Flash management<a class="headerlink" href="#flash-management" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">4.9.3. </span>Flash management<a class="headerlink" href="#flash-management" title="Permalink to this heading"></a></h2>
 <span class="target" id="index-2"></span><dl class="js function">
 <dt class="sig sig-object js">
 <span class="sig-prename descclassname"><span class="n"><span class="pre">DeviceAPI</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">isChipErase</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
-<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if a full chip erase was requested (e.g. EBlink
-<code class="docutils literal notranslate"><span class="pre">-F</span> <span class="pre">erase</span></code> option). Use in <code class="docutils literal notranslate"><span class="pre">ebFlashStart()</span></code> to select the erase
-strategy:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">ebFlashStart</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="k">if</span><span class="p">(</span><span class="n">DeviceAPI</span><span class="p">()</span><span class="o">.</span><span class="n">isChipErase</span><span class="p">())</span>
-        <span class="n">flash_mass_erase</span><span class="p">();</span>
-<span class="p">}</span>
-</pre></div>
-</div>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if a mass erase is active. Used in <code class="docutils literal notranslate"><span class="pre">ebFlashErase()</span></code> when
+no <code class="docutils literal notranslate"><span class="pre">ebFlashEraseChip</span></code> is defined — EBlink then falls back to sector-by-sector
+erase and this function allows the script to detect whether that erase was
+triggered by a chip erase request or a normal sector erase.</p>
 </dd></dl>
 
 <span class="target" id="index-3"></span><dl class="js function">
