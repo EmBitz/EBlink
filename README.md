@@ -18,11 +18,17 @@ The variable `EB_DEFAULT_PROBE` is set to `"stlink"`.
 
 ### What's New in Version 6.30
 
-Version 6.30 adds **multi-GDB server support** from the command line. Multiple `-G` options can now be given in a single EBlink invocation — one GDB server per DAP access port. This allows dual-core targets to be controlled without requiring a device script to set up the services::
+Version 6.30 adds **multi-GDB server support** from the command line. Until now, launching EBlink for a dual-core target (e.g. STM32H7 CM4 + CM7) required the device script to set up multiple GDB server instances via `ebServicesSetup`. That still works — and is the recommended path for well-known targets — but you can now also spin up multiple servers directly from the command line by repeating the `-G` option:
 
     EBlink -I stlink -S auto -G ap=0,port=2331 -G ap=1,port=2332
 
-Device scripts for dual-core targets (e.g. STM32H7) already handle this automatically via `ebServicesSetup`; the new CLI option is available for targets where the script does not.
+Each `-G` binds one GDB server instance to a specific DAP Access Port (`ap=`), listening on its own TCP port. The two instances run concurrently inside a single EBlink process, sharing the same probe connection.
+
+You can optionally give each instance a name that shows up in the log, which is helpful when debugging multi-core sessions:
+
+    EBlink -I stlink -S auto -G ap=0,port=2331,name=CM4 -G ap=1,port=2332,name=CM7
+
+**Note:** Device scripts for well-supported dual-core targets (such as STM32H7) already call `ebServicesSetup` internally and set up the GDB servers automatically — no extra `-G` options needed. The new multi-`-G` CLI option is intended for targets where no such script exists yet, or for custom setups where you need full control over port assignments.
 
 ---
 
