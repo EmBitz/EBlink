@@ -16,6 +16,16 @@ The variable `EB_DEFAULT_PROBE` is set to `"stlink"`.
 
 ![alt text](https://www.embitz.org/context3.png)  
 
+### What's New in Version 6.30
+
+Version 6.30 adds **multi-GDB server support** from the command line. Multiple `-G` options can now be given in a single EBlink invocation — one GDB server per DAP access port. This allows dual-core targets to be controlled without requiring a device script to set up the services::
+
+    EBlink -I stlink -S auto -G ap=0,port=2331 -G ap=1,port=2332
+
+Device scripts for dual-core targets (e.g. STM32H7) already handle this automatically via `ebServicesSetup`; the new CLI option is available for targets where the script does not.
+
+---
+
 ### What's New in Version 6.21
 
 Starting with version 6.21, **EBmon** is now included in the packages. EBmon is the host-side component of the real-time monitor, which has been available for years as a plugin in EmBitz.  
@@ -99,7 +109,7 @@ Best of all, the EBmon CLI is **not strictly tied to EBlink**, giving you more f
 	-F <options>, --flash <options> Run image flashing
 	-G [options], --gdb <options>   Launch GDB server
 	
-- Multiple `--script`, `--path`, `--execute`, and `--define` are allowed.  
+- Multiple `--script`, `--path`, `--execute`, `--define`, and `--gdb` are allowed.  
 - `--interf` is mandatory if `EB_DEFAULT_PROBE` is not set.
 
 **Examples:**
@@ -107,7 +117,7 @@ Best of all, the EBmon CLI is **not strictly tied to EBlink**, giving you more f
         EBlink -I stlink -S auto -G
         EBlink -I stlink -S stm32 -G -D FLASH_SIZE=1024 -D RAM_SIZE=16
         EBlink -I stlink,dr,speed=3000 -S silabs -F erase,verify,run,file=mytarget.elf
-        EBlink -I cmsis-dap -T cortex-m,fu=0 -S renesas -G port=4242,nc,s -S myReset.scr
+        EBlink -I stlink -T cortex-m,fu=0 -S renesas -G port=4242,nc,s -S myReset.scr
         EBlink -I stlink -S auto -E "setopt(WRREG, 5);dataflash_erase(0x08000500)" 
 
 ---
@@ -196,11 +206,16 @@ Options:
 - `address=<x.x.x.x>` – Listen address (default 0.0.0.0)  
 - `port=<tcp port>` – TCP port (default 2331)  
 - `proxy=<host>[:<port>]` – Connect to external EBridge (default port 3333)  
-- `ap=<port>` – DAP_AP port (default 0)  
+- `ap=<n>` – DAP_AP port (default 0)  
+- `name=<name>` – Optional instance name (default `GDB` or `GDB_<ap>` when multiple `-G` are used)  
 - `s` – Shutdown after disconnect  
 - `nc` – Disable EBlink flash cache  
 
-Example: `-G nc,proxy=foo.nl`
+Multiple `-G` options are allowed. Device scripts for dual-core targets handle this automatically; use multiple `-G` when the script does not:
+
+    -G ap=0,port=2331 -G ap=1,port=2332
+
+Example: `-G nc`
 
 ---
 
