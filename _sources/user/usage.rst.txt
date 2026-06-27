@@ -60,8 +60,8 @@ specify on the command line overrides the environment variable, so you can
 always deviate from the default for a single session without changing the
 setting::
 
-    # normally uses stlink from environment, override for this session:
-    eblink -I cmsis-dap -F file=firmware.elf
+    # override for this session with explicit probe options:
+    eblink -I stlink,speed=1000 -F file=firmware.elf
 
 The command line structure
 --------------------------
@@ -69,6 +69,27 @@ The command line structure
 ::
 
     eblink -I <probe>[,options] -S <script> [operation] [options...]
+
+EBlink is built from independent modules. Each command-line switch is routed
+directly to its own module, so adding a new probe type or target architecture
+does not affect the rest of the tool::
+
+    -I ...  -->  [ Interface module(s) ]
+    -S ...  -->  [ Script engine       ]
+    -T ...  -->  [ Target module(s)    ]
+    -F ...  -->  [ Flash module        ]
+    -G ...  -->  [ GDB server          ]
+
+For switches that can have multiple implementations — currently ``-I`` for
+probe types and ``-T`` for target architectures — the first parameter is
+always the module name, followed by optional comma-separated options for
+that module::
+
+    -I stlink[,...]
+    -T cortex-m[,...]
+
+This makes it straightforward to add support for new probe types or target
+architectures in the future without changing the command-line structure.
 
 EBlink always follows this sequence when it starts:
 
@@ -132,12 +153,22 @@ contains the memory map, the flash algorithm, and the reset strategy.
 ::
 
     -S auto                         # auto-detect the device
-    -S stm32g0.script               # explicit script by name
+    -S stm32.script                 # explicit script by family
     -S /home/user/scripts/my.script # explicit script by full path
 
 With ``auto``, EBlink reads the device ID register from the target and
 selects the matching script from the installed scripts. If the device is not recognised,
 EBlink tells you so and exits — in that case you need a custom script.
+
+Multiple ``-S`` options are allowed. This makes it possible to combine a
+device family script with a project-specific script that adds board-level
+initialisation, custom flash regions, or helper functions::
+
+    eblink -I stlink -S stm32.script -S my_project.script
+
+Functions defined in any loaded script can be called directly from the
+command line with ``-E``, or interactively from a GDB session using
+GDB monitor commands (see :ref:`gdb_monitor`).
 
 Use ``-P <path>`` to add a directory to the script search path so you can
 refer to scripts by filename rather than full path::
@@ -241,16 +272,30 @@ The most useful ``-G`` options:
 
 ``port=<n>``
     Use a different TCP port. Useful when the default port 2331 is already
-    in use, or when you run multiple EBlink instances at the same time::
+    in use, or when multiple GDB servers are started at the same time::
 
         -G port=4242
 
 ``ap=<n>``
     Attach this GDB server to a specific DAP access port. By default EBlink
     selects the first useful AP it finds. On a dual-core device (e.g.
-    STM32H7), run two separate EBlink instances — one with ``-G ap=0`` for
-    the CM7 core and one with ``-G ap=1`` for the CM4 core. Each GDB session
-    then controls its own core independently.
+    STM32H7) multiple ``-G`` options can be given — one per core::
+
+        -G ap=0,name=CM7,port=2331 -G ap=1,name=CM4,port=2332
+
+    Each GDB session then controls its own core independently.
+
+    .. note::
+
+       Device scripts for dual-core targets (such as the STM32H7 script)
+       set up multiple GDB servers automatically via ``ebServicesSetup()``.
+       Multiple ``-G`` on the command line is only needed when the script
+       does not handle this itself. See :ref:`eblink_servicesapi`.
+
+``name=<name>``
+    Optional instance name shown in the EBlink log. When a single ``-G`` is
+    given the name defaults to ``GDB``; with multiple ``-G`` it defaults to
+    ``GDB_<ap>`` (e.g. ``GDB_0``, ``GDB_1``).
 
 ``s``
     Shut down EBlink when GDB disconnects. Without this, EBlink keeps
@@ -277,6 +322,135 @@ and then hand control to the debugger::
 EBlink programs the flash first, then starts the GDB server and waits for
 a connection.
 
+.. _gdb_monitor:
+
+GDB monitor commands
+~~~~~~~~~~~~~~~~~~~~
+
+.. index::
+    single: GDB; monitor commands
+    single: monitor commands
+
+From any GDB session you can send commands directly to EBlink using the
+GDB ``monitor`` prefix::
+
+    (gdb) monitor <command>
+
+The following built-in commands are available:
+
+.. index:: single: monitor commands; reset
+
+``reset [0|1|2]``
+    Reset the target. The optional argument selects the reset type:
+    ``0`` = system reset (default), ``1`` = core-only reset, ``2`` = JTAG
+    reset.
+
+.. index:: single: monitor commands; clrbp
+
+``clrbp``
+    Clear all software (flash) breakpoints.
+
+.. index:: single: monitor commands; is_running
+
+``is_running``
+    Returns OK if the target is running, error if it is halted. IDEs such
+    as EmBitz use this command to implement hotplug without requiring the
+    extended GDB protocol — by querying the target state before attaching.
+
+.. index:: single: monitor commands; reg
+
+``reg <name>[=<value>]``
+    Read or write a CPU register by name (e.g. ``PC``, ``R0``, ``SP``).
+    Without a value the current register contents are returned. The value
+    can be a literal (``0x20001000``) or an indirect memory read
+    (``R0=(0x20001000)``).
+
+.. index:: single: monitor commands; writeu32
+
+``writeu32 <addr>=<value>``
+    Write a 32-bit value to a memory address. Both address and value
+    accept decimal or hex notation::
+
+        monitor writeu32 0x40021000=0x00000001
+
+.. index:: single: monitor commands; semihosting
+
+``semihosting [enable|disable]``
+    Enable or disable ARM semihosting. Without an argument semihosting
+    is enabled. Also accepted as ``EnableSemihost``.
+
+.. index:: single: monitor commands; sleep
+
+``sleep <ms>``
+    Pause EBlink for the given number of milliseconds before processing
+    the next GDB request.
+
+.. index:: single: monitor commands; execute
+
+``execute <function call>``
+    Call a function defined in any loaded script, exactly as with ``-E``
+    on the command line::
+
+        monitor execute myBoardInit()
+
+.. index:: single: monitor commands; servicePollInterval
+
+``servicePollInterval <ms>``
+    Adjust the GDB poll interval in milliseconds. Lower values give more
+    responsive single-stepping at the cost of higher CPU load on the host.
+
+.. index:: single: monitor commands; DAP
+
+DAP register access
+^^^^^^^^^^^^^^^^^^^
+
+The following commands provide direct access to the ARM Debug Access Port
+registers. They are compatible with the STMicro GDB server protocol and are
+used by IDEs such as STM32CubeIDE to identify and configure the target.
+
+.. index:: single: monitor commands; ReadDP
+
+``ReadDP <addr>``
+    Read a Debug Port register. Address in hex::
+
+        monitor ReadDP 0x0
+
+    Register ``0x0`` returns the DP IDCODE (e.g. ``0x2ba01477`` for a
+    Cortex-M with SWD).
+
+.. index:: single: monitor commands; WriteDP
+
+``WriteDP <addr> <value>``
+    Write a value to a Debug Port register::
+
+        monitor WriteDP 0x8 0x00FF0000
+
+.. index:: single: monitor commands; ReadAP
+
+``ReadAP <ap> <addr>``
+    Read an Access Port register. Register ``0xF8`` on AP 0 returns the
+    MEM-AP IDR, which IDEs use to verify the target is an ARM device::
+
+        monitor ReadAP 0 0xf8
+
+.. index:: single: monitor commands; WriteAP
+
+``WriteAP <ap> <addr> <value>``
+    Write a value to an Access Port register::
+
+        monitor WriteAP 0 0x0 0x22000040
+
+.. index:: single: monitor commands; WriteMemAP
+
+``WriteMemAP <ap> <addr> <value>``
+    Write a 32-bit value to memory via a specific Access Port. Equivalent
+    to ``WriteAP`` in this implementation.
+
+Scripts can also intercept any monitor command by defining the function
+``ebGDBqRcmd(command, length, buffer)`` — if it exists, EBlink calls it
+first and only falls through to the built-in handler if the function
+returns without writing to the buffer.
+
 Configuring the Cortex-M core: ``-T``
 --------------------------------------
 
@@ -299,8 +473,29 @@ fault handling or reset behaviour.
     stay powered.
 
 ``fc=<flags>``
-    Controls which fault classes trigger the vector catch. Default is all
-    faults. Remove ``r`` if you do not want reset vectors caught::
+    Selects which exception types trigger the vector catch — the mechanism
+    that halts the core the instant a fault fires, before any fault handler
+    runs. Only active when ``fu=2`` (the default).
+
+    Each letter enables one exception class:
+
+    ===== ========= =====================================================
+    Flag  Name      Catches when…
+    ===== ========= =====================================================
+    ``r`` RESET     the core executes a reset (e.g. a watchdog or software reset)
+    ``m`` MEM       a MemManage fault fires (MPU violation, null-pointer access)
+    ``n`` NOCP      a coprocessor instruction is executed but no coprocessor is present
+    ``c`` CHK       a UsageFault check error occurs (unaligned access, divide by zero)
+    ``s`` STAT      a UsageFault invalid-state or invalid-PC error occurs
+    ``b`` BUS       a BusFault fires (bad memory access on the bus)
+    ``i`` INT       an error occurs during exception entry or return
+    ``h`` HARD      a HardFault fires
+    ===== ========= =====================================================
+
+    The default is all flags (``rmncsbih``). The most common reason to
+    change this is to omit ``r`` so that a target that deliberately
+    resets itself (watchdog, bootloader) does not stop in the debugger
+    every time::
 
         -T cortex-m,fc=mncsbih
 
@@ -308,9 +503,24 @@ Other options
 -------------
 
 ``-v <0..8>``
-    Verbosity level (default 4). Lower numbers give less output; higher
-    numbers show internal debug traffic. Use ``-v 0`` for scripted use where
-    you only want the result of a ``-F read``.
+    Controls how much EBlink prints. The default is ``4``.
+
+    ===== =========================================================================
+    Level Output
+    ===== =========================================================================
+    ``0`` Errors only. Use for scripted calls where only ``-F read`` output matters.
+    ``1`` Adds the version banner.
+    ``2`` Adds operational messages (probe connected, flash progress) and animation.
+    ``3`` Adds script ``print()`` output and yes/no prompts.
+    ``4`` Adds target info: CPU type, flash regions, breakpoint count. **(default)**
+    ``5`` Adds notices.
+    ``6`` Adds warnings.
+    ``7`` Adds internal debug messages. Animation is disabled at this level.
+    ``8`` Adds low-level protocol trace for investigating probe communication.
+    ===== =========================================================================
+
+    For script debugging, use ``-v 7`` for function-level tracing or
+    ``-v 8`` for line-level tracing.
 
 ``-H``
     Connect without resetting the target — same as adding ``dr`` to the

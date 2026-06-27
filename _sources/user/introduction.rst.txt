@@ -56,7 +56,6 @@ Supported probes
 ----------------
 
 - **STlink V2 / V3** — including clones
-- **CMSIS-DAP v1 / v2**
 
 How it works
 ------------

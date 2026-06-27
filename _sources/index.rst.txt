@@ -36,4 +36,9 @@
    user/usage.rst
    user/language.rst
    user/eblink/index.rst
-   user/bookindex.rst
+
+.. only:: html
+
+   .. toctree::
+
+      user/bookindex.rst

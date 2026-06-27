@@ -5,7 +5,7 @@ InterfAPI
 =========
 
 ``InterfAPI`` is a class registered by EBlink that represents the physical
-debug probe (ST-Link, CMSIS-DAP, etc.). Scripts instantiate it once
+debug probe. Scripts instantiate it once
 at global scope and share the instance across all included files::
 
     intrfApi <- InterfAPI()

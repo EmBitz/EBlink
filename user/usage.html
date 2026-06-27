@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>2. Usage &mdash; EBlink documentation 6.2 documentation</title>
+  <title>2. Usage &mdash; EBlink documentation 6.3 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -15,7 +15,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2847d854"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=8c3f5c4d"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../_static/js/theme.js"></script>
@@ -38,7 +38,7 @@
               <img src="../_static/EBlink.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                6.2
+                6.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -60,6 +60,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#flashing-firmware-f">2.7. Flashing firmware: <code class="docutils literal notranslate"><span class="pre">-F</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#debugging-with-gdb-g">2.8. Debugging with GDB: <code class="docutils literal notranslate"><span class="pre">-G</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#combining-f-and-g">2.8.1. Combining <code class="docutils literal notranslate"><span class="pre">-F</span></code> and <code class="docutils literal notranslate"><span class="pre">-G</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gdb-monitor-commands">2.8.2. GDB monitor commands</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dap-register-access">2.8.2.1. DAP register access</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#configuring-the-cortex-m-core-t">2.9. Configuring the Cortex-M core: <code class="docutils literal notranslate"><span class="pre">-T</span></code></a></li>
@@ -68,7 +72,9 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="language.html">3. The script language</a></li>
 <li class="toctree-l1"><a class="reference internal" href="eblink/index.html">4. EBlink Scripting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bookindex.html">5. Index</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bookindex.html">Index</a></li>
 </ul>
 
         </div>
@@ -145,8 +151,8 @@ EBlink picks up the probe and script from the environment. Anything you do
 specify on the command line overrides the environment variable, so you can
 always deviate from the default for a single session without changing the
 setting:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># normally uses stlink from environment, override for this session:</span>
-<span class="n">eblink</span> <span class="o">-</span><span class="n">I</span> <span class="n">cmsis</span><span class="o">-</span><span class="n">dap</span> <span class="o">-</span><span class="n">F</span> <span class="n">file</span><span class="o">=</span><span class="n">firmware</span><span class="o">.</span><span class="n">elf</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># override for this session with explicit probe options:</span>
+<span class="n">eblink</span> <span class="o">-</span><span class="n">I</span> <span class="n">stlink</span><span class="p">,</span><span class="n">speed</span><span class="o">=</span><span class="mi">1000</span> <span class="o">-</span><span class="n">F</span> <span class="n">file</span><span class="o">=</span><span class="n">firmware</span><span class="o">.</span><span class="n">elf</span>
 </pre></div>
 </div>
 </section>
@@ -155,6 +161,26 @@ setting:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">eblink</span> <span class="o">-</span><span class="n">I</span> <span class="o">&lt;</span><span class="n">probe</span><span class="o">&gt;</span><span class="p">[,</span><span class="n">options</span><span class="p">]</span> <span class="o">-</span><span class="n">S</span> <span class="o">&lt;</span><span class="n">script</span><span class="o">&gt;</span> <span class="p">[</span><span class="n">operation</span><span class="p">]</span> <span class="p">[</span><span class="n">options</span><span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
+<p>EBlink is built from independent modules. Each command-line switch is routed
+directly to its own module, so adding a new probe type or target architecture
+does not affect the rest of the tool:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">I</span> <span class="o">...</span>  <span class="o">--&gt;</span>  <span class="p">[</span> <span class="n">Interface</span> <span class="n">module</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="p">]</span>
+<span class="o">-</span><span class="n">S</span> <span class="o">...</span>  <span class="o">--&gt;</span>  <span class="p">[</span> <span class="n">Script</span> <span class="n">engine</span>       <span class="p">]</span>
+<span class="o">-</span><span class="n">T</span> <span class="o">...</span>  <span class="o">--&gt;</span>  <span class="p">[</span> <span class="n">Target</span> <span class="n">module</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>    <span class="p">]</span>
+<span class="o">-</span><span class="n">F</span> <span class="o">...</span>  <span class="o">--&gt;</span>  <span class="p">[</span> <span class="n">Flash</span> <span class="n">module</span>        <span class="p">]</span>
+<span class="o">-</span><span class="n">G</span> <span class="o">...</span>  <span class="o">--&gt;</span>  <span class="p">[</span> <span class="n">GDB</span> <span class="n">server</span>          <span class="p">]</span>
+</pre></div>
+</div>
+<p>For switches that can have multiple implementations — currently <code class="docutils literal notranslate"><span class="pre">-I</span></code> for
+probe types and <code class="docutils literal notranslate"><span class="pre">-T</span></code> for target architectures — the first parameter is
+always the module name, followed by optional comma-separated options for
+that module:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">I</span> <span class="n">stlink</span><span class="p">[,</span><span class="o">...</span><span class="p">]</span>
+<span class="o">-</span><span class="n">T</span> <span class="n">cortex</span><span class="o">-</span><span class="n">m</span><span class="p">[,</span><span class="o">...</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>This makes it straightforward to add support for new probe types or target
+architectures in the future without changing the command-line structure.</p>
 <p>EBlink always follows this sequence when it starts:</p>
 <ol class="arabic simple">
 <li><p>Open the debug probe (<code class="docutils literal notranslate"><span class="pre">-I</span></code>).</p></li>
@@ -208,13 +234,22 @@ core, <code class="docutils literal notranslate"><span class="pre">ap=1</span></
 <p>The device script is what makes EBlink work with your specific target. It
 contains the memory map, the flash algorithm, and the reset strategy.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">S</span> <span class="n">auto</span>                         <span class="c1"># auto-detect the device</span>
-<span class="o">-</span><span class="n">S</span> <span class="n">stm32g0</span><span class="o">.</span><span class="n">script</span>               <span class="c1"># explicit script by name</span>
+<span class="o">-</span><span class="n">S</span> <span class="n">stm32</span><span class="o">.</span><span class="n">script</span>                 <span class="c1"># explicit script by family</span>
 <span class="o">-</span><span class="n">S</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">user</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">my</span><span class="o">.</span><span class="n">script</span> <span class="c1"># explicit script by full path</span>
 </pre></div>
 </div>
 <p>With <code class="docutils literal notranslate"><span class="pre">auto</span></code>, EBlink reads the device ID register from the target and
 selects the matching script from the installed scripts. If the device is not recognised,
 EBlink tells you so and exits — in that case you need a custom script.</p>
+<p>Multiple <code class="docutils literal notranslate"><span class="pre">-S</span></code> options are allowed. This makes it possible to combine a
+device family script with a project-specific script that adds board-level
+initialisation, custom flash regions, or helper functions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">eblink</span> <span class="o">-</span><span class="n">I</span> <span class="n">stlink</span> <span class="o">-</span><span class="n">S</span> <span class="n">stm32</span><span class="o">.</span><span class="n">script</span> <span class="o">-</span><span class="n">S</span> <span class="n">my_project</span><span class="o">.</span><span class="n">script</span>
+</pre></div>
+</div>
+<p>Functions defined in any loaded script can be called directly from the
+command line with <code class="docutils literal notranslate"><span class="pre">-E</span></code>, or interactively from a GDB session using
+GDB monitor commands (see <a class="reference internal" href="#gdb-monitor"><span class="std std-ref">GDB monitor commands</span></a>).</p>
 <p>Use <code class="docutils literal notranslate"><span class="pre">-P</span> <span class="pre">&lt;path&gt;</span></code> to add a directory to the script search path so you can
 refer to scripts by filename rather than full path:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">eblink</span> <span class="o">-</span><span class="n">I</span> <span class="n">stlink</span> <span class="o">-</span><span class="n">S</span> <span class="n">my_target</span><span class="o">.</span><span class="n">script</span> <span class="o">-</span><span class="n">P</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">user</span><span class="o">/</span><span class="n">my_scripts</span>
@@ -308,16 +343,29 @@ GDB client connects with:</p>
 <p>The most useful <code class="docutils literal notranslate"><span class="pre">-G</span></code> options:</p>
 <dl>
 <dt><code class="docutils literal notranslate"><span class="pre">port=&lt;n&gt;</span></code></dt><dd><p>Use a different TCP port. Useful when the default port 2331 is already
-in use, or when you run multiple EBlink instances at the same time:</p>
+in use, or when multiple GDB servers are started at the same time:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">G</span> <span class="n">port</span><span class="o">=</span><span class="mi">4242</span>
 </pre></div>
 </div>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">ap=&lt;n&gt;</span></code></dt><dd><p>Attach this GDB server to a specific DAP access port. By default EBlink
 selects the first useful AP it finds. On a dual-core device (e.g.
-STM32H7), run two separate EBlink instances — one with <code class="docutils literal notranslate"><span class="pre">-G</span> <span class="pre">ap=0</span></code> for
-the CM7 core and one with <code class="docutils literal notranslate"><span class="pre">-G</span> <span class="pre">ap=1</span></code> for the CM4 core. Each GDB session
-then controls its own core independently.</p>
+STM32H7) multiple <code class="docutils literal notranslate"><span class="pre">-G</span></code> options can be given — one per core:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">G</span> <span class="n">ap</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">CM7</span><span class="p">,</span><span class="n">port</span><span class="o">=</span><span class="mi">2331</span> <span class="o">-</span><span class="n">G</span> <span class="n">ap</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">CM4</span><span class="p">,</span><span class="n">port</span><span class="o">=</span><span class="mi">2332</span>
+</pre></div>
+</div>
+<p>Each GDB session then controls its own core independently.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Device scripts for dual-core targets (such as the STM32H7 script)
+set up multiple GDB servers automatically via <code class="docutils literal notranslate"><span class="pre">ebServicesSetup()</span></code>.
+Multiple <code class="docutils literal notranslate"><span class="pre">-G</span></code> on the command line is only needed when the script
+does not handle this itself. See <a class="reference internal" href="eblink/servicesapi.html#eblink-servicesapi"><span class="std std-ref">ServicesAPI</span></a>.</p>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">name=&lt;name&gt;</span></code></dt><dd><p>Optional instance name shown in the EBlink log. When a single <code class="docutils literal notranslate"><span class="pre">-G</span></code> is
+given the name defaults to <code class="docutils literal notranslate"><span class="pre">GDB</span></code>; with multiple <code class="docutils literal notranslate"><span class="pre">-G</span></code> it defaults to
+<code class="docutils literal notranslate"><span class="pre">GDB_&lt;ap&gt;</span></code> (e.g. <code class="docutils literal notranslate"><span class="pre">GDB_0</span></code>, <code class="docutils literal notranslate"><span class="pre">GDB_1</span></code>).</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">s</span></code></dt><dd><p>Shut down EBlink when GDB disconnects. Without this, EBlink keeps
 running and waits for the next connection. Add <code class="docutils literal notranslate"><span class="pre">s</span></code> in automated test
@@ -342,6 +390,115 @@ and then hand control to the debugger:</p>
 <p>EBlink programs the flash first, then starts the GDB server and waits for
 a connection.</p>
 </section>
+<section id="gdb-monitor-commands">
+<span id="gdb-monitor"></span><h3><span class="section-number">2.8.2. </span>GDB monitor commands<a class="headerlink" href="#gdb-monitor-commands" title="Permalink to this heading"></a></h3>
+<p id="index-0">From any GDB session you can send commands directly to EBlink using the
+GDB <code class="docutils literal notranslate"><span class="pre">monitor</span></code> prefix:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">monitor</span> <span class="o">&lt;</span><span class="n">command</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>The following built-in commands are available:</p>
+<dl class="simple" id="index-1">
+<dt><code class="docutils literal notranslate"><span class="pre">reset</span> <span class="pre">[0|1|2]</span></code></dt><dd><p>Reset the target. The optional argument selects the reset type:
+<code class="docutils literal notranslate"><span class="pre">0</span></code> = system reset (default), <code class="docutils literal notranslate"><span class="pre">1</span></code> = core-only reset, <code class="docutils literal notranslate"><span class="pre">2</span></code> = JTAG
+reset.</p>
+</dd>
+</dl>
+<dl class="simple" id="index-2">
+<dt><code class="docutils literal notranslate"><span class="pre">clrbp</span></code></dt><dd><p>Clear all software (flash) breakpoints.</p>
+</dd>
+</dl>
+<dl class="simple" id="index-3">
+<dt><code class="docutils literal notranslate"><span class="pre">is_running</span></code></dt><dd><p>Returns OK if the target is running, error if it is halted. IDEs such
+as EmBitz use this command to implement hotplug without requiring the
+extended GDB protocol — by querying the target state before attaching.</p>
+</dd>
+</dl>
+<dl class="simple" id="index-4">
+<dt><code class="docutils literal notranslate"><span class="pre">reg</span> <span class="pre">&lt;name&gt;[=&lt;value&gt;]</span></code></dt><dd><p>Read or write a CPU register by name (e.g. <code class="docutils literal notranslate"><span class="pre">PC</span></code>, <code class="docutils literal notranslate"><span class="pre">R0</span></code>, <code class="docutils literal notranslate"><span class="pre">SP</span></code>).
+Without a value the current register contents are returned. The value
+can be a literal (<code class="docutils literal notranslate"><span class="pre">0x20001000</span></code>) or an indirect memory read
+(<code class="docutils literal notranslate"><span class="pre">R0=(0x20001000)</span></code>).</p>
+</dd>
+</dl>
+<dl id="index-5">
+<dt><code class="docutils literal notranslate"><span class="pre">writeu32</span> <span class="pre">&lt;addr&gt;=&lt;value&gt;</span></code></dt><dd><p>Write a 32-bit value to a memory address. Both address and value
+accept decimal or hex notation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">monitor</span> <span class="n">writeu32</span> <span class="mh">0x40021000</span><span class="o">=</span><span class="mh">0x00000001</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="simple" id="index-6">
+<dt><code class="docutils literal notranslate"><span class="pre">semihosting</span> <span class="pre">[enable|disable]</span></code></dt><dd><p>Enable or disable ARM semihosting. Without an argument semihosting
+is enabled. Also accepted as <code class="docutils literal notranslate"><span class="pre">EnableSemihost</span></code>.</p>
+</dd>
+</dl>
+<dl class="simple" id="index-7">
+<dt><code class="docutils literal notranslate"><span class="pre">sleep</span> <span class="pre">&lt;ms&gt;</span></code></dt><dd><p>Pause EBlink for the given number of milliseconds before processing
+the next GDB request.</p>
+</dd>
+</dl>
+<dl id="index-8">
+<dt><code class="docutils literal notranslate"><span class="pre">execute</span> <span class="pre">&lt;function</span> <span class="pre">call&gt;</span></code></dt><dd><p>Call a function defined in any loaded script, exactly as with <code class="docutils literal notranslate"><span class="pre">-E</span></code>
+on the command line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">monitor</span> <span class="n">execute</span> <span class="n">myBoardInit</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="simple" id="index-9">
+<dt><code class="docutils literal notranslate"><span class="pre">servicePollInterval</span> <span class="pre">&lt;ms&gt;</span></code></dt><dd><p>Adjust the GDB poll interval in milliseconds. Lower values give more
+responsive single-stepping at the cost of higher CPU load on the host.</p>
+</dd>
+</dl>
+<section id="dap-register-access">
+<span id="index-10"></span><h4><span class="section-number">2.8.2.1. </span>DAP register access<a class="headerlink" href="#dap-register-access" title="Permalink to this heading"></a></h4>
+<p>The following commands provide direct access to the ARM Debug Access Port
+registers. They are compatible with the STMicro GDB server protocol and are
+used by IDEs such as STM32CubeIDE to identify and configure the target.</p>
+<dl id="index-11">
+<dt><code class="docutils literal notranslate"><span class="pre">ReadDP</span> <span class="pre">&lt;addr&gt;</span></code></dt><dd><p>Read a Debug Port register. Address in hex:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">monitor</span> <span class="n">ReadDP</span> <span class="mh">0x0</span>
+</pre></div>
+</div>
+<p>Register <code class="docutils literal notranslate"><span class="pre">0x0</span></code> returns the DP IDCODE (e.g. <code class="docutils literal notranslate"><span class="pre">0x2ba01477</span></code> for a
+Cortex-M with SWD).</p>
+</dd>
+</dl>
+<dl id="index-12">
+<dt><code class="docutils literal notranslate"><span class="pre">WriteDP</span> <span class="pre">&lt;addr&gt;</span> <span class="pre">&lt;value&gt;</span></code></dt><dd><p>Write a value to a Debug Port register:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">monitor</span> <span class="n">WriteDP</span> <span class="mh">0x8</span> <span class="mh">0x00FF0000</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl id="index-13">
+<dt><code class="docutils literal notranslate"><span class="pre">ReadAP</span> <span class="pre">&lt;ap&gt;</span> <span class="pre">&lt;addr&gt;</span></code></dt><dd><p>Read an Access Port register. Register <code class="docutils literal notranslate"><span class="pre">0xF8</span></code> on AP 0 returns the
+MEM-AP IDR, which IDEs use to verify the target is an ARM device:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">monitor</span> <span class="n">ReadAP</span> <span class="mi">0</span> <span class="mh">0xf8</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl id="index-14">
+<dt><code class="docutils literal notranslate"><span class="pre">WriteAP</span> <span class="pre">&lt;ap&gt;</span> <span class="pre">&lt;addr&gt;</span> <span class="pre">&lt;value&gt;</span></code></dt><dd><p>Write a value to an Access Port register:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">monitor</span> <span class="n">WriteAP</span> <span class="mi">0</span> <span class="mh">0x0</span> <span class="mh">0x22000040</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="simple" id="index-15">
+<dt><code class="docutils literal notranslate"><span class="pre">WriteMemAP</span> <span class="pre">&lt;ap&gt;</span> <span class="pre">&lt;addr&gt;</span> <span class="pre">&lt;value&gt;</span></code></dt><dd><p>Write a 32-bit value to memory via a specific Access Port. Equivalent
+to <code class="docutils literal notranslate"><span class="pre">WriteAP</span></code> in this implementation.</p>
+</dd>
+</dl>
+<p>Scripts can also intercept any monitor command by defining the function
+<code class="docutils literal notranslate"><span class="pre">ebGDBqRcmd(command,</span> <span class="pre">length,</span> <span class="pre">buffer)</span></code> — if it exists, EBlink calls it
+first and only falls through to the built-in handler if the function
+returns without writing to the buffer.</p>
+</section>
+</section>
 </section>
 <section id="configuring-the-cortex-m-core-t">
 <h2><span class="section-number">2.9. </span>Configuring the Cortex-M core: <code class="docutils literal notranslate"><span class="pre">-T</span></code><a class="headerlink" href="#configuring-the-cortex-m-core-t" title="Permalink to this heading"></a></h2>
@@ -361,8 +518,56 @@ reset, <code class="docutils literal notranslate"><span class="pre">2</span></co
 problems — for example when it reinitialises peripherals that need to
 stay powered.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">fc=&lt;flags&gt;</span></code></dt><dd><p>Controls which fault classes trigger the vector catch. Default is all
-faults. Remove <code class="docutils literal notranslate"><span class="pre">r</span></code> if you do not want reset vectors caught:</p>
+<dt><code class="docutils literal notranslate"><span class="pre">fc=&lt;flags&gt;</span></code></dt><dd><p>Selects which exception types trigger the vector catch — the mechanism
+that halts the core the instant a fault fires, before any fault handler
+runs. Only active when <code class="docutils literal notranslate"><span class="pre">fu=2</span></code> (the default).</p>
+<p>Each letter enables one exception class:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Flag</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Catches when…</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">r</span></code></p></td>
+<td><p>RESET</p></td>
+<td><p>the core executes a reset (e.g. a watchdog or software reset)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">m</span></code></p></td>
+<td><p>MEM</p></td>
+<td><p>a MemManage fault fires (MPU violation, null-pointer access)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">n</span></code></p></td>
+<td><p>NOCP</p></td>
+<td><p>a coprocessor instruction is executed but no coprocessor is present</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">c</span></code></p></td>
+<td><p>CHK</p></td>
+<td><p>a UsageFault check error occurs (unaligned access, divide by zero)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">s</span></code></p></td>
+<td><p>STAT</p></td>
+<td><p>a UsageFault invalid-state or invalid-PC error occurs</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">b</span></code></p></td>
+<td><p>BUS</p></td>
+<td><p>a BusFault fires (bad memory access on the bus)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">i</span></code></p></td>
+<td><p>INT</p></td>
+<td><p>an error occurs during exception entry or return</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">h</span></code></p></td>
+<td><p>HARD</p></td>
+<td><p>a HardFault fires</p></td>
+</tr>
+</tbody>
+</table>
+<p>The default is all flags (<code class="docutils literal notranslate"><span class="pre">rmncsbih</span></code>). The most common reason to
+change this is to omit <code class="docutils literal notranslate"><span class="pre">r</span></code> so that a target that deliberately
+resets itself (watchdog, bootloader) does not stop in the debugger
+every time:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">T</span> <span class="n">cortex</span><span class="o">-</span><span class="n">m</span><span class="p">,</span><span class="n">fc</span><span class="o">=</span><span class="n">mncsbih</span>
 </pre></div>
 </div>
@@ -372,9 +577,45 @@ faults. Remove <code class="docutils literal notranslate"><span class="pre">r</s
 <section id="other-options">
 <h2><span class="section-number">2.10. </span>Other options<a class="headerlink" href="#other-options" title="Permalink to this heading"></a></h2>
 <dl>
-<dt><code class="docutils literal notranslate"><span class="pre">-v</span> <span class="pre">&lt;0..8&gt;</span></code></dt><dd><p>Verbosity level (default 4). Lower numbers give less output; higher
-numbers show internal debug traffic. Use <code class="docutils literal notranslate"><span class="pre">-v</span> <span class="pre">0</span></code> for scripted use where
-you only want the result of a <code class="docutils literal notranslate"><span class="pre">-F</span> <span class="pre">read</span></code>.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">-v</span> <span class="pre">&lt;0..8&gt;</span></code></dt><dd><p>Controls how much EBlink prints. The default is <code class="docutils literal notranslate"><span class="pre">4</span></code>.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Level</p></th>
+<th class="head"><p>Output</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+<td><p>Errors only. Use for scripted calls where only <code class="docutils literal notranslate"><span class="pre">-F</span> <span class="pre">read</span></code> output matters.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td><p>Adds the version banner.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">2</span></code></p></td>
+<td><p>Adds operational messages (probe connected, flash progress) and animation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">3</span></code></p></td>
+<td><p>Adds script <code class="docutils literal notranslate"><span class="pre">print()</span></code> output and yes/no prompts.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">4</span></code></p></td>
+<td><p>Adds target info: CPU type, flash regions, breakpoint count. <strong>(default)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">5</span></code></p></td>
+<td><p>Adds notices.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">6</span></code></p></td>
+<td><p>Adds warnings.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">7</span></code></p></td>
+<td><p>Adds internal debug messages. Animation is disabled at this level.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">8</span></code></p></td>
+<td><p>Adds low-level protocol trace for investigating probe communication.</p></td>
+</tr>
+</tbody>
+</table>
+<p>For script debugging, use <code class="docutils literal notranslate"><span class="pre">-v</span> <span class="pre">7</span></code> for function-level tracing or
+<code class="docutils literal notranslate"><span class="pre">-v</span> <span class="pre">8</span></code> for line-level tracing.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">-H</span></code></dt><dd><p>Connect without resetting the target — same as adding <code class="docutils literal notranslate"><span class="pre">dr</span></code> to the
 <code class="docutils literal notranslate"><span class="pre">-I</span></code> string.</p>

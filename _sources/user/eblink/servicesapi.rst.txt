@@ -55,10 +55,12 @@ using the original ``-G`` CLI options with an overridden DAP access port::
         return ERROR_OK;
     }
 
-The ``cliSwitch("-G")`` call returns the full ``-G`` option string as supplied
-on the command line (e.g. ``"port=4242"``). The ``ap=`` parameter is appended
-after it so it takes precedence over any ``ap=`` value in the original CLI
-string.
+The ``cliSwitch("-G")`` call returns the option string of the **first** ``-G``
+on the command line (e.g. ``"port=4242"``). When a script manages its own
+dual-core setup via ``ebServicesSetup``, it typically ignores any ``-G``
+entries and builds its own service options. The ``ap=`` parameter is appended
+after the ``cliSwitch`` string so it takes precedence over any ``ap=`` value
+in the original CLI string.
 
 Reference
 ---------

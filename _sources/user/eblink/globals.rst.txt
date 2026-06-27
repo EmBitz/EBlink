@@ -75,7 +75,8 @@ EBlink information
 
    Returns the value string of a CLI option. Recognised switches are ``"-I"``
    (interface), ``"-T"`` (target), ``"-F"`` (flash), ``"-G"`` (GDB). Returns
-   an empty string if the option was not supplied::
+   an empty string if the option was not supplied. When multiple ``-G`` options
+   are given, only the first one is returned::
 
        local iface_opt = cliSwitch("-I");
        if(iface_opt == "")
