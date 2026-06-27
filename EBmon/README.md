@@ -1,5 +1,7 @@
 # EBmonitor Target Integration
 
+> **Disclaimer:** This software is provided "as is", without warranty of any kind. The author is not liable for any damage, data loss, or hardware failure resulting from its use. Use at your own risk.
+
 This document explains how to use `ebmon.c` in your embedded target, configure its defines, and control blocking vs non-blocking mode.
 
 ---

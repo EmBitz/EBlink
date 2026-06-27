@@ -3,6 +3,8 @@
 [![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://embitz.github.io/EBlink/)
 
 # Cortex-M Tool Support (e.g., STlink V2 & V3)
+
+> **Disclaimer:** This software is provided "as is", without warranty of any kind. The author is not liable for any damage, data loss, or hardware failure resulting from its use. Use at your own risk.
 ## Win32, Linux x86_64, and Raspberry Pi (32/64-bit)
 ### Auto-detects Silabs, STMicro, Atmel, NXP, and Renesas
 
@@ -28,7 +30,7 @@ You can optionally give each instance a name that shows up in the log, which is 
 
     EBlink -I stlink -S auto -G ap=0,port=2331,name=CM4 -G ap=1,port=2332,name=CM7
 
-**Note:** Device scripts for well-supported dual-core targets (such as STM32H7) already call `ebServicesSetup` internally and set up the GDB servers automatically — no extra `-G` options needed. The new multi-`-G` CLI option is intended for targets where no such script exists yet, or for custom setups where you need full control over port assignments.
+**Note:** Device scripts for well-supported dual-core targets (such as STM32H7) already call `ebServicesSetup` internally and set up the GDB servers automatically — no extra `-G` options needed. The multi-`-G` CLI option is intended for targets where no such script exists yet, or for custom setups where you need full control over port assignments.
 
 ---
 
