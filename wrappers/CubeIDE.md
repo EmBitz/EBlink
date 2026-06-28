@@ -1,18 +1,42 @@
-# Using EBlink in STM32CubeIDE
+# EBlink in STM32CubeIDE
 
-EBlink can be used as a drop-in replacement for the GDB server in STM32CubeIDE via the OpenOCD wrapper. CubeIDE will auto-launch EBlink just as it would OpenOCD — no manual startup required.
+EBlink can be used as a seamless drop-in replacement for the built-in GDB servers in STM32CubeIDE (OpenOCD, ST-LINK GDB server, J-Link GDB server). CubeIDE will auto-launch EBlink at the start of each debug session and close it afterwards — no manual startup required.
 
-## Setup
+## Installation
 
-1. Copy `openocd.exe` (Windows) or `openocd` (Linux) from the wrappers folder into the EBlink installation directory, next to `eblink`.
+Run **eblink-cube.exe** as administrator. The tool searches the registry for STM32CubeIDE installations. If none are found, enter the CubeIDE root path manually (e.g. `C:\ST\STM32CubeIDE_1.16.0`).
 
-2. In CubeIDE, open your debug configuration:
-   `Run` → `Debug Configurations` → select your configuration → `Debugger` tab
+```
+=== EBlink CubeIDE wrapper installer ===
+Architecture: 64-bit
+No STM32CubeIDE installation found in registry.
+Enter path manually: C:\ST\STM32CubeIDE_1.16.0
 
-3. Under **GDB Server Settings**, set the server to **OpenOCD** and point the executable path to the wrapper:
-   `C:\path\to\eblink\openocd.exe`
+What do you want to do?
+  [1] Install (replace with EBlink wrapper)
+  [2] Uninstall (restore originals)
+  Choice: 1
 
-That's all. CubeIDE will now auto-launch EBlink at the start of each debug session and close it at the end, exactly as it does with OpenOCD.
+Install which server(s)?
+  [1] OpenOCD
+  [2] ST-LINK GDB
+  [3] J-Link GDB
+  [A] All
+  Choice: A
+```
+
+What the installer does:
+- The original executable (e.g. `openocd.exe`) is **renamed to `openocd.exe.wrapped`** — it stays in place as a backup
+- The EBlink wrapper is written in its place under the same original name
+- CubeIDE keeps working exactly as before, but now launches EBlink instead
+
+To uninstall, run eblink-cube.exe again and select option 2. The `.wrapped` files are renamed back to their original names and the wrapper is removed.
+
+**eblink must be on the system PATH** so the wrappers can find it. Add the EBlink installation directory to your PATH environment variable before using CubeIDE.
+
+## What changes in CubeIDE
+
+Nothing. Select OpenOCD (or ST-LINK / J-Link) in your debug configuration as usual. The wrapper intercepts the launch, translates the arguments to EBlink format, and starts EBlink transparently.
 
 ## Debug Console
 
@@ -39,3 +63,18 @@ Additional Info:
 ```
 
 This appears both in the Debugger Console and as a popup message box on Windows.
+
+## Troubleshooting
+
+**"Wrong network parameter" / port bind failure**
+Windows (with Hyper-V, WSL2, or Docker installed) reserves dynamic port ranges that can include the GDB server default ports. Change the GDB server port in the CubeIDE debug configuration to a port outside the excluded range. To list excluded ranges:
+```
+netsh int ipv4 show excludedportrange protocol=tcp
+```
+
+## Why using EBlink
+
+- Incremental flashing — only changed sectors are written, reducing flash wear and cutting download time
+- Faster flashing — significantly faster than OpenOCD for typical firmware sizes
+- Fault unwind — on a hard fault or bus fault, EBlink shows a full exception analysis with stack unwind in the CubeIDE console and as a popup
+- Lightweight — single small executable, no scripts or config files needed
