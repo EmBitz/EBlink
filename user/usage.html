@@ -376,6 +376,21 @@ re-flashing from GDB is fast. If your target modifies its own flash
 at runtime (bootloaders, EEPROM emulation), disable the cache so EBlink
 always reads back the real flash contents.</p>
 </dd>
+<dt><code class="docutils literal notranslate"><span class="pre">proxy=&lt;host&gt;[:&lt;port&gt;]</span></code></dt><dd><p>Instead of listening for an incoming GDB connection, EBlink connects
+<em>outward</em> to an EBridge server running on <code class="docutils literal notranslate"><span class="pre">&lt;host&gt;</span></code>. The default port
+is <code class="docutils literal notranslate"><span class="pre">3333</span></code>. Use this when EBlink runs behind NAT or a firewall where
+port forwarding is not available:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">G</span> <span class="n">proxy</span><span class="o">=</span><span class="n">myserver</span><span class="o">.</span><span class="n">net</span>
+<span class="o">-</span><span class="n">G</span> <span class="n">proxy</span><span class="o">=</span><span class="n">myserver</span><span class="o">.</span><span class="n">net</span><span class="p">:</span><span class="mi">3333</span>
+</pre></div>
+</div>
+<p>EBridge is a lightweight TCP bridge that accepts the outgoing connection
+from EBlink on its main port and exposes a local client port (default
+<code class="docutils literal notranslate"><span class="pre">2331</span></code>) where your GDB or IDE connects as normal. When the GDB session
+ends, EBridge resets the bridge and EBlink reconnects automatically —
+exactly as it would when listening locally.</p>
+<p>See the EBridge documentation for setup instructions.</p>
+</dd>
 </dl>
 <section id="combining-f-and-g">
 <h3><span class="section-number">2.8.1. </span>Combining <code class="docutils literal notranslate"><span class="pre">-F</span></code> and <code class="docutils literal notranslate"><span class="pre">-G</span></code><a class="headerlink" href="#combining-f-and-g" title="Permalink to this heading"></a></h3>

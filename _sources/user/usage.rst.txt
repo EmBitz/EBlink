@@ -308,6 +308,23 @@ The most useful ``-G`` options:
     at runtime (bootloaders, EEPROM emulation), disable the cache so EBlink
     always reads back the real flash contents.
 
+``proxy=<host>[:<port>]``
+    Instead of listening for an incoming GDB connection, EBlink connects
+    *outward* to an EBridge server running on ``<host>``. The default port
+    is ``3333``. Use this when EBlink runs behind NAT or a firewall where
+    port forwarding is not available::
+
+        -G proxy=myserver.net
+        -G proxy=myserver.net:3333
+
+    EBridge is a lightweight TCP bridge that accepts the outgoing connection
+    from EBlink on its main port and exposes a local client port (default
+    ``2331``) where your GDB or IDE connects as normal. When the GDB session
+    ends, EBridge resets the bridge and EBlink reconnects automatically —
+    exactly as it would when listening locally.
+
+    See the EBridge documentation for setup instructions.
+
 Combining ``-F`` and ``-G``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
