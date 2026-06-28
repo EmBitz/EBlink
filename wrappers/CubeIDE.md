@@ -78,3 +78,6 @@ netsh int ipv4 show excludedportrange protocol=tcp
 - Faster flashing — significantly faster than OpenOCD for typical firmware sizes
 - Fault unwind — on a hard fault or bus fault, EBlink shows a full exception analysis with stack unwind in the CubeIDE console and as a popup
 - Lightweight — single small executable, no scripts or config files needed
+
+
+> **Legal Notice:** **JLinkGDBServerCL** and **ST-LINK_gdbserver** are properties of their respective owners (SEGGER Microcontroller GmbH and STMicroelectronics). This wrapper is an independent compatibility layer and is not affiliated with, authorized, or endorsed by these companies.

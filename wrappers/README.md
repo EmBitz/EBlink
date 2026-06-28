@@ -39,8 +39,5 @@ Each wrapper accepts the command-line arguments of the tool it replaces, extract
 
 The wrappers handle the most common IDE-generated arguments. Unknown arguments are silently ignored.
 
-## Trademarks
 
-JLinkGDBServerCL is a trademark of SEGGER Microcontroller GmbH. This wrapper is an independent compatibility layer and is not affiliated with, authorized, or endorsed by SEGGER.
-
-ST-LINK_gdbserver is a trademark of STMicroelectronics. This wrapper is an independent compatibility layer and is not affiliated with, authorized, or endorsed by STMicroelectronics.
+> **Legal Notice:** **JLinkGDBServerCL** and **ST-LINK_gdbserver** are properties of their respective owners (SEGGER Microcontroller GmbH and STMicroelectronics). This wrapper is an independent compatibility layer and is not affiliated with, authorized, or endorsed by these companies.
