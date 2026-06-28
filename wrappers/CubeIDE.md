@@ -32,7 +32,7 @@ What the installer does:
 
 To uninstall, run eblink-cube.exe again and select option 2. The `.wrapped` files are renamed back to their original names and the wrapper is removed.
 
-**eblink must be on the system PATH** so the wrappers can find it. Add the EBlink installation directory to your PATH environment variable before using CubeIDE.
+The wrappers find `eblink.exe` automatically when EBlink was installed with the standard installer — the install path is read from the registry (`HKCU\SOFTWARE\EBlink\Path`). No PATH change is needed in that case. As a fallback, placing `eblink.exe` next to the wrapper also works, as does adding the EBlink directory to the system PATH.
 
 ## What changes in CubeIDE
 
