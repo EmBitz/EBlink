@@ -357,10 +357,31 @@ The following built-in commands are available:
 
 .. index:: single: monitor commands; reset
 
-``reset [0|1|2]``
-    Reset the target. The optional argument selects the reset type:
-    ``0`` = system reset (default), ``1`` = core-only reset, ``2`` = JTAG
-    reset.
+``reset [type]``
+    Reset the target. The optional argument selects the reset type, either
+    by name or by number (case-insensitive). Without an argument, system
+    reset is performed.
+
+    +----------------+---+--------------------------------------------------+
+    | ``system``     | 0 | Full system reset via AIRCR.SYSRESETREQ (default)|
+    +----------------+---+--------------------------------------------------+
+    | ``core``       | 1 | Core-only reset via AIRCR.VECTRESET              |
+    +----------------+---+--------------------------------------------------+
+    | ``hardware``   | 2 | Hardware reset via the nRESET pin                |
+    +----------------+---+--------------------------------------------------+
+    | ``user``       | 3 | User-defined reset — see below                   |
+    +----------------+---+--------------------------------------------------+
+
+    The ``user`` reset type delegates the reset to the script via
+    ``ebResetUser()`` — see :ref:`eblink_interaction` for the full
+    description and an example.
+
+    Examples::
+
+        (gdb) monitor reset
+        (gdb) monitor reset system
+        (gdb) monitor reset 2
+        (gdb) monitor reset user
 
 .. index:: single: monitor commands; clrbp
 
@@ -415,6 +436,76 @@ The following built-in commands are available:
 ``servicePollInterval <ms>``
     Adjust the GDB poll interval in milliseconds. Lower values give more
     responsive single-stepping at the cost of higher CPU load on the host.
+
+.. index:: single: monitor commands; eblink
+
+``eblink [subcommand [value]]``
+    Configure EBlink behaviour from within a running GDB session. Settings
+    take effect immediately and persist for the duration of the connection.
+    Omitting a value queries the current state; ``monitor eblink`` with no
+    arguments shows all settings at once.
+
+    **Flash cache**
+
+    ``eblink flash cache [on|off]``
+        Enable or disable the EBlink flash cache. Disable it when your target
+        modifies its own flash at runtime (EEPROM emulation, bootloader) so
+        that GDB always reads the real flash contents. Without a value the
+        current state is shown::
+
+            monitor eblink flash cache off
+            monitor eblink flash cache        (query)
+
+    **Fault handling** (Cortex-M only)
+
+    ``eblink unwind [off|passive|active]``
+        Set the fault unwind level at runtime, equivalent to
+        ``-T cortex-m,fu=``. Without a value the current level is shown.
+
+        ============ ===========================================================
+        Value        Behaviour
+        ============ ===========================================================
+        ``off``      Fault unwind disabled.
+        ``passive``  Decode fault when already halted; do not catch faults.
+        ``active``   Catch faults immediately (default).
+        ============ ===========================================================
+
+        Example::
+
+            monitor eblink unwind passive
+            monitor eblink unwind             (query)
+
+    ``eblink catch [+name|-name|name ...|off|default]``
+        Select which exceptions trigger the vector catch, equivalent to
+        ``-T cortex-m,fc=``. Without a value the current set is shown.
+
+        Prefix a name with ``+`` to add it or ``-`` to remove it from the
+        current set without affecting the others. Without a prefix the
+        supplied list replaces the current set entirely.
+
+        ============ ===========================================================
+        Name         Exception
+        ============ ===========================================================
+        ``reset``    Core reset
+        ``mem``      MemManage fault
+        ``nocop``    No-coprocessor fault
+        ``check``    UsageFault check error
+        ``stat``     UsageFault invalid-state error
+        ``bus``      BusFault
+        ``int``      Exception entry/return error
+        ``hard``     HardFault
+        ``off``      Disable all vector catches
+        ``default``  Enable all (equivalent to all names above)
+        ============ ===========================================================
+
+        Examples::
+
+            monitor eblink catch hard bus mem   (replace set)
+            monitor eblink catch -reset         (remove reset from set)
+            monitor eblink catch +hard          (add hard to set)
+            monitor eblink catch off
+            monitor eblink catch default
+            monitor eblink catch                (query)
 
 .. index:: single: monitor commands; DAP
 

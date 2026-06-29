@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5. Wrappers &mdash; EBlink documentation 6.3 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/EBlink.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=8c3f5c4d"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Index" href="bookindex.html" />
+    <link rel="prev" title="4.14. API Quick Reference" href="eblink/apiindex.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            EBlink documentation
+              <img src="../_static/EBlink.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.3
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">2. Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="language.html">3. The script language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eblink/index.html">4. EBlink Scripting</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5. Wrappers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#how-it-works">5.1. How it works</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#finding-eblink">5.1.1. Finding EBlink</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#placement">5.1.2. Placement</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#extra-eblink-flags-eb-wrapper-args">5.2. Extra EBlink flags: <code class="docutils literal notranslate"><span class="pre">EB_WRAPPER_ARGS</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#merge-rules">5.2.1. Merge rules</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#cubeide-integration">5.3. CubeIDE integration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#adjusting-settings-at-runtime">5.3.1. Adjusting settings at runtime</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#available-wrappers">5.4. Available wrappers</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bookindex.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EBlink documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">5. </span>Wrappers</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="wrappers">
+<span id="id1"></span><h1><span class="section-number">5. </span>Wrappers<a class="headerlink" href="#wrappers" title="Permalink to this heading"></a></h1>
+<p>Many IDEs start a GDB server automatically when a debug session begins and
+expect to control its entire lifetime — launch, connection and shutdown.
+Which server to start is often fixed by the IDE or its debug plug-in and
+cannot be changed without replacing the server executable itself.  You can
+always start EBlink manually and connect GDB to it as a remote target, but
+that requires a separate step every time and the IDE does not manage the
+server lifetime.</p>
+<p>To get full IDE integration — automatic launch, probe release on shutdown,
+and terminal integration — you need a <em>wrapper</em>.  A wrapper is a small
+executable that takes the place of the GDB server the IDE normally starts.
+It has the same name as that server, accepts the same command-line arguments,
+translates them to EBlink equivalents, and launches EBlink.  From the IDE’s
+point of view nothing has changed.</p>
+<section id="how-it-works">
+<h2><span class="section-number">5.1. </span>How it works<a class="headerlink" href="#how-it-works" title="Permalink to this heading"></a></h2>
+<p>When the IDE starts a debug session it invokes the wrapper with the arguments
+it would normally pass to its GDB server.  Using OpenOCD as an example, those
+arguments look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">openocd</span> <span class="o">-</span><span class="n">f</span> <span class="n">interface</span><span class="o">/</span><span class="n">stlink</span><span class="o">.</span><span class="n">cfg</span> <span class="o">-</span><span class="n">f</span> <span class="n">target</span><span class="o">/</span><span class="n">stm32g0x</span><span class="o">.</span><span class="n">cfg</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;gdb_port 3333&quot;</span>
+</pre></div>
+</div>
+<p>The wrapper extracts what it needs — port number, transport protocol, adapter
+speed, probe serial number — and starts EBlink accordingly.  Arguments that
+EBlink handles differently, such as config file paths and target names, are
+ignored because EBlink detects the target automatically.</p>
+<p>The wrapper then waits for EBlink to exit.  When the IDE ends the debug
+session EBlink shuts down cleanly, releases the probe, and the wrapper exits.</p>
+<section id="finding-eblink">
+<h3><span class="section-number">5.1.1. </span>Finding EBlink<a class="headerlink" href="#finding-eblink" title="Permalink to this heading"></a></h3>
+<p>The wrapper locates the EBlink executable in the following order:</p>
+<ol class="arabic simple">
+<li><p>The same directory as the wrapper itself.</p></li>
+<li><p>The path stored in the Windows registry key
+<code class="docutils literal notranslate"><span class="pre">HKEY_CURRENT_USER\SOFTWARE\EBlink\Path</span></code> (Windows only).  The EBlink
+installer sets this key automatically.</p></li>
+<li><p>The system <code class="docutils literal notranslate"><span class="pre">PATH</span></code> as a last resort.</p></li>
+</ol>
+</section>
+<section id="placement">
+<h3><span class="section-number">5.1.2. </span>Placement<a class="headerlink" href="#placement" title="Permalink to this heading"></a></h3>
+<p>The wrapper can be placed anywhere on the filesystem.  When the EBlink
+installer is used the registry key is set and the wrapper can be placed where
+the IDE expects its GDB server while EBlink itself lives elsewhere.  Without
+the installer, placing the wrapper and EBlink in the same directory is the
+simplest setup.</p>
+</section>
+</section>
+<section id="extra-eblink-flags-eb-wrapper-args">
+<h2><span class="section-number">5.2. </span>Extra EBlink flags: <code class="docutils literal notranslate"><span class="pre">EB_WRAPPER_ARGS</span></code><a class="headerlink" href="#extra-eblink-flags-eb-wrapper-args" title="Permalink to this heading"></a></h2>
+<p>The IDE controls every argument it passes to the wrapper and usually provides
+no way to add extras.  The <code class="docutils literal notranslate"><span class="pre">EB_WRAPPER_ARGS</span></code> environment variable fills that
+gap: set it in your system or user environment before starting the IDE and the
+wrapper merges its contents into the EBlink command line automatically.</p>
+<p>The value uses the same flag syntax as the EBlink command line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">EB_WRAPPER_ARGS</span><span class="o">=-</span><span class="n">v</span> <span class="mi">7</span>
+
+<span class="n">EB_WRAPPER_ARGS</span><span class="o">=-</span><span class="n">T</span> <span class="n">cortex</span><span class="o">-</span><span class="n">m</span><span class="p">,</span><span class="n">fu</span><span class="o">=</span><span class="n">passive</span> <span class="o">-</span><span class="n">v</span> <span class="mi">5</span>
+</pre></div>
+</div>
+<p>When <code class="docutils literal notranslate"><span class="pre">EB_WRAPPER_ARGS</span></code> is set the wrapper always prints it to stdout at
+startup so you can confirm it is active:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">eblink</span><span class="o">-</span><span class="n">wrapper</span><span class="p">:</span> <span class="n">EB_WRAPPER_ARGS</span><span class="p">:</span> <span class="o">-</span><span class="n">v</span> <span class="mi">7</span>
+</pre></div>
+</div>
+<section id="merge-rules">
+<h3><span class="section-number">5.2.1. </span>Merge rules<a class="headerlink" href="#merge-rules" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 75%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Switch</p></th>
+<th class="head"><p>Behaviour</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-I</span></code> <code class="docutils literal notranslate"><span class="pre">-T</span></code> <code class="docutils literal notranslate"><span class="pre">-F</span></code> <code class="docutils literal notranslate"><span class="pre">-v</span></code> <code class="docutils literal notranslate"><span class="pre">-a</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">EB_WRAPPER_ARGS</span></code> value <strong>replaces</strong> the wrapper-supplied value.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-S</span></code> <code class="docutils literal notranslate"><span class="pre">-D</span></code> <code class="docutils literal notranslate"><span class="pre">-P</span></code> <code class="docutils literal notranslate"><span class="pre">-E</span></code> <code class="docutils literal notranslate"><span class="pre">-Q</span></code></p></td>
+<td><p>Both values are kept; each becomes a separate argument (append).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-G</span></code></p></td>
+<td><p>The first <code class="docutils literal notranslate"><span class="pre">-G</span></code> in <code class="docutils literal notranslate"><span class="pre">EB_WRAPPER_ARGS</span></code> is <strong>comma-merged</strong> into the
+existing <code class="docutils literal notranslate"><span class="pre">-G</span></code> value.  A second <code class="docutils literal notranslate"><span class="pre">-G</span></code> adds an extra GDB server
+instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-g</span></code> <code class="docutils literal notranslate"><span class="pre">-H</span></code> <code class="docutils literal notranslate"><span class="pre">-i</span></code> <code class="docutils literal notranslate"><span class="pre">-t</span></code></p></td>
+<td><p>Boolean flag — set when present, no value follows.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cubeide-integration">
+<h2><span class="section-number">5.3. </span>CubeIDE integration<a class="headerlink" href="#cubeide-integration" title="Permalink to this heading"></a></h2>
+<p>CubeIDE launches its GDB server from a fixed location inside its own plugin
+directory.  The EBlink installer patches that location in-place: it renames the
+original server executable to <code class="docutils literal notranslate"><span class="pre">&lt;name&gt;.wrapped</span></code> as a backup and writes the
+EBlink wrapper in its place under the original name.  CubeIDE continues to
+start its server exactly as before — only now it starts the wrapper, which in
+turn starts EBlink.</p>
+<p>The installer carries the three wrapper executables as embedded resources and
+supports both 32-bit and 64-bit Windows.  It locates all CubeIDE installations
+automatically via the registry and lets you choose which server types to patch.
+Multiple CubeIDE installations can be patched in a single run.  Uninstalling
+reverses the process by restoring the <code class="docutils literal notranslate"><span class="pre">.wrapped</span></code> backups.</p>
+<p>EBlink itself is not included in the installer and must be present separately.
+The wrapper finds EBlink via the registry key
+<code class="docutils literal notranslate"><span class="pre">HKEY_CURRENT_USER\SOFTWARE\EBlink\Path</span></code> or in the same directory as the
+wrapper.</p>
+<p>CubeIDE works equally well with any of the three wrappers depending on which
+GDB server the project is configured to use.</p>
+<section id="adjusting-settings-at-runtime">
+<h3><span class="section-number">5.3.1. </span>Adjusting settings at runtime<a class="headerlink" href="#adjusting-settings-at-runtime" title="Permalink to this heading"></a></h3>
+<p>CubeIDE provides a GDB console in the Debug perspective under the <strong>Console</strong>
+tab.  Click the dropdown arrow next to the console icon and select <strong>gdb</strong> to
+get a prompt where you can type GDB commands directly during a live debug
+session.</p>
+<p>EBlink exposes a set of <code class="docutils literal notranslate"><span class="pre">monitor</span> <span class="pre">eblink</span></code> commands that let you change probe
+and target behaviour without restarting the session.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">monitor</span> <span class="pre">eblink</span></code></dt><dd><p>Print all current EBlink settings:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Flash</span> <span class="n">cache</span> <span class="p">:</span> <span class="n">enabled</span>
+<span class="n">Unwind</span>      <span class="p">:</span> <span class="n">active</span>
+<span class="n">Catch</span>       <span class="p">:</span> <span class="n">reset</span> <span class="n">mem</span> <span class="n">bus</span> <span class="n">hard</span>
+</pre></div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">monitor</span> <span class="pre">eblink</span> <span class="pre">flash</span> <span class="pre">cache</span> <span class="pre">[on|off]</span></code></dt><dd><p>Enable or disable the EBlink flash cache.  Turn it off when the target
+writes its own flash at runtime so that GDB always reads fresh data:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">monitor</span> <span class="n">eblink</span> <span class="n">flash</span> <span class="n">cache</span> <span class="n">off</span>
+<span class="n">monitor</span> <span class="n">eblink</span> <span class="n">flash</span> <span class="n">cache</span>        <span class="p">(</span><span class="n">show</span> <span class="n">current</span> <span class="n">state</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">monitor</span> <span class="pre">eblink</span> <span class="pre">unwind</span> <span class="pre">[off|passive|active]</span></code></dt><dd><p>Change the fault unwind level on the fly:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">monitor</span> <span class="n">eblink</span> <span class="n">unwind</span> <span class="n">passive</span>
+<span class="n">monitor</span> <span class="n">eblink</span> <span class="n">unwind</span>             <span class="p">(</span><span class="n">show</span> <span class="n">current</span> <span class="n">state</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">monitor</span> <span class="pre">eblink</span> <span class="pre">catch</span> <span class="pre">[+name|-name|name</span> <span class="pre">...|off|default]</span></code></dt><dd><p>Select which exceptions trigger the hardware vector catch.  Prefix a name
+with <code class="docutils literal notranslate"><span class="pre">+</span></code> to add it or <code class="docutils literal notranslate"><span class="pre">-</span></code> to remove it from the current set:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">monitor</span> <span class="n">eblink</span> <span class="n">catch</span> <span class="o">-</span><span class="n">reset</span>
+<span class="n">monitor</span> <span class="n">eblink</span> <span class="n">catch</span> <span class="o">+</span><span class="n">hard</span>
+<span class="n">monitor</span> <span class="n">eblink</span> <span class="n">catch</span> <span class="n">off</span>
+<span class="n">monitor</span> <span class="n">eblink</span> <span class="n">catch</span>              <span class="p">(</span><span class="n">show</span> <span class="n">current</span> <span class="n">state</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Available exception names: <code class="docutils literal notranslate"><span class="pre">reset</span></code> <code class="docutils literal notranslate"><span class="pre">mem</span></code> <code class="docutils literal notranslate"><span class="pre">nocop</span></code> <code class="docutils literal notranslate"><span class="pre">check</span></code>
+<code class="docutils literal notranslate"><span class="pre">stat</span></code> <code class="docutils literal notranslate"><span class="pre">bus</span></code> <code class="docutils literal notranslate"><span class="pre">int</span></code> <code class="docutils literal notranslate"><span class="pre">hard</span></code>.</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="available-wrappers">
+<h2><span class="section-number">5.4. </span>Available wrappers<a class="headerlink" href="#available-wrappers" title="Permalink to this heading"></a></h2>
+<p>EBlink currently ships three wrappers:</p>
+<ul class="simple">
+<li><p><strong>OpenOCD</strong> — replaces OpenOCD as the GDB server.</p></li>
+<li><p><strong>ST-Link GDB server</strong> — replaces the ST-Link GDB server.</p></li>
+<li><p><strong>J-Link GDB server</strong> — replaces the J-Link GDB server.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>ST-LINK_gdbserver</strong> and <strong>STM32CubeIDE</strong> are properties
+of STMicroelectronics. <strong>JLinkGDBServerCL</strong> is a property of SEGGER
+Microcontroller GmbH. These wrappers are independent compatibility layers
+and are not affiliated with, authorized, or endorsed by these companies.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="eblink/apiindex.html" class="btn btn-neutral float-left" title="4.14. API Quick Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="bookindex.html" class="btn btn-neutral float-right" title="Index" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2009-2026, Gerard Zagema.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

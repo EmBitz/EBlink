@@ -1,0 +1,179 @@
+.. _wrappers:
+
+********
+Wrappers
+********
+
+Many IDEs start a GDB server automatically when a debug session begins and
+expect to control its entire lifetime — launch, connection and shutdown.
+Which server to start is often fixed by the IDE or its debug plug-in and
+cannot be changed without replacing the server executable itself.  You can
+always start EBlink manually and connect GDB to it as a remote target, but
+that requires a separate step every time and the IDE does not manage the
+server lifetime.
+
+To get full IDE integration — automatic launch, probe release on shutdown,
+and terminal integration — you need a *wrapper*.  A wrapper is a small
+executable that takes the place of the GDB server the IDE normally starts.
+It has the same name as that server, accepts the same command-line arguments,
+translates them to EBlink equivalents, and launches EBlink.  From the IDE's
+point of view nothing has changed.
+
+How it works
+------------
+
+When the IDE starts a debug session it invokes the wrapper with the arguments
+it would normally pass to its GDB server.  Using OpenOCD as an example, those
+arguments look like this::
+
+    openocd -f interface/stlink.cfg -f target/stm32g0x.cfg -c "gdb_port 3333"
+
+The wrapper extracts what it needs — port number, transport protocol, adapter
+speed, probe serial number — and starts EBlink accordingly.  Arguments that
+EBlink handles differently, such as config file paths and target names, are
+ignored because EBlink detects the target automatically.
+
+The wrapper then waits for EBlink to exit.  When the IDE ends the debug
+session EBlink shuts down cleanly, releases the probe, and the wrapper exits.
+
+Finding EBlink
+^^^^^^^^^^^^^^
+
+The wrapper locates the EBlink executable in the following order:
+
+1. The same directory as the wrapper itself.
+2. The path stored in the Windows registry key
+   ``HKEY_CURRENT_USER\SOFTWARE\EBlink\Path`` (Windows only).  The EBlink
+   installer sets this key automatically.
+3. The system ``PATH`` as a last resort.
+
+Placement
+^^^^^^^^^
+
+The wrapper can be placed anywhere on the filesystem.  When the EBlink
+installer is used the registry key is set and the wrapper can be placed where
+the IDE expects its GDB server while EBlink itself lives elsewhere.  Without
+the installer, placing the wrapper and EBlink in the same directory is the
+simplest setup.
+
+Extra EBlink flags: ``EB_WRAPPER_ARGS``
+---------------------------------------
+
+The IDE controls every argument it passes to the wrapper and usually provides
+no way to add extras.  The ``EB_WRAPPER_ARGS`` environment variable fills that
+gap: set it in your system or user environment before starting the IDE and the
+wrapper merges its contents into the EBlink command line automatically.
+
+The value uses the same flag syntax as the EBlink command line::
+
+    EB_WRAPPER_ARGS=-v 7
+
+    EB_WRAPPER_ARGS=-T cortex-m,fu=passive -v 5
+
+When ``EB_WRAPPER_ARGS`` is set the wrapper always prints it to stdout at
+startup so you can confirm it is active::
+
+    eblink-wrapper: EB_WRAPPER_ARGS: -v 7
+
+Merge rules
+^^^^^^^^^^^
+
+.. list-table::
+   :header-rows: 1
+   :widths: 25 75
+
+   * - Switch
+     - Behaviour
+   * - ``-I`` ``-T`` ``-F`` ``-v`` ``-a``
+     - ``EB_WRAPPER_ARGS`` value **replaces** the wrapper-supplied value.
+   * - ``-S`` ``-D`` ``-P`` ``-E`` ``-Q``
+     - Both values are kept; each becomes a separate argument (append).
+   * - ``-G``
+     - The first ``-G`` in ``EB_WRAPPER_ARGS`` is **comma-merged** into the
+       existing ``-G`` value.  A second ``-G`` adds an extra GDB server
+       instance.
+   * - ``-g`` ``-H`` ``-i`` ``-t``
+     - Boolean flag — set when present, no value follows.
+
+CubeIDE integration
+-------------------
+
+CubeIDE launches its GDB server from a fixed location inside its own plugin
+directory.  The EBlink installer patches that location in-place: it renames the
+original server executable to ``<name>.wrapped`` as a backup and writes the
+EBlink wrapper in its place under the original name.  CubeIDE continues to
+start its server exactly as before — only now it starts the wrapper, which in
+turn starts EBlink.
+
+The installer carries the three wrapper executables as embedded resources and
+supports both 32-bit and 64-bit Windows.  It locates all CubeIDE installations
+automatically via the registry and lets you choose which server types to patch.
+Multiple CubeIDE installations can be patched in a single run.  Uninstalling
+reverses the process by restoring the ``.wrapped`` backups.
+
+EBlink itself is not included in the installer and must be present separately.
+The wrapper finds EBlink via the registry key
+``HKEY_CURRENT_USER\SOFTWARE\EBlink\Path`` or in the same directory as the
+wrapper.
+
+CubeIDE works equally well with any of the three wrappers depending on which
+GDB server the project is configured to use.
+
+Adjusting settings at runtime
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+CubeIDE provides a GDB console in the Debug perspective under the **Console**
+tab.  Click the dropdown arrow next to the console icon and select **gdb** to
+get a prompt where you can type GDB commands directly during a live debug
+session.
+
+EBlink exposes a set of ``monitor eblink`` commands that let you change probe
+and target behaviour without restarting the session.
+
+``monitor eblink``
+    Print all current EBlink settings::
+
+        Flash cache : enabled
+        Unwind      : active
+        Catch       : reset mem bus hard
+
+``monitor eblink flash cache [on|off]``
+    Enable or disable the EBlink flash cache.  Turn it off when the target
+    writes its own flash at runtime so that GDB always reads fresh data::
+
+        monitor eblink flash cache off
+        monitor eblink flash cache        (show current state)
+
+``monitor eblink unwind [off|passive|active]``
+    Change the fault unwind level on the fly::
+
+        monitor eblink unwind passive
+        monitor eblink unwind             (show current state)
+
+``monitor eblink catch [+name|-name|name ...|off|default]``
+    Select which exceptions trigger the hardware vector catch.  Prefix a name
+    with ``+`` to add it or ``-`` to remove it from the current set::
+
+        monitor eblink catch -reset
+        monitor eblink catch +hard
+        monitor eblink catch off
+        monitor eblink catch              (show current state)
+
+    Available exception names: ``reset`` ``mem`` ``nocop`` ``check``
+    ``stat`` ``bus`` ``int`` ``hard``.
+
+Available wrappers
+------------------
+
+EBlink currently ships three wrappers:
+
+* **OpenOCD** — replaces OpenOCD as the GDB server.
+* **ST-Link GDB server** — replaces the ST-Link GDB server.
+* **J-Link GDB server** — replaces the J-Link GDB server.
+
+.. note::
+
+   **ST-LINK_gdbserver** and **STM32CubeIDE** are properties
+   of STMicroelectronics. **JLinkGDBServerCL** is a property of SEGGER
+   Microcontroller GmbH. These wrappers are independent compatibility layers
+   and are not affiliated with, authorized, or endorsed by these companies.

@@ -36,6 +36,7 @@
    user/usage.rst
    user/language.rst
    user/eblink/index.rst
+   user/wrapper.rst
 
 .. only:: html
 

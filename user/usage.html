@@ -72,6 +72,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="language.html">3. The script language</a></li>
 <li class="toctree-l1"><a class="reference internal" href="eblink/index.html">4. EBlink Scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wrapper.html">5. Wrappers</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="bookindex.html">Index</a></li>
@@ -413,10 +414,40 @@ GDB <code class="docutils literal notranslate"><span class="pre">monitor</span><
 </pre></div>
 </div>
 <p>The following built-in commands are available:</p>
-<dl class="simple" id="index-1">
-<dt><code class="docutils literal notranslate"><span class="pre">reset</span> <span class="pre">[0|1|2]</span></code></dt><dd><p>Reset the target. The optional argument selects the reset type:
-<code class="docutils literal notranslate"><span class="pre">0</span></code> = system reset (default), <code class="docutils literal notranslate"><span class="pre">1</span></code> = core-only reset, <code class="docutils literal notranslate"><span class="pre">2</span></code> = JTAG
-reset.</p>
+<dl id="index-1">
+<dt><code class="docutils literal notranslate"><span class="pre">reset</span> <span class="pre">[type]</span></code></dt><dd><p>Reset the target. The optional argument selects the reset type, either
+by name or by number (case-insensitive). Without an argument, system
+reset is performed.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">system</span></code></p></td>
+<td><p>0</p></td>
+<td><p>Full system reset via AIRCR.SYSRESETREQ (default)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">core</span></code></p></td>
+<td><p>1</p></td>
+<td><p>Core-only reset via AIRCR.VECTRESET</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hardware</span></code></p></td>
+<td><p>2</p></td>
+<td><p>Hardware reset via the nRESET pin</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">user</span></code></p></td>
+<td><p>3</p></td>
+<td><p>User-defined reset — see below</p></td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="docutils literal notranslate"><span class="pre">user</span></code> reset type delegates the reset to the script via
+<code class="docutils literal notranslate"><span class="pre">ebResetUser()</span></code> — see <a class="reference internal" href="eblink/interaction.html#eblink-interaction"><span class="std std-ref">EBlink Interaction</span></a> for the full
+description and an example.</p>
+<p>Examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">monitor</span> <span class="n">reset</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">monitor</span> <span class="n">reset</span> <span class="n">system</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">monitor</span> <span class="n">reset</span> <span class="mi">2</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">monitor</span> <span class="n">reset</span> <span class="n">user</span>
+</pre></div>
+</div>
 </dd>
 </dl>
 <dl class="simple" id="index-2">
@@ -467,12 +498,114 @@ on the command line:</p>
 responsive single-stepping at the cost of higher CPU load on the host.</p>
 </dd>
 </dl>
+<dl id="index-10">
+<dt><code class="docutils literal notranslate"><span class="pre">eblink</span> <span class="pre">[subcommand</span> <span class="pre">[value]]</span></code></dt><dd><p>Configure EBlink behaviour from within a running GDB session. Settings
+take effect immediately and persist for the duration of the connection.
+Omitting a value queries the current state; <code class="docutils literal notranslate"><span class="pre">monitor</span> <span class="pre">eblink</span></code> with no
+arguments shows all settings at once.</p>
+<p><strong>Flash cache</strong></p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">eblink</span> <span class="pre">flash</span> <span class="pre">cache</span> <span class="pre">[on|off]</span></code></dt><dd><p>Enable or disable the EBlink flash cache. Disable it when your target
+modifies its own flash at runtime (EEPROM emulation, bootloader) so
+that GDB always reads the real flash contents. Without a value the
+current state is shown:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">monitor</span> <span class="n">eblink</span> <span class="n">flash</span> <span class="n">cache</span> <span class="n">off</span>
+<span class="n">monitor</span> <span class="n">eblink</span> <span class="n">flash</span> <span class="n">cache</span>        <span class="p">(</span><span class="n">query</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<p><strong>Fault handling</strong> (Cortex-M only)</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">eblink</span> <span class="pre">unwind</span> <span class="pre">[off|passive|active]</span></code></dt><dd><p>Set the fault unwind level at runtime, equivalent to
+<code class="docutils literal notranslate"><span class="pre">-T</span> <span class="pre">cortex-m,fu=</span></code>. Without a value the current level is shown.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Value</p></th>
+<th class="head"><p>Behaviour</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">off</span></code></p></td>
+<td><p>Fault unwind disabled.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">passive</span></code></p></td>
+<td><p>Decode fault when already halted; do not catch faults.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">active</span></code></p></td>
+<td><p>Catch faults immediately (default).</p></td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">monitor</span> <span class="n">eblink</span> <span class="n">unwind</span> <span class="n">passive</span>
+<span class="n">monitor</span> <span class="n">eblink</span> <span class="n">unwind</span>             <span class="p">(</span><span class="n">query</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">eblink</span> <span class="pre">catch</span> <span class="pre">[+name|-name|name</span> <span class="pre">...|off|default]</span></code></dt><dd><p>Select which exceptions trigger the vector catch, equivalent to
+<code class="docutils literal notranslate"><span class="pre">-T</span> <span class="pre">cortex-m,fc=</span></code>. Without a value the current set is shown.</p>
+<p>Prefix a name with <code class="docutils literal notranslate"><span class="pre">+</span></code> to add it or <code class="docutils literal notranslate"><span class="pre">-</span></code> to remove it from the
+current set without affecting the others. Without a prefix the
+supplied list replaces the current set entirely.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Exception</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">reset</span></code></p></td>
+<td><p>Core reset</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mem</span></code></p></td>
+<td><p>MemManage fault</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">nocop</span></code></p></td>
+<td><p>No-coprocessor fault</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">check</span></code></p></td>
+<td><p>UsageFault check error</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">stat</span></code></p></td>
+<td><p>UsageFault invalid-state error</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bus</span></code></p></td>
+<td><p>BusFault</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p>Exception entry/return error</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hard</span></code></p></td>
+<td><p>HardFault</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">off</span></code></p></td>
+<td><p>Disable all vector catches</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">default</span></code></p></td>
+<td><p>Enable all (equivalent to all names above)</p></td>
+</tr>
+</tbody>
+</table>
+<p>Examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">monitor</span> <span class="n">eblink</span> <span class="n">catch</span> <span class="n">hard</span> <span class="n">bus</span> <span class="n">mem</span>   <span class="p">(</span><span class="n">replace</span> <span class="nb">set</span><span class="p">)</span>
+<span class="n">monitor</span> <span class="n">eblink</span> <span class="n">catch</span> <span class="o">-</span><span class="n">reset</span>         <span class="p">(</span><span class="n">remove</span> <span class="n">reset</span> <span class="kn">from</span><span class="w"> </span><span class="nn">set</span><span class="p">)</span>
+<span class="n">monitor</span> <span class="n">eblink</span> <span class="n">catch</span> <span class="o">+</span><span class="n">hard</span>          <span class="p">(</span><span class="n">add</span> <span class="n">hard</span> <span class="n">to</span> <span class="nb">set</span><span class="p">)</span>
+<span class="n">monitor</span> <span class="n">eblink</span> <span class="n">catch</span> <span class="n">off</span>
+<span class="n">monitor</span> <span class="n">eblink</span> <span class="n">catch</span> <span class="n">default</span>
+<span class="n">monitor</span> <span class="n">eblink</span> <span class="n">catch</span>                <span class="p">(</span><span class="n">query</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
 <section id="dap-register-access">
-<span id="index-10"></span><h4><span class="section-number">2.8.2.1. </span>DAP register access<a class="headerlink" href="#dap-register-access" title="Permalink to this heading"></a></h4>
+<span id="index-11"></span><h4><span class="section-number">2.8.2.1. </span>DAP register access<a class="headerlink" href="#dap-register-access" title="Permalink to this heading"></a></h4>
 <p>The following commands provide direct access to the ARM Debug Access Port
 registers. They are compatible with the STMicro GDB server protocol and are
 used by IDEs such as STM32CubeIDE to identify and configure the target.</p>
-<dl id="index-11">
+<dl id="index-12">
 <dt><code class="docutils literal notranslate"><span class="pre">ReadDP</span> <span class="pre">&lt;addr&gt;</span></code></dt><dd><p>Read a Debug Port register. Address in hex:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">monitor</span> <span class="n">ReadDP</span> <span class="mh">0x0</span>
 </pre></div>
@@ -481,14 +614,14 @@ used by IDEs such as STM32CubeIDE to identify and configure the target.</p>
 Cortex-M with SWD).</p>
 </dd>
 </dl>
-<dl id="index-12">
+<dl id="index-13">
 <dt><code class="docutils literal notranslate"><span class="pre">WriteDP</span> <span class="pre">&lt;addr&gt;</span> <span class="pre">&lt;value&gt;</span></code></dt><dd><p>Write a value to a Debug Port register:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">monitor</span> <span class="n">WriteDP</span> <span class="mh">0x8</span> <span class="mh">0x00FF0000</span>
 </pre></div>
 </div>
 </dd>
 </dl>
-<dl id="index-13">
+<dl id="index-14">
 <dt><code class="docutils literal notranslate"><span class="pre">ReadAP</span> <span class="pre">&lt;ap&gt;</span> <span class="pre">&lt;addr&gt;</span></code></dt><dd><p>Read an Access Port register. Register <code class="docutils literal notranslate"><span class="pre">0xF8</span></code> on AP 0 returns the
 MEM-AP IDR, which IDEs use to verify the target is an ARM device:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">monitor</span> <span class="n">ReadAP</span> <span class="mi">0</span> <span class="mh">0xf8</span>
@@ -496,14 +629,14 @@ MEM-AP IDR, which IDEs use to verify the target is an ARM device:</p>
 </div>
 </dd>
 </dl>
-<dl id="index-14">
+<dl id="index-15">
 <dt><code class="docutils literal notranslate"><span class="pre">WriteAP</span> <span class="pre">&lt;ap&gt;</span> <span class="pre">&lt;addr&gt;</span> <span class="pre">&lt;value&gt;</span></code></dt><dd><p>Write a value to an Access Port register:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">monitor</span> <span class="n">WriteAP</span> <span class="mi">0</span> <span class="mh">0x0</span> <span class="mh">0x22000040</span>
 </pre></div>
 </div>
 </dd>
 </dl>
-<dl class="simple" id="index-15">
+<dl class="simple" id="index-16">
 <dt><code class="docutils literal notranslate"><span class="pre">WriteMemAP</span> <span class="pre">&lt;ap&gt;</span> <span class="pre">&lt;addr&gt;</span> <span class="pre">&lt;value&gt;</span></code></dt><dd><p>Write a 32-bit value to memory via a specific Access Port. Equivalent
 to <code class="docutils literal notranslate"><span class="pre">WriteAP</span></code> in this implementation.</p>
 </dd>
