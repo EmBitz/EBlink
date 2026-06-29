@@ -80,4 +80,6 @@ netsh int ipv4 show excludedportrange protocol=tcp
 - Lightweight — single small executable, no scripts or config files needed
 
 
-> **Legal Notice:** **JLinkGDBServerCL** and **ST-LINK_gdbserver** are properties of their respective owners (SEGGER Microcontroller GmbH and STMicroelectronics). This wrapper is an independent compatibility layer and is not affiliated with, authorized, or endorsed by these companies.
+For full EBlink documentation, including all command-line options and scripting, refer to the EBlink User Manual.
+
+> **Legal Notice:** **STM32CubeIDE** and **ST-LINK_gdbserver** are properties of STMicroelectronics. **JLinkGDBServerCL** is a property of SEGGER Microcontroller GmbH. These wrappers are independent compatibility layers and are not affiliated with, authorized, or endorsed by these companies.

@@ -18,19 +18,23 @@ The variable `EB_DEFAULT_PROBE` is set to `"stlink"`.
 
 ![alt text](https://www.embitz.org/context3.png)  
 
-### What's New in Version 6.30
+### What's New in Version 6.3x
 
-Version 6.30 adds **multi-GDB server support** from the command line. Until now, launching EBlink for a dual-core target (e.g. STM32H7 CM4 + CM7) required the device script to set up multiple GDB server instances via `ebServicesSetup`. That still works — and is the recommended path for well-known targets — but you can now also spin up multiple servers directly from the command line by repeating the `-G` option:
+**6.31 — CubeIDE wrapper integration and runtime configuration**
 
-    EBlink -I stlink -S auto -G ap=0,port=2331 -G ap=1,port=2332
+- **CubeIDE wrappers** — Three drop-in wrappers (OpenOCD, ST-Link GDB server, J-Link) let CubeIDE auto-launch EBlink instead of its built-in server. A console installer patches CubeIDE in-place; the originals are preserved as `.wrapped` backups and can be restored at any time.
+- **EB_WRAPPER_ARGS** — Set this environment variable to inject extra EBlink flags into any wrapper session without touching the IDE configuration.
+- **`monitor eblink` commands** — Change EBlink settings live from the GDB console without restarting the session:
+  - `monitor eblink flash cache [on|off]` — enable or disable flash caching
+  - `monitor eblink unwind [off|passive|active]` — change fault unwind level
+  - `monitor eblink catch [+name|-name|off|default]` — modify the vector catch set incrementally
+  - `monitor eblink` (no args) — show all current settings
 
-Each `-G` binds one GDB server instance to a specific DAP Access Port (`ap=`), listening on its own TCP port. The two instances run concurrently inside a single EBlink process, sharing the same probe connection.
-
-You can optionally give each instance a name that shows up in the log, which is helpful when debugging multi-core sessions:
+- **Multiple `-G` options** spin up concurrent GDB server instances in a single EBlink process, each bound to its own DAP Access Port and TCP port — useful for dual-core targets without a dedicated device script:
 
     EBlink -I stlink -S auto -G ap=0,port=2331,name=CM4 -G ap=1,port=2332,name=CM7
 
-**Note:** Device scripts for well-supported dual-core targets (such as STM32H7) already call `ebServicesSetup` internally and set up the GDB servers automatically — no extra `-G` options needed. The multi-`-G` CLI option is intended for targets where no such script exists yet, or for custom setups where you need full control over port assignments.
+- **User Manual** — A full EBlink User Manual is now available (see the Documentation badge above) covering all options, GDB monitor commands, scripting API and wrapper integration.
 
 ---
 
