@@ -20,9 +20,9 @@ The variable `EB_DEFAULT_PROBE` is set to `"stlink"`.
 
 ### What's New in Version 6.3x
 
-**6.31 — CubeIDE wrapper integration and runtime configuration**
+**6.31 — IDE wrapper integration and runtime configuration**
 
-- **CubeIDE wrappers** — Three drop-in wrappers (OpenOCD, ST-Link GDB server, J-Link) let CubeIDE auto-launch EBlink instead of its built-in server. A console installer patches CubeIDE in-place; the originals are preserved as `.wrapped` backups and can be restored at any time.
+- **IDE wrappers** — Drop-in wrappers (OpenOCD, ST-Link GDB server, J-Link) that let an IDE auto-launch EBlink instead of its built-in debug server. For CubeIDE a console installer is available that patches the IDE in-place; the originals are preserved as `.wrapped` backups and can be restored at any time.
 - **EB_WRAPPER_ARGS** — Set this environment variable to inject extra EBlink flags into any wrapper session without touching the IDE configuration.
 - **`monitor eblink` commands** — Change EBlink settings live from the GDB console without restarting the session:
   - `monitor eblink flash cache [on|off]` — enable or disable flash caching
