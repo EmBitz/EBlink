@@ -1,0 +1,133 @@
+.. _eblink_targetapi:
+
+=========
+TargetAPI
+=========
+
+``TargetAPI`` is a class registered by EBlink that controls the CPU state:
+halting, resuming, reading and writing registers, executing code, and
+resetting the device. Scripts instantiate it once at global scope::
+
+    targetApi <- TargetAPI()
+
+All methods throw an integer ``ERROR_xxx`` exception on failure.
+
+Target information
+------------------
+
+.. index:: single: TargetAPI; .getName()
+
+.. js:function:: TargetAPI.getName()
+   :noindex:
+
+   Returns the device name string as reported by the target driver (e.g.
+   ``"STM32F4"``) or ``null`` if no target is attached.
+
+.. index:: single: TargetAPI; .getCpuName()
+
+.. js:function:: TargetAPI.getCpuName()
+   :noindex:
+
+   Returns the ARM CPU core name (e.g. ``"M0"``, ``"M3"``, ``"M4"``).
+
+.. index:: single: TargetAPI; .getState()
+
+.. js:function:: TargetAPI.getState()
+   :noindex:
+
+   Returns the current CPU state as one of the ``TARGET_xxx`` constants:
+   ``TARGET_UNKNOWN``, ``TARGET_RUNNING``, ``TARGET_HALTED``,
+   ``TARGET_RESET``.
+
+Execution control
+-----------------
+
+.. index:: single: TargetAPI; .halt()
+
+.. js:function:: TargetAPI.halt()
+   :noindex:
+
+   Requests the CPU to halt. Throws on error.
+
+.. index:: single: TargetAPI; .resume()
+
+.. js:function:: TargetAPI.resume()
+   :noindex:
+
+   Resumes a halted CPU. Throws on error.
+
+.. index:: single: TargetAPI; .poll()
+
+.. js:function:: TargetAPI.poll()
+   :noindex:
+
+   Polls the target hardware and updates the internal state. Call this after
+   ``resume()`` before reading ``getState()`` if you need an immediate
+   state update.
+
+.. index:: single: TargetAPI; .execute()
+
+.. js:function:: TargetAPI.execute(addr, wait)
+   :noindex:
+
+   Writes ``addr`` to the program counter (PC register) and resumes the CPU.
+   If ``wait`` is ``true``, blocks until the CPU halts again. Useful for
+   running a small RAM-resident flash algorithm::
+
+       // Upload algorithm to RAM, then execute it
+       intrfApi.writeBuf(algo_buf, 0x20000000);
+       targetApi.execute(0x20000000, true);
+
+.. index:: single: TargetAPI; .reset()
+
+.. js:function:: TargetAPI.reset(type)
+   :noindex:
+
+   Resets the device using one of the ``xxx_RESET`` constants::
+
+       targetApi.reset(SYSTEM_RESET);
+
+   For ``USER_RESET``, the ``ebResetUser()`` script function is called
+   instead of a hardware reset. After the reset the ``ebResetPost()``
+   function is called if it exists.
+
+Register access
+---------------
+
+Register names are core-specific. For ARM Cortex-M the standard names are
+``"r0"`` through ``"r15"``, ``"pc"`` (same as ``"r15"``), ``"sp"``
+(same as ``"r13"``), ``"lr"`` (same as ``"r14"``), and ``"xpsr"``.
+
+.. index:: single: TargetAPI; .readReg()
+
+.. js:function:: TargetAPI.readReg(name)
+   :noindex:
+
+   Returns the 32-bit value of the named register. Throws on error or if the
+   register name is unknown::
+
+       local pc = targetApi.readReg("pc");
+       printf("PC = 0x%08X\n", pc);
+
+.. index:: single: TargetAPI; .writeReg()
+
+.. js:function:: TargetAPI.writeReg(name, value)
+   :noindex:
+
+   Writes ``value`` to the named register. Throws on error or if the
+   register name is unknown::
+
+       targetApi.writeReg("r0", 0x00000000);  // clear R0
+
+Example: read and print all core registers
+------------------------------------------
+
+::
+
+    function dump_regs()
+    {
+        local regs = ["r0","r1","r2","r3","r4","r5","r6","r7",
+                      "r8","r9","r10","r11","r12","sp","lr","pc","xpsr"];
+        foreach(name in regs)
+            printf("%-6s = 0x%08X\n", name, targetApi.readReg(name));
+    }

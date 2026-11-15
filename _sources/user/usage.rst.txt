@@ -1,0 +1,667 @@
+.. _usage:
+
+*****
+Usage
+*****
+
+This chapter walks you through using EBlink from scratch — from connecting
+your first probe to running a GDB debug session.
+
+Before you start
+----------------
+
+You need two things before EBlink can do anything:
+
+1. **A debug probe** connected to your PC and to the target board (SWD or
+   JTAG header).
+2. **A device script** that tells EBlink about your target — its memory map,
+   how to erase and write flash, and how to reset it.
+
+EBlink is shipped with device scripts for STMicro, NXP, Atmel, Silicon Labs
+and Renesas targets. If you are not sure which script to use, start with
+``auto`` and EBlink will identify the connected device and select the right
+script for you.
+
+Your first command
+------------------
+
+The minimal EBlink command is::
+
+    eblink -I stlink -S auto
+
+``-I stlink`` tells EBlink to use an STlink probe.
+``-S auto`` tells EBlink to auto-detect your device and load the right script.
+
+If EBlink starts without errors, your probe is connected and the target is
+recognised. EBlink will then exit immediately because you have not asked it
+to do anything yet — that is normal.
+
+Saving yourself some typing
+---------------------------
+
+Typing ``-I stlink -S auto`` on every command gets old fast. EBlink reads two
+environment variables at startup so you can set your defaults once and leave
+them out of every command:
+
+``EB_DEFAULT_PROBE``
+    Used as the ``-I`` argument when ``-I`` is not on the command line.
+
+``EB_DEFAULT_SCRIPT``
+    Used as a ``-S`` argument when ``-S`` is not on the command line.
+
+Set them in your shell profile or system settings::
+
+    export EB_DEFAULT_PROBE=stlink
+    export EB_DEFAULT_SCRIPT=auto
+
+After this, ``eblink -F file=firmware.elf`` is enough to flash a board —
+EBlink picks up the probe and script from the environment. Anything you do
+specify on the command line overrides the environment variable, so you can
+always deviate from the default for a single session without changing the
+setting::
+
+    # override for this session with explicit probe options:
+    eblink -I stlink,speed=1000 -F file=firmware.elf
+
+The command line structure
+--------------------------
+
+::
+
+    eblink -I <probe>[,options] -S <script> [operation] [options...]
+
+EBlink is built from independent modules. Each command-line switch is routed
+directly to its own module, so adding a new probe type or target architecture
+does not affect the rest of the tool::
+
+    -I ...  -->  [ Interface module(s) ]
+    -S ...  -->  [ Script engine       ]
+    -T ...  -->  [ Target module(s)    ]
+    -F ...  -->  [ Flash module        ]
+    -G ...  -->  [ GDB server          ]
+
+For switches that can have multiple implementations — currently ``-I`` for
+probe types and ``-T`` for target architectures — the first parameter is
+always the module name, followed by optional comma-separated options for
+that module::
+
+    -I stlink[,...]
+    -T cortex-m[,...]
+
+This makes it straightforward to add support for new probe types or target
+architectures in the future without changing the command-line structure.
+
+EBlink always follows this sequence when it starts:
+
+1. Open the debug probe (``-I``).
+2. Load the device script(s) (``-S``).
+3. Call ``ebMain()`` in the script — this sets up the memory map and
+   initialises the target.
+4. Carry out whatever operation you asked for (flash, GDB server, or both).
+
+If any step fails, EBlink stops and reports the error. The most common
+first-time problems are a wrong probe type in ``-I``, a missing USB driver,
+or a target that is not powered.
+
+Configuring the probe: ``-I``
+------------------------------
+
+The probe type comes first in the ``-I`` string, followed by comma-separated
+options::
+
+    -I stlink,speed=4000
+
+The most useful options are:
+
+``speed=<kHz>``
+    The SWD clock speed. The default is the maximum the probe supports, which
+    is fine in most cases. If you get connection errors, try a lower speed
+    such as ``speed=1000`` — long cables or noisy boards can cause problems
+    at high speeds.
+
+``dr`` (disable reset)
+    Normally EBlink resets the target when it connects. Add ``dr`` to connect
+    without a reset — useful when the target is already running code that
+    must not be interrupted, or when the reset pin is not wired to the header.
+
+``swd`` / ``jtag``
+    The debug protocol. SWD is the default and works on virtually all
+    Cortex-M targets. Switch to ``jtag`` only if your hardware requires it.
+
+``serial=<sn>``
+    If you have more than one probe plugged in at the same time, use the
+    serial number to pick the right one. You can find serial numbers by
+    running EBlink without this option — it will list all connected probes
+    if there is ambiguity.
+
+``vcc=<V>``
+    The target supply voltage (e.g. ``3.3`` or ``1.8``). EBlink uses this
+    for speed calibration; it does not control the actual supply rail.
+
+``ap=<n>``
+    By default EBlink scans the DAP and selects the first useful access port
+    it finds. On multi-core devices such as the STM32H7, each core has its
+    own AP, so you need to specify which one to use: ``ap=0`` for the CM7
+    core, ``ap=1`` for the CM4 core.
+
+Loading a script: ``-S``
+-------------------------
+
+The device script is what makes EBlink work with your specific target. It
+contains the memory map, the flash algorithm, and the reset strategy.
+
+::
+
+    -S auto                         # auto-detect the device
+    -S stm32.script                 # explicit script by family
+    -S /home/user/scripts/my.script # explicit script by full path
+
+With ``auto``, EBlink reads the device ID register from the target and
+selects the matching script from the installed scripts. If the device is not recognised,
+EBlink tells you so and exits — in that case you need a custom script.
+
+Multiple ``-S`` options are allowed. This makes it possible to combine a
+device family script with a project-specific script that adds board-level
+initialisation, custom flash regions, or helper functions::
+
+    eblink -I stlink -S stm32.script -S my_project.script
+
+Functions defined in any loaded script can be called directly from the
+command line with ``-E``, or interactively from a GDB session using
+GDB monitor commands (see :ref:`gdb_monitor`).
+
+Use ``-P <path>`` to add a directory to the script search path so you can
+refer to scripts by filename rather than full path::
+
+    eblink -I stlink -S my_target.script -P /home/user/my_scripts
+
+Use ``-D name=value`` to pass a value into the script as a global variable.
+Some scripts use this for configuration that differs between board variants::
+
+    -D FLASH_SIZE=0x200000
+
+Flashing firmware: ``-F``
+--------------------------
+
+The ``-F`` option programs, verifies, or inspects flash memory. You combine
+keywords and values with commas::
+
+    -F file=firmware.elf,erase,verify,run
+
+**The most important thing to understand** is that by default — without
+``erase`` — EBlink only re-programs flash sectors that differ from the new
+image. Unchanged sectors are left alone. This is faster and reduces flash
+wear. It works for most development workflows.
+
+Use ``erase`` when you need a clean slate: for example when changing
+partition layouts, clearing old data sectors, or recovering a board with
+write-protected flash.
+
+The most common operations:
+
+``file=<file>``
+    The image to program. EBlink accepts ELF, Intel HEX, and SREC and detects
+    the format automatically from the file contents.
+
+``erase``
+    Chip-erase the entire flash before programming. Use this when the default
+    smart re-flash is not sufficient.
+
+``verify``
+    Read back every programmed sector and compare it with the image. If
+    anything does not match, EBlink reports an error. Adds some time but
+    gives you certainty.
+
+``run``
+    Release the target and let it start running after all operations are
+    done. Without this the target stays halted.
+
+``cmp=<file>``
+    Compare flash contents with a file without changing anything. Useful for
+    checking whether a board already has the right firmware.
+
+``write=<hex>@<address>``
+    Patch bytes at a specific flash address. The value is written as raw hex
+    — two hex digits per byte, no ``0x`` prefix. The address uses the normal
+    ``0x`` notation. This is done *after* the file upload, so you can patch
+    a serial number or device-specific calibration into an otherwise
+    identical firmware image::
+
+        -F file=fw.elf,write=0102030405@0x0800FF00
+
+    Multiple ``write`` options are allowed in a single ``-F``.
+
+``read=<length>@<address>``
+    Read bytes from the target and print them as hex. Handy for checking a
+    register value or a specific memory location without a full debug
+    session. Use ``-v 0`` to suppress all other EBlink output so only the
+    hex bytes appear::
+
+        eblink -I stlink -S auto -v 0 -F read=4@0x08000004
+
+``dump=<length>@<address>:<file>``
+    Save a region of memory to a file. Use a ``.hex`` extension for Intel
+    HEX format, any other extension for raw binary.
+
+Typical flashing examples::
+
+    # Development: only re-program what changed
+    eblink -I stlink -S auto -F file=firmware.elf
+
+    # Production: erase everything, program, verify, start
+    eblink -I stlink -S auto -F erase,verify,run,file=firmware.elf
+
+    # Check if the board already has the right firmware
+    eblink -I stlink -S auto -F cmp=firmware.elf
+
+Debugging with GDB: ``-G``
+---------------------------
+
+Adding ``-G`` starts a GDB remote-serial-protocol server. You then point
+your debugger (arm-none-eabi-gdb, an IDE like EmBitz or VS Code) at that
+server and connect::
+
+    eblink -I stlink -S auto -G
+
+By default EBlink listens on all network interfaces on TCP port 2331. Your
+GDB client connects with::
+
+    target remote localhost:2331
+
+The most useful ``-G`` options:
+
+``port=<n>``
+    Use a different TCP port. Useful when the default port 2331 is already
+    in use, or when multiple GDB servers are started at the same time::
+
+        -G port=4242
+
+``ap=<n>``
+    Attach this GDB server to a specific DAP access port. By default EBlink
+    selects the first useful AP it finds. On a dual-core device (e.g.
+    STM32H7) multiple ``-G`` options can be given — one per core::
+
+        -G ap=0,name=CM7,port=2331 -G ap=1,name=CM4,port=2332
+
+    Each GDB session then controls its own core independently.
+
+    .. note::
+
+       Device scripts for dual-core targets (such as the STM32H7 script)
+       set up multiple GDB servers automatically via ``ebServicesSetup()``.
+       Multiple ``-G`` on the command line is only needed when the script
+       does not handle this itself. See :ref:`eblink_servicesapi`.
+
+``name=<name>``
+    Optional instance name shown in the EBlink log. When a single ``-G`` is
+    given the name defaults to ``GDB``; with multiple ``-G`` it defaults to
+    ``GDB_<ap>`` (e.g. ``GDB_0``, ``GDB_1``).
+
+``s``
+    Shut down EBlink when GDB disconnects. Without this, EBlink keeps
+    running and waits for the next connection. Add ``s`` in automated test
+    flows where EBlink should exit cleanly after each session.
+
+``nc``
+    Disable the flash cache. EBlink normally caches flash contents so that
+    re-flashing from GDB is fast. If your target modifies its own flash
+    at runtime (bootloaders, EEPROM emulation), disable the cache so EBlink
+    always reads back the real flash contents.
+
+``proxy=[<scheme>:]<host>[:<port>]``
+    Instead of listening for an incoming GDB connection, EBlink connects
+    *outward* to an EBridge server running on ``<host>``. Use this when
+    EBlink runs behind NAT or a firewall where port forwarding is not
+    available::
+
+        -G proxy=myserver.net
+        -G proxy=myserver.net:3333
+
+    Without a scheme prefix EBlink connects to a plain EBridge on the default
+    port ``3333``.
+
+    EBridge is a lightweight TCP bridge that accepts the outgoing connection
+    from EBlink on its main port and exposes a local client port (default
+    ``2331``) where your GDB or IDE connects as normal. When the GDB session
+    ends, EBridge resets the bridge and EBlink reconnects automatically —
+    exactly as it would when listening locally.
+
+    An optional ``<scheme>:`` prefix selects a different bridge type:
+
+    ``Scheme a:``
+        Authenticated bridge (EBridgeAuth). EBlink performs a probe-serial
+        handshake so the bridge can allow or deny the connecting probe. The
+        default port is ``8433``::
+
+            -G proxy=a:myserver.net
+            -G proxy=a:myserver.net:8433
+
+        This requires the probe to report a serial number; if none is
+        available the proxy is not started.
+
+    An unknown ``<scheme>:`` prefix is reported with a warning and no proxy
+    connection is started.
+
+    See the EBridge(Auth) documentation for setup instructions.
+
+Combining ``-F`` and ``-G``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You do not need to flash anything to use the GDB server — ``-G`` works on
+its own and connects to whatever is already running on the target. Adding
+``-F`` is useful when you want to write something to flash first, for
+example a bootloader, a certificate, or device-specific calibration data,
+and then hand control to the debugger::
+
+    eblink -I stlink -S auto -F file=bootloader.elf -G port=4242
+
+EBlink programs the flash first, then starts the GDB server and waits for
+a connection.
+
+.. _gdb_monitor:
+
+GDB monitor commands
+~~~~~~~~~~~~~~~~~~~~
+
+.. index::
+    single: GDB; monitor commands
+    single: monitor commands
+
+From any GDB session you can send commands directly to EBlink using the
+GDB ``monitor`` prefix::
+
+    (gdb) monitor <command>
+
+The following built-in commands are available:
+
+.. index:: single: monitor commands; reset
+
+``reset [type]``
+    Reset the target. The optional argument selects the reset type, either
+    by name or by number (case-insensitive). Without an argument, system
+    reset is performed.
+
+    +----------------+---+--------------------------------------------------+
+    | ``system``     | 0 | Full system reset via AIRCR.SYSRESETREQ (default)|
+    +----------------+---+--------------------------------------------------+
+    | ``core``       | 1 | Core-only reset via AIRCR.VECTRESET              |
+    +----------------+---+--------------------------------------------------+
+    | ``hardware``   | 2 | Hardware reset via the nRESET pin                |
+    +----------------+---+--------------------------------------------------+
+    | ``user``       | 3 | User-defined reset — see below                   |
+    +----------------+---+--------------------------------------------------+
+
+    The ``user`` reset type delegates the reset to the script via
+    ``ebResetUser()`` — see :ref:`eblink_interaction` for the full
+    description and an example.
+
+    Examples::
+
+        (gdb) monitor reset
+        (gdb) monitor reset system
+        (gdb) monitor reset 2
+        (gdb) monitor reset user
+
+.. index:: single: monitor commands; clrbp
+
+``clrbp``
+    Clear all software (flash) breakpoints.
+
+.. index:: single: monitor commands; is_running
+
+``is_running``
+    Returns OK if the target is running, error if it is halted. IDEs such
+    as EmBitz use this command to implement hotplug without requiring the
+    extended GDB protocol — by querying the target state before attaching.
+
+.. index:: single: monitor commands; reg
+
+``reg <name>[=<value>]``
+    Read or write a CPU register by name (e.g. ``PC``, ``R0``, ``SP``).
+    Without a value the current register contents are returned. The value
+    can be a literal (``0x20001000``) or an indirect memory read
+    (``R0=(0x20001000)``).
+
+.. index:: single: monitor commands; writeu32
+
+``writeu32 <addr>=<value>``
+    Write a 32-bit value to a memory address. Both address and value
+    accept decimal or hex notation::
+
+        monitor writeu32 0x40021000=0x00000001
+
+.. index:: single: monitor commands; semihosting
+
+``semihosting [enable|disable]``
+    Enable or disable ARM semihosting. Without an argument semihosting
+    is enabled. Also accepted as ``EnableSemihost``.
+
+.. index:: single: monitor commands; sleep
+
+``sleep <ms>``
+    Pause EBlink for the given number of milliseconds before processing
+    the next GDB request.
+
+.. index:: single: monitor commands; execute
+
+``execute <function call>``
+    Call a function defined in any loaded script, exactly as with ``-E``
+    on the command line::
+
+        monitor execute myBoardInit()
+
+.. index:: single: monitor commands; servicePollInterval
+
+``servicePollInterval <ms>``
+    Adjust the GDB poll interval in milliseconds. Lower values give more
+    responsive single-stepping at the cost of higher CPU load on the host.
+
+.. index:: single: monitor commands; eblink
+
+``eblink [subcommand [value]]``
+    Configure EBlink behaviour from within a running GDB session. Settings
+    take effect immediately and persist for the duration of the connection.
+    Omitting a value queries the current state; ``monitor eblink`` with no
+    arguments shows all settings at once.
+
+    **Flash cache**
+
+    ``eblink flash cache [on|off]``
+        Enable or disable the EBlink flash cache. Disable it when your target
+        modifies its own flash at runtime (EEPROM emulation, bootloader) so
+        that GDB always reads the real flash contents. Without a value the
+        current state is shown::
+
+            monitor eblink flash cache off
+            monitor eblink flash cache        (query)
+
+    **Fault handling** (Cortex-M only)
+
+    ``eblink unwind [off|passive|active]``
+        Set the fault unwind level at runtime, equivalent to
+        ``-T cortex-m,fu=``. Without a value the current level is shown.
+
+        ============ ===========================================================
+        Value        Behaviour
+        ============ ===========================================================
+        ``off``      Fault unwind disabled.
+        ``passive``  Decode fault when already halted; do not catch faults.
+        ``active``   Catch faults immediately (default).
+        ============ ===========================================================
+
+        Example::
+
+            monitor eblink unwind passive
+            monitor eblink unwind             (query)
+
+    ``eblink catch [+name|-name|name ...|off|default]``
+        Select which exceptions trigger the vector catch, equivalent to
+        ``-T cortex-m,fc=``. Without a value the current set is shown.
+
+        Prefix a name with ``+`` to add it or ``-`` to remove it from the
+        current set without affecting the others. Without a prefix the
+        supplied list replaces the current set entirely.
+
+        ============ ===========================================================
+        Name         Exception
+        ============ ===========================================================
+        ``reset``    Core reset
+        ``mem``      MemManage fault
+        ``nocop``    No-coprocessor fault
+        ``check``    UsageFault check error
+        ``stat``     UsageFault invalid-state error
+        ``bus``      BusFault
+        ``int``      Exception entry/return error
+        ``hard``     HardFault
+        ``off``      Disable all vector catches
+        ``default``  Enable all (equivalent to all names above)
+        ============ ===========================================================
+
+        Examples::
+
+            monitor eblink catch hard bus mem   (replace set)
+            monitor eblink catch -reset         (remove reset from set)
+            monitor eblink catch +hard          (add hard to set)
+            monitor eblink catch off
+            monitor eblink catch default
+            monitor eblink catch                (query)
+
+.. index:: single: monitor commands; DAP
+
+DAP register access
+^^^^^^^^^^^^^^^^^^^
+
+The following commands provide direct access to the ARM Debug Access Port
+registers. They are compatible with the STMicro GDB server protocol and are
+used by IDEs such as STM32CubeIDE to identify and configure the target.
+
+.. index:: single: monitor commands; ReadDP
+
+``ReadDP <addr>``
+    Read a Debug Port register. Address in hex::
+
+        monitor ReadDP 0x0
+
+    Register ``0x0`` returns the DP IDCODE (e.g. ``0x2ba01477`` for a
+    Cortex-M with SWD).
+
+.. index:: single: monitor commands; WriteDP
+
+``WriteDP <addr> <value>``
+    Write a value to a Debug Port register::
+
+        monitor WriteDP 0x8 0x00FF0000
+
+.. index:: single: monitor commands; ReadAP
+
+``ReadAP <ap> <addr>``
+    Read an Access Port register. Register ``0xF8`` on AP 0 returns the
+    MEM-AP IDR, which IDEs use to verify the target is an ARM device::
+
+        monitor ReadAP 0 0xf8
+
+.. index:: single: monitor commands; WriteAP
+
+``WriteAP <ap> <addr> <value>``
+    Write a value to an Access Port register::
+
+        monitor WriteAP 0 0x0 0x22000040
+
+.. index:: single: monitor commands; WriteMemAP
+
+``WriteMemAP <ap> <addr> <value>``
+    Write a 32-bit value to memory via a specific Access Port. Equivalent
+    to ``WriteAP`` in this implementation.
+
+Scripts can also intercept any monitor command by defining the function
+``ebGDBqRcmd(command, length, buffer)`` — if it exists, EBlink calls it
+first and only falls through to the built-in handler if the function
+returns without writing to the buffer.
+
+Configuring the Cortex-M core: ``-T``
+--------------------------------------
+
+``-T`` is optional and rarely needed for everyday use. EBlink auto-detects
+the core type. You add ``-T`` only when you want to change the default
+fault handling or reset behaviour.
+
+``fu=<0..2>``
+    Fault unwind level. When your target crashes (HardFault, MemManage,
+    etc.), EBlink can decode the exception stack frame and show you exactly
+    which instruction faulted and why. ``0`` = disabled, ``1`` = passive
+    (decode when halted), ``2`` = active (catch the fault immediately,
+    default). This is one of EBlink's most useful debugging features — leave
+    it at the default ``2`` unless you have a specific reason not to.
+
+``reset=<0..2>``
+    Reset strategy: ``0`` = system reset (default), ``1`` = core-only
+    reset, ``2`` = JTAG reset. Change this only if a system reset causes
+    problems — for example when it reinitialises peripherals that need to
+    stay powered.
+
+``fc=<flags>``
+    Selects which exception types trigger the vector catch — the mechanism
+    that halts the core the instant a fault fires, before any fault handler
+    runs. Only active when ``fu=2`` (the default).
+
+    Each letter enables one exception class:
+
+    ===== ========= =====================================================
+    Flag  Name      Catches when…
+    ===== ========= =====================================================
+    ``r`` RESET     the core executes a reset (e.g. a watchdog or software reset)
+    ``m`` MEM       a MemManage fault fires (MPU violation, null-pointer access)
+    ``n`` NOCP      a coprocessor instruction is executed but no coprocessor is present
+    ``c`` CHK       a UsageFault check error occurs (unaligned access, divide by zero)
+    ``s`` STAT      a UsageFault invalid-state or invalid-PC error occurs
+    ``b`` BUS       a BusFault fires (bad memory access on the bus)
+    ``i`` INT       an error occurs during exception entry or return
+    ``h`` HARD      a HardFault fires
+    ===== ========= =====================================================
+
+    The default is all flags (``rmncsbih``). The most common reason to
+    change this is to omit ``r`` so that a target that deliberately
+    resets itself (watchdog, bootloader) does not stop in the debugger
+    every time::
+
+        -T cortex-m,fc=mncsbih
+
+Other options
+-------------
+
+``-v <0..8>``
+    Controls how much EBlink prints. The default is ``4``.
+
+    ===== =========================================================================
+    Level Output
+    ===== =========================================================================
+    ``0`` Errors only. Use for scripted calls where only ``-F read`` output matters.
+    ``1`` Adds the version banner.
+    ``2`` Adds operational messages (probe connected, flash progress) and animation.
+    ``3`` Adds script ``print()`` output and yes/no prompts.
+    ``4`` Adds target info: CPU type, flash regions, breakpoint count. **(default)**
+    ``5`` Adds notices.
+    ``6`` Adds warnings.
+    ``7`` Adds internal debug messages. Animation is disabled at this level.
+    ``8`` Adds low-level protocol trace for investigating probe communication.
+    ===== =========================================================================
+
+    For script debugging, use ``-v 7`` for function-level tracing or
+    ``-v 8`` for line-level tracing.
+
+``-H``
+    Connect without resetting the target — same as adding ``dr`` to the
+    ``-I`` string.
+
+``-E <call>``
+    Execute a Squirrel function after initialisation. Lets you call script
+    functions from the command line without writing a wrapper script::
+
+        -E "dataflash_erase(0x08000500)"
+
+    Multiple ``-E`` options are executed in order.
+
+``-Q <n|y|d>``
+    How EBlink handles yes/no questions from a script: ``n`` = always no,
+    ``y`` = always yes, ``d`` = use the script default. Useful for
+    unattended automation where no one is at the keyboard.

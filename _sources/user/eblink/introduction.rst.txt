@@ -1,0 +1,103 @@
+.. _eblink_introduction:
+
+============
+Introduction
+============
+
+EBlink uses `Squirrel <http://squirrel-lang.org>`_ as its scripting language.
+Scripts drive the device-specific behaviour: they set up the memory map, implement
+flash erase and write algorithms, handle custom resets, and can interact with the
+GDB monitor interface.
+
+A C/C++ background is assumed throughout this chapter. Squirrel syntax is covered
+in the language reference; this chapter focuses on what EBlink exposes to scripts
+and how scripts integrate with the EBlink runtime.
+
+How scripts are loaded
+----------------------
+
+Scripts are specified on the command line with ``-S``. Multiple ``-S`` options
+are allowed; each file is loaded in order into the same Squirrel VM so all
+scripts share one global namespace and see each other's definitions::
+
+    EBlink -I stlink -S stm32.script -G
+    EBlink -I stlink -S mydevice -S myReset.scr -G
+
+Script files are searched in the paths added with ``-P``. Multiple ``-P``
+options accumulate search paths::
+
+    EBlink -I stlink -P C:\eblink\scripts -S stm32 -G
+
+CLI defines
+-----------
+
+Key/value pairs can be passed to scripts at startup with ``-D``.
+Multiple ``-D`` options are allowed::
+
+    EBlink -I stlink -S stm32 -D FLASH_SIZE=1024 -D RAM_SIZE=16 -G
+
+Inside the script these are available as global integer constants::
+
+    printf("Flash speed: %d KHz\n", FLASH_SPEED);
+
+API objects
+-----------
+
+``InterfAPI``, ``DeviceAPI``, ``TargetAPI``, and ``ServicesAPI`` are classes
+registered by EBlink. A script instantiates them itself, typically at the top
+of the main script as globals using the ``<-`` operator::
+
+    intrfApi  <- InterfAPI()
+    targetApi <- TargetAPI()
+
+These globals are then accessible to all scripts loaded via ``require`` or
+``include``. ``DeviceAPI()`` is usually called inline where the memory map
+needs to be set.
+
+Minimal example
+---------------
+
+The smallest useful top-level script: instantiate the API objects, set the
+memory map, and define flash entry points. Flash programming requires
+device-specific register sequences — the body of each function is
+device-specific and omitted here::
+
+    intrfApi  <- InterfAPI()
+    targetApi <- TargetAPI()
+
+    function ebMain()
+    {
+        intrfApi.setSpeed(4000);
+
+        DeviceAPI().memmap( @@"<?xml version=\"1.0\"?>
+    <memory-map>
+      <memory type=\"ram\"   start=\"0x20000000\" length=\"0x8000\"/>
+      <memory type=\"flash\" start=\"0x08000000\" length=\"0x40000\">
+        <property name=\"pagesize\">0x400</property>
+      </memory>
+    </memory-map>" );
+    }
+
+    function ebFlashStart()
+    {
+        // Unlock flash, reset target to known state.
+        return ERROR_OK;
+    }
+
+    function ebFlashErase(sector, address)
+    {
+        // Device-specific sector erase via intrfApi.write(...).
+        return ERROR_OK;
+    }
+
+    function ebFlashWrite(sector, address, buffer)
+    {
+        // Device-specific flash write via intrfApi.writeBuf(...).
+        return ERROR_OK;
+    }
+
+    function ebFlashDone()
+    {
+        // Re-lock flash.
+        return ERROR_OK;
+    }

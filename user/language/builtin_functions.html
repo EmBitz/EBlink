@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3.11. Built-in Functions &mdash; EBlink documentation 6.40 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/EBlink.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=96c17db1"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4. EBlink Scripting" href="../eblink/index.html" />
+    <link rel="prev" title="3.10. Constants &amp; Enumerations" href="constants_and_enumerations.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            EBlink documentation
+              <img src="../../_static/EBlink.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">2. Usage</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../language.html">3. The script language</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="lexical_structure.html">3.1. Lexical Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datatypes.html">3.2. Values and Data types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="execution_context.html">3.3. Execution Context</a></li>
+<li class="toctree-l2"><a class="reference internal" href="statements.html">3.4. Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expressions.html">3.5. Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tables.html">3.6. Tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="arrays.html">3.7. Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html">3.8. Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classes.html">3.9. Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants_and_enumerations.html">3.10. Constants &amp; Enumerations</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.11. Built-in Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#global-symbols">3.11.1. Global Symbols</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#array"><code class="docutils literal notranslate"><span class="pre">array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#assert"><code class="docutils literal notranslate"><span class="pre">assert()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#print"><code class="docutils literal notranslate"><span class="pre">print()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#error"><code class="docutils literal notranslate"><span class="pre">error()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#type"><code class="docutils literal notranslate"><span class="pre">type()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#default-delegates">3.11.1.1. Default delegates</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#integer">3.11.2. Integer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#float">3.11.3. Float</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bool">3.11.4. Bool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#string">3.11.5. String</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#table">3.11.6. Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">3.11.7. Array</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#function">3.11.8. Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#class">3.11.9. Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#class-instance">3.11.10. Class Instance</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../eblink/index.html">4. EBlink Scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../wrapper.html">5. Wrappers</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../bookindex.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">EBlink documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../language.html"><span class="section-number">3. </span>The script language</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">3.11. </span>Built-in Functions</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="built-in-functions">
+<span id="builtin-functions"></span><h1><span class="section-number">3.11. </span>Built-in Functions<a class="headerlink" href="#built-in-functions" title="Permalink to this heading"></a></h1>
+<section id="global-symbols">
+<span id="index-0"></span><h2><span class="section-number">3.11.1. </span>Global Symbols<a class="headerlink" href="#global-symbols" title="Permalink to this heading"></a></h2>
+<dl class="js function">
+<dt class="sig sig-object js" id="array">
+<span class="sig-name descname"><span class="n"><span class="pre">array</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">fill</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#array" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>creates and returns array of a specified size. If the optional parameter fill is specified its value will be used to fill the new array’s slots. If the fill parameter is omitted, null is used instead.</p>
+<dl class="js function">
+<dt class="sig sig-object js" id="assert">
+<span class="sig-name descname"><span class="n"><span class="pre">assert</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#assert" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>throws an exception if exp is null or false. Throws “assertion failed” string by default, or message if specified.</p>
+<dl class="js function">
+<dt class="sig sig-object js" id="print">
+<span class="sig-name descname"><span class="n"><span class="pre">print</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#print" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>prints x to the standard output</p>
+<dl class="js function">
+<dt class="sig sig-object js" id="error">
+<span class="sig-name descname"><span class="n"><span class="pre">error</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#error" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>prints x in the standard error output</p>
+<dl class="js function">
+<dt class="sig sig-object js" id="type">
+<span class="sig-name descname"><span class="n"><span class="pre">type</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>return the ‘raw’ type of an object without invoking the metamethod ‘_typeof’.</p>
+<section id="default-delegates">
+<h3><span class="section-number">3.11.1.1. </span>Default delegates<a class="headerlink" href="#default-delegates" title="Permalink to this heading"></a></h3>
+<p>Except null and userdata every squirrel object has a default delegate containing a set of functions to manipulate and retrieve information from the object itself.</p>
+</section>
+</section>
+<section id="integer">
+<h2><span class="section-number">3.11.2. </span>Integer<a class="headerlink" href="#integer" title="Permalink to this heading"></a></h2>
+<span class="target" id="index-1"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">integer</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">tofloat</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>convert the number to float and returns it</p>
+<span class="target" id="index-2"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">integer</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">tostring</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>converts the number to string and returns it</p>
+<span class="target" id="index-3"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">integer</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">tointeger</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>dummy function; returns the value of the integer.</p>
+<span class="target" id="index-4"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">integer</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">tochar</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>returns a string containing a single character represented by the integer.</p>
+</section>
+<section id="float">
+<h2><span class="section-number">3.11.3. </span>Float<a class="headerlink" href="#float" title="Permalink to this heading"></a></h2>
+<span class="target" id="index-5"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">float</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">tofloat</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>returns the value of the float(dummy function)</p>
+<span class="target" id="index-6"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">float</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">tointeger</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>converts the number to integer and returns it</p>
+<span class="target" id="index-7"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">float</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">tostring</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>converts the number to string and returns it</p>
+<span class="target" id="index-8"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">float</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">tochar</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>returns a string containing a single character represented by the integer part of the float.</p>
+</section>
+<section id="bool">
+<h2><span class="section-number">3.11.4. </span>Bool<a class="headerlink" href="#bool" title="Permalink to this heading"></a></h2>
+<span class="target" id="index-9"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">bool</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">tofloat</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>returns 1.0 for true 0.0 for false</p>
+<span class="target" id="index-10"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">bool</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">tointeger</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>returns 1 for true 0 for false</p>
+<span class="target" id="index-11"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">bool</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">tostring</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>returns “true” for true and “false” for false</p>
+</section>
+<section id="string">
+<h2><span class="section-number">3.11.5. </span>String<a class="headerlink" href="#string" title="Permalink to this heading"></a></h2>
+<span class="target" id="index-12"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">len</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>returns the string length</p>
+<span class="target" id="index-13"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">tointeger</span></span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">base</span></span></em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>Converts the string to integer and returns it. An optional parameter base can be specified–if a base is not specified, it defaults to base 10.</p>
+<span class="target" id="index-14"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">tofloat</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>converts the string to float and returns it</p>
+<span class="target" id="index-15"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">tostring</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>returns the string (really, a dummy function)</p>
+<span class="target" id="index-16"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">slice</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>returns a section of the string as new string. Copies from start to the end (not included). If start is negative the index is calculated as length + start, if end is negative the index is calculated as length + end. If end is omitted end is equal to the string length.</p>
+<span class="target" id="index-17"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">find</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">substr</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">startidx</span></span></em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>Searches a sub string (substr) starting from the index startidx and returns the index of its first occurrence. If startidx is omitted the search operation starts from the beginning of the string. The function returns null if substr is not found.</p>
+<span class="target" id="index-18"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">tolower</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>returns a lowercase copy of the string.</p>
+<span class="target" id="index-19"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">toupper</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>returns a uppercase copy of the string.</p>
+</section>
+<section id="table">
+<h2><span class="section-number">3.11.6. </span>Table<a class="headerlink" href="#table" title="Permalink to this heading"></a></h2>
+<span class="target" id="index-20"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">table</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">len</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>returns the number of slots contained in a table</p>
+<span class="target" id="index-21"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">table</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">tostring</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>Tries to invoke the _tostring metamethod. If that fails, it returns “(table : pointer)”.</p>
+<span class="target" id="index-22"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">table</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">clear</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>removes all the slots from the table. Returns table itself.</p>
+<span class="target" id="index-23"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">table</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">filter</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func(key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val)</span></span></em><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>Creates a new table with all values that pass the test implemented by the provided function. In detail, it creates a new table, invokes the specified function for each key-value pair in the original table; if the function returns ‘true’, then the value is added to the newly created table at the same key.</p>
+<span class="target" id="index-24"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">table</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">keys</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>returns an array containing all the keys of the table slots.</p>
+<span class="target" id="index-25"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">table</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">values</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>returns an array containing all the values of the table slots.</p>
+</section>
+<section id="id1">
+<h2><span class="section-number">3.11.7. </span>Array<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<span class="target" id="index-26"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">array</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">len</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>returns the length of the array</p>
+<span class="target" id="index-27"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">array</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">append</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>appends the value ‘val’ at the end of the array. Returns array itself.</p>
+<span class="target" id="index-28"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">array</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">push</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>appends the value ‘val’ at the end of the array. Returns array itself.</p>
+<span class="target" id="index-29"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">array</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">extend</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>Extends the array by appending all the items in the given array. Returns array itself.</p>
+<span class="target" id="index-30"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">array</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">pop</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>removes a value from the back of the array and returns it.</p>
+<span class="target" id="index-31"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">array</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">top</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>returns the value of the array with the higher index</p>
+<span class="target" id="index-32"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">array</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">insert</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>inserts the value ‘val’ at the position ‘idx’ in the array. Returns array itself.</p>
+<span class="target" id="index-33"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">array</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">remove</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span></em><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>removes the value at the position ‘idx’ in the array and returns its value.</p>
+<span class="target" id="index-34"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">array</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">resize</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">fill</span></span></em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>Resizes the array. If the optional parameter ‘fill’ is specified, its value will be used to fill the new array’s slots when the size specified is bigger than the previous size. If the fill parameter is omitted, null is used instead. Returns array itself.</p>
+<span class="target" id="index-35"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">array</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">sort</span></span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">compare_func</span></span></em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>Sorts the array in-place. A custom compare function can be optionally passed. The function prototype as to be the following.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">custom_compare</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">a</span><span class="o">&gt;</span><span class="n">b</span><span class="p">)</span> <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">a</span><span class="o">&lt;</span><span class="n">b</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>a more compact version of a custom compare can be written using a lambda expression and the operator &lt;=&gt;</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="o">@</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="n">a</span> <span class="o">&lt;=&gt;</span> <span class="n">b</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Returns array itself.</p>
+<span class="target" id="index-36"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">array</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">reverse</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>reverse the elements of the array in place. Returns array itself.</p>
+<span class="target" id="index-37"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">array</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">slice</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>Returns a section of the array as new array. Copies from start to the end (not included). If start is negative the index is calculated as length + start, if end is negative the index is calculated as length + end. If end is omitted end is equal to the array length.</p>
+<span class="target" id="index-38"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">array</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">tostring</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>returns the string “(array : pointer)”.</p>
+<span class="target" id="index-39"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">array</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">clear</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>removes all the items from the array</p>
+<span class="target" id="index-40"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">array</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">map</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">func(item_value,</span> <span class="pre">[item_index],</span> <span class="pre">[array_ref])</span></em><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>Creates a new array of the same size. For each element in the original array invokes the function ‘func’ and assigns the return value of the function to the corresponding element of the newly created array.
+Provided func can accept up to 3 arguments: array item value (required), array item index (optional), reference to array itself (optional).</p>
+<span class="target" id="index-41"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">array</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">apply</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">func([item_value,</span> <span class="pre">[item_index],</span> <span class="pre">[array_ref])</span></em><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>for each element in the array invokes the function ‘func’ and replace the original value of the element with the return value of the function.</p>
+<span class="target" id="index-42"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">array</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">reduce</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func(prevval</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">curval)</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">initializer</span></span></em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>Reduces an array to a single value. For each element in the array invokes the function ‘func’ passing
+the initial value (or value from the previous callback call) and the value of the current element.
+The return value of the function is then used as ‘prevval’ for the next element.
+If the optional initializer is present, it is placed before the items of the array in the calculation,
+and serves as a default when the sequence is empty.
+If initializer is not given then for sequence contains only one item, reduce() returns the first item,
+and for empty sequence returns null.</p>
+<p>Given an sequence with 2 or more elements (including initializer) calls the function with the first two elements as the parameters,
+gets that result, then calls the function with that result and the third element, gets that result,
+calls the function with that result and the fourth parameter and so on until all element have been processed.
+Finally, returns the return value of the last invocation of func.</p>
+<span class="target" id="index-43"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">array</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">filter</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func(index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val)</span></span></em><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>Creates a new array with all elements that pass the test implemented by the provided function. In detail, it creates a new array, for each element in the original array invokes the specified function passing the index of the element and it’s value; if the function returns ‘true’, then the value of the corresponding element is added on the newly created array.</p>
+<span class="target" id="index-44"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">array</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">find</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>Performs a linear search for the value in the array. Returns the index of the value if it was found null otherwise.</p>
+</section>
+<section id="function">
+<h2><span class="section-number">3.11.8. </span>Function<a class="headerlink" href="#function" title="Permalink to this heading"></a></h2>
+<span class="target" id="index-45"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">call</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_this</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args...</span></span></em><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>calls the function with the specified environment object(‘this’) and parameters</p>
+<span class="target" id="index-46"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">pcall</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_this</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args...</span></span></em><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>calls the function with the specified environment object(‘this’) and parameters, this function will not invoke the error callback in case of failure(pcall stays for ‘protected call’)</p>
+</section>
+<section id="class">
+<h2><span class="section-number">3.11.9. </span>Class<a class="headerlink" href="#class" title="Permalink to this heading"></a></h2>
+<span class="target" id="index-47"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">class</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">instance</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>returns a new instance of the class. this function does not invoke the instance constructor. The constructor must be explicitly called (eg. class_inst.constructor(class_inst) ).</p>
+</section>
+<section id="class-instance">
+<h2><span class="section-number">3.11.10. </span>Class Instance<a class="headerlink" href="#class-instance" title="Permalink to this heading"></a></h2>
+<span class="target" id="index-48"></span><dl class="js function">
+<dt class="sig sig-object js">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">instance</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">getclass</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>returns the class that created the instance.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="constants_and_enumerations.html" class="btn btn-neutral float-left" title="3.10. Constants &amp; Enumerations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../eblink/index.html" class="btn btn-neutral float-right" title="4. EBlink Scripting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2009-2026, Gerard Zagema.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

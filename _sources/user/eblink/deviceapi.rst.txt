@@ -1,0 +1,204 @@
+.. _eblink_deviceapi:
+
+=========
+DeviceAPI
+=========
+
+``DeviceAPI`` is a class registered by EBlink that manages the device memory
+map and the flash sector cache. A new instance is created where needed::
+
+    DeviceAPI().memmap( ... )
+
+The memory map must be set in ``ebMain()``; without it EBlink cannot operate.
+
+Memory map
+----------
+
+.. index:: single: DeviceAPI; .memmap()
+
+.. js:function:: DeviceAPI.memmap(xml)
+   :noindex:
+
+   Sets the device memory map from an XML string. The XML format is the GDB
+   memory-map DTD. Must be called in ``ebMain()``. Returns ``ERROR_OK`` on
+   success or a negative error code if the XML could not be parsed.
+
+   The ``blocksize`` property inside a flash region defines the sector size
+   used for the flash cache::
+
+       DeviceAPI().memmap( @@"<?xml version=\"1.0\"?>
+           <!DOCTYPE memory-map PUBLIC \"+//IDN gnu.org//DTD GDB Memory Map V1.0//EN\"
+                                       \"http://sourceware.org/gdb/gdb-memory-map.dtd\">
+           <memory-map>
+             <memory type=\"flash\" start=\"0x08000000\" length=\"0x100000\">
+               <property name=\"blocksize\">0x800</property>
+             </memory>
+             <memory type=\"ram\" start=\"0x20000000\" length=\"0x20000\"/>
+           </memory-map>" );
+
+   Multiple flash and RAM regions can be defined. GDB uses this information
+   for breakpoints, stack unwinding, and the memory display.
+
+.. index:: single: DeviceAPI; .memmapFromFile()
+
+.. js:function:: DeviceAPI.memmapFromFile(filename)
+   :noindex:
+
+   Loads the memory map XML from a file instead of an inline string. Returns
+   ``ERROR_OK`` on success or ``-1`` on failure (file not found, read error,
+   or XML parse error).
+
+Memory map XML format
+---------------------
+
+EBlink uses the standard GDB memory-map XML format, extended with
+EBlink-specific attributes and properties for flash sector management.
+
+The GDB memory-map format is defined by the DTD at
+``http://sourceware.org/gdb/gdb-memory-map.dtd``. Full documentation of
+the standard format can be found in the GDB manual under
+*Memory Map Format* (``https://sourceware.org/gdb/current/onlinedocs/gdb/Memory-Map-Format.html``).
+
+**Flash memory attribute**
+
+``evalue`` (optional)
+   The byte value that represents an erased flash cell. Default is ``0xFF``.
+   Set this for devices where the erased state differs::
+
+       <memory type="flash" start="0x08000000" length="0x80000" evalue="0x00">
+
+**Flash property elements**
+
+``blocksize`` (mandatory)
+   Size of one flash sector in bytes. Accepts decimal or hexadecimal::
+
+       <property name="blocksize">0x800</property>
+
+``secstart`` (optional)
+   Sets the sector number for the first sector of this region. EBlink
+   automatically counts up from this number for each subsequent sector.
+   The counter carries over to the next flash region if ``secstart`` is
+   not set there. Default is ``0``::
+
+       <property name="secstart">8</property>
+
+``sectype`` (optional)
+   Shorthand to set the cache and read behaviour for this region.
+   Two independent flags control what EBlink does:
+
+   - **cache_mcu** — read the MCU flash into the sector cache so EBlink
+     can detect changes and avoid unnecessary writes.
+   - **read_mcu** — serve GDB memory reads directly from the MCU instead
+     of from the cache.
+
+   .. tabularcolumns:: p{2.5cm}p{1.8cm}p{1.8cm}p{4.5cm}p{3.2cm}
+
+   .. list-table::
+      :header-rows: 1
+      :widths: 16 12 11 30 31
+
+      * - Value
+        - cache_mcu
+        - read_mcu
+        - Flash operations
+        - GDB reads
+      * - *(default)*
+        - on
+        - off
+        - MCU content is read into cache; only changed sectors are written.
+        - Served from cache.
+      * - ``virtual``
+        - off
+        - off
+        - Cache is treated as empty without reading the MCU; sector is
+          always considered erased.
+        - Served from cache (erased value).
+      * - ``nocache``
+        - off
+        - on
+        - Cache is treated as empty without reading the MCU; sector is
+          always written.
+        - Read directly from MCU.
+      * - ``read_through``
+        - on
+        - on
+        - MCU content is read into cache; only changed sectors are written.
+        - Read directly from MCU.
+      * - ``ebskip``
+        - —
+        - —
+        - Sector is completely excluded from all flash operations.
+        - Not accessible through EBlink.
+
+   ::
+
+       <property name="sectype">nocache</property>
+
+``cache_mcu`` (optional)
+   Sets or clears the cache_mcu flag individually. Use ``disabled`` to clear
+   it, any other value to set it. This is the same flag that ``sectype``
+   controls as part of its shorthand combinations::
+
+       <property name="cache_mcu">disabled</property>
+
+``read_mcu`` (optional)
+   Sets or clears the read_mcu flag individually. Use ``disabled`` to clear
+   it, any other value to set it. This is the same flag that ``sectype``
+   controls as part of its shorthand combinations::
+
+       <property name="read_mcu">disabled</property>
+
+Flash management
+----------------
+
+.. index:: single: DeviceAPI; .isChipErase()
+
+.. js:function:: DeviceAPI.isChipErase()
+   :noindex:
+
+   Returns ``true`` if a mass erase is active. Used in ``ebFlashErase()`` when
+   no ``ebFlashEraseChip`` is defined — EBlink then falls back to sector-by-sector
+   erase and this function allows the script to detect whether that erase was
+   triggered by a chip erase request or a normal sector erase.
+
+.. index:: single: DeviceAPI; .sectorCount()
+
+.. js:function:: DeviceAPI.sectorCount()
+   :noindex:
+
+   Returns the total number of flash sectors defined in the memory map.
+
+.. index:: single: DeviceAPI; .setFlashEraseValue()
+
+.. js:function:: DeviceAPI.setFlashEraseValue(value)
+   :noindex:
+
+   Sets the byte value that EBlink considers an "erased" cell. Default is
+   ``0xFF`` (standard NOR flash). Change this for devices with a different
+   erase value (e.g. ``0x00``). Returns ``ERROR_OK``.
+
+.. index:: single: DeviceAPI; .setFlashDontTrim()
+
+.. js:function:: DeviceAPI.setFlashDontTrim(value)
+   :noindex:
+
+   When ``value`` is ``true``, disables the automatic trimming of the flash
+   write buffer to the erased value. By default EBlink strips trailing erased
+   bytes from the end of each sector before calling ``ebFlashWrite()`` to
+   avoid unnecessary writes. Returns ``ERROR_OK``.
+
+.. index:: single: DeviceAPI; .modifyFlash()
+
+.. js:function:: DeviceAPI.modifyFlash(addr, buffer)
+   :noindex:
+
+   Writes ``buffer`` directly into the EBlink flash sector cache at address
+   ``addr``, without touching the target hardware. EBlink will include these
+   modified sectors in the next flash programming cycle. Returns ``ERROR_OK``
+   or a negative error code.
+
+   Use this to patch data in flash before the normal write cycle::
+
+       local patch = EBbuffer(4);
+       patch.set(0, 0xDEADBEEF);
+       DeviceAPI().modifyFlash(0x080FFFFC, patch);

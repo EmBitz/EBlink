@@ -1,0 +1,10 @@
+.. _bookindex:
+
+*****
+Index
+*****
+
+.. raw:: html
+
+   <script>window.location.replace('../genindex.html');</script>
+   <noscript><a href="../genindex.html">Go to index</a></noscript>
