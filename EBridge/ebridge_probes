@@ -1,0 +1,15 @@
+# ebridgesec allow file
+#
+# One probe serial per line, optionally followed by a description after a
+# space or tab. Lines starting with '#' are comments; a '#' inside a serial
+# is part of the serial. Serials are compared case-insensitive.
+#
+# The file is read again for every new main connection, so probes can be
+# added or removed without restarting ebridgesec. A rejected serial is
+# logged, so you can copy a new probe's serial from the log after it tried
+# to connect once (only if you expect that connection).
+#
+#
+# <serial>                   <description>
+
+51FF71065067485753401787    STMf4 dev board

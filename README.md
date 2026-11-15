@@ -18,6 +18,20 @@ The variable `EB_DEFAULT_PROBE` is set to `"stlink"`.
 
 ![alt text](https://www.embitz.org/context3.png)  
 
+### What's New in Version 6.4x
+
+**6.4x — Authenticated EBridge GDB proxy**
+
+- **EBridgeAuth** — An authenticated variant of the EBridge GDB proxy. Prepend `a:` to the proxy host to perform a probe-serial handshake; only serials that are on the bridge allow-list are accepted:
+
+  ```
+  EBlink -I stlink -S auto -G proxy=a:<host>[:<port>]
+  ```
+
+  The EBridgeAuth source code is included in the `EBridge` folder.
+
+---
+
 ### What's New in Version 6.3x
 
 **6.31 — IDE wrapper integration and runtime configuration**

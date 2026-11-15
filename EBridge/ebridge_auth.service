@@ -1,0 +1,18 @@
+[Unit]
+Description=EBlink TCP Authentication Bridge
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=nobody
+Group=nogroup
+ExecStart=/usr/local/bin/ebridge_auth -a /etc/ebridge_auth_probes -l /var/log/ebridge_auth.log
+Restart=on-failure
+RestartSec=5s
+SyslogIdentifier=ebridge_auth
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
